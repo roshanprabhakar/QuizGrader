@@ -23,10 +23,10 @@ public class UserInteractiveGrading {
 
     public static ArrayList<CanvasContainer> canvi = new ArrayList<>();
 
+    //most important data structures for the program
     public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
-
-    private int previousLineY = 0;
+    public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>();
 
     public void run() throws InterruptedException, IOException {
 
@@ -50,6 +50,10 @@ public class UserInteractiveGrading {
                 image.resize(scaleHeight, scaleWidth);
                 CanvasContainer container = new CanvasContainer(student.getName(), image.getRegion(ans), ans.getProblemNum());
                 canvi.add(container);
+
+                System.out.println(numberToCanvas);
+                System.out.println(ans.getProblemNum());
+                numberToCanvas.get(ans.getProblemNum()).add(container);
 
                 if (newX + container.getWidth() > screenWidth) {
                     newX = 0;
@@ -191,6 +195,9 @@ public class UserInteractiveGrading {
             }
             scores.put(student.getName(), new HashMap<>());
         }
+        for (int i = 1; i <= numOfProblems; i++) {
+            numberToCanvas.put(i, new ArrayList<>());
+        }
     }
 
     public static void updateCanvi() {
@@ -200,6 +207,12 @@ public class UserInteractiveGrading {
                     container.addLabel(label);
                 }
             }
+        }
+    }
+
+    public static void updateScoresForProblem(int problemNum, String total) {
+        for (CanvasContainer container : numberToCanvas.get(problemNum)) {
+            container.setscoreField(total);
         }
     }
 }

@@ -76,4 +76,8 @@ public class CanvasContainer {
     public String toString() {
         return problemNum + name;
     }
+
+    public void setscoreField(String total) {
+        canvas.setScoreField(total);
+    }
 }

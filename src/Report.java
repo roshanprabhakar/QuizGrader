@@ -11,8 +11,8 @@ public class Report {
 
     private JPanel mainPanel;
     private JTextField title;
-    private JTextArea classData;
     private JButton sendInformationButton;
+    private JEditorPane reportPane;
 
     public JFrame getFrame() {
         return frame;
@@ -20,18 +20,6 @@ public class Report {
 
     public JPanel getMainPanel() {
         return mainPanel;
-    }
-
-    public JTextField getTitle() {
-        return title;
-    }
-
-    public JTextArea getClassData() {
-        return classData;
-    }
-
-    public JButton getSendInformationButton() {
-        return sendInformationButton;
     }
 
     public Report(HashMap<String, HashMap<Integer, Score>> scores, int numOfProblems) {
@@ -42,23 +30,22 @@ public class Report {
         for (String student : scores.keySet()) {
             int suggestedTotal = 0;
             int suggestedEarned = 0;
-            writeable += student + ": ";
+            writeable += "<b>" + student + "</b>" + ": " + "<br>";
             writeable += "\n" + "       ";
             for (int i = 1; i <= numOfProblems; i++) {
                 suggestedEarned += scores.get(student).get(i).getEarned();
                 suggestedTotal += scores.get(student).get(i).getPossible();
-                writeable += i + ": " + scores.get(student).get(i).toString();
-                writeable += "\n" + "       ";
+                writeable += i + ": " + scores.get(student).get(i).toString() + "<br>";
             }
             Score score = new Score(suggestedEarned, suggestedTotal);
-            writeable += "  total: " + score.toString() + ", " + findGrade(score);
-            writeable += "\n";
+            writeable += "  total: " + score.toString() + ", " + findGrade(score) + "<br><br>";
         }
 
-        classData.setBorder(BorderFactory.createCompoundBorder(
+        reportPane.setBorder(BorderFactory.createCompoundBorder(
                 mainPanel.getBorder(),
                 BorderFactory.createEmptyBorder(5, 15, 15, 15)));
-        classData.setText(writeable);
+
+        reportPane.setText(writeable);
 
 
         sendInformationButton.addActionListener(new ActionListener() {
@@ -85,5 +72,9 @@ public class Report {
             count++;
         }
         return 'F';
+    }
+
+    private void createUIComponents() {
+        reportPane = new JEditorPane("text/html", "");
     }
 }
