@@ -104,6 +104,7 @@ public class Canvas {
                     score.setText("");
                     canScoreDisappear = false;
                 }
+                score.setCaretPosition(0);
             }
         });
     }
@@ -140,9 +141,10 @@ public class Canvas {
     }
 
     public void setScoreField(String total) {
-        if (score.getText().equals("Score/Total")) {
+        if (score.getText().trim().equals("Score/Total")) {
             score.setText("/" + total);
+        } else {
+            score.setText(score.getText() + "/" + total);
         }
-        score.setText(score.getText() + "/" + total);
     }
 }
