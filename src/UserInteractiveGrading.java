@@ -34,6 +34,7 @@ public class UserInteractiveGrading {
 
         setup();
 
+        //positioning stuff
         int newX = 0;
         int newY = 0;
 
@@ -55,6 +56,7 @@ public class UserInteractiveGrading {
                 System.out.println(ans.getProblemNum());
                 numberToCanvas.get(ans.getProblemNum()).add(container);
 
+                //position stuff
                 if (newX + container.getWidth() > screenWidth) {
                     newX = 0;
                     newLine = true;

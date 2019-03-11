@@ -48,7 +48,10 @@ public class Canvas {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                if (customTags.getText().equals("Tags")) customTags.setText("");
                 String[] customTagsCollected = customTags.getText().split(", ");
+
+                Constants.removeDuplicates(customTagsCollected);
 
                 for (String label : customTagsCollected) {
                     tags.add(label);

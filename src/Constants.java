@@ -16,4 +16,14 @@ public class Constants {
         }
         return list;
     }
+
+    public static void removeDuplicates(String[] arr) {
+        ArrayList<String> uniqueTags = new ArrayList<>();
+        for (String item : arr) {
+            if (!uniqueTags.contains(item)) {
+                uniqueTags.add(item);
+            }
+        }
+        arr = toArray(uniqueTags);
+    }
 }
