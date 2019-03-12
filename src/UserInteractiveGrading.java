@@ -7,8 +7,12 @@ import java.util.HashMap;
 
 public class UserInteractiveGrading {
 
+    public static final int numPages = 1;
+
+    public DataLoader dataLoader = new DataLoader(numPages);
+
     public static int submittedProblems = 0;
-    private int numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
+    private int numOfStudents;
 
     private final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -29,6 +33,9 @@ public class UserInteractiveGrading {
     public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>();
 
     public void run() throws InterruptedException, IOException {
+
+        dataLoader.loadData("src" + File.separator + "RES");
+        numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
 
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
 
@@ -91,14 +98,14 @@ public class UserInteractiveGrading {
     private HashMap<String, ArrayList<AnswerField>> loadAllAnswerFields() throws InterruptedException, IOException {
 
         HashMap<String, ArrayList<AnswerField>> answers = new HashMap<>();
-        File[] blankTest = new File(Constants.imagePath + "AllPagesOfBlankTest" + Constants.separator).listFiles();
+        File[] blankTest = new File(Constants.imagePath + "BlankTest" + Constants.separator).listFiles();
 
         int num = 0;
         for (File page : blankTest) {
 
             answers.put(page.getName(), new ArrayList<>());
 
-            QGImage pageImage = new QGImage(Constants.imagePath + "AllPagesOfBlankTest" + Constants.separator + page.getName());
+            QGImage pageImage = new QGImage(Constants.imagePath + "BlankTest" + Constants.separator + page.getName());
             pageImage.resize(scaleHeight, scaleWidth);
             pageImage.display();
 

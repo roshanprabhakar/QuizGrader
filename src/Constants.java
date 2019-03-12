@@ -6,6 +6,8 @@ public class Constants {
     public static final String separator = File.separator;
     public static final String imagePath = "src" + separator + "ScannedImageSources" + separator;
     public static final String StudentResponsePath = imagePath + "StudentResponses";
+    public static final String blankTestPath = imagePath + "BlankTest" + separator;
+    public static final String StudentDirectoryPath = StudentResponsePath + separator + "Student";
 
     public static char[] grades = new char[] {'F','F','F','F','F','F','D','C','B','A'};
 
