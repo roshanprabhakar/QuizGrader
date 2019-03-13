@@ -10,6 +10,7 @@ public class Constants {
     public static final String StudentDirectoryPath = StudentResponsePath + separator + "Student";
 
     public static char[] grades = new char[] {'F','F','F','F','F','F','D','C','B','A'};
+    public static String[] simpGrades = new String[] {"F","D","C","B","A"};
 
     public static String[] toArray(ArrayList<String> arr) {
         String[] list = new String[arr.size()];
@@ -27,5 +28,17 @@ public class Constants {
             }
         }
         arr = toArray(uniqueTags);
+    }
+
+    public static Character findGrade(Score score) {
+        if (score.getPercent() > 90) return 'A';
+        int count = 0;
+        for (double i = 0; i <= 100; i += 10) {
+            if (score.getPercent() <= i) {
+                return Constants.grades[count];
+            }
+            count++;
+        }
+        return 'F';
     }
 }

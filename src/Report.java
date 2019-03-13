@@ -1,3 +1,5 @@
+import com.sun.tools.internal.jxc.ap.Const;
+
 import javax.swing.*;
 import javax.swing.text.Style;
 import javax.swing.text.html.HTML;
@@ -22,6 +24,7 @@ public class Report {
 
     private HashMap<String, HashMap<Integer, Score>> scores;
     private HashMap<String, HashMap<Integer, ArrayList<String>>> tags;
+    private HashMap<String, Character> grades;
 
     public JFrame getFrame() {
         return frame;
@@ -35,6 +38,7 @@ public class Report {
 
         this.scores = scores;
         this.tags = tags;
+        this.grades = new HashMap<>();
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet styleSheet = kit.getStyleSheet();
@@ -62,8 +66,11 @@ public class Report {
                 }
 
             }
+
             Score score = new Score(suggestedEarned, suggestedTotal);
-            writeable += "  total: " + score.toString() + ", " + findGrade(score) + "<br>";
+            grades.put(student, Constants.findGrade(score));
+
+            writeable += "  total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>";
             writeable += "</p>";
             writeable += "<br>";
         }
@@ -100,7 +107,7 @@ public class Report {
         reportWriteable += "Average percentage: " + getAveragePercent() + "<br>";
         reportWriteable += "Lowest scorers: " + getLowestScorers() + "<br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres() + "<br>";
-        reportWriteable += "Tags (most to least common) " + getOrderedTags() + "<br>";
+        reportWriteable += "Tags (most to least common):x " + getOrderedTags() + "<br>";
 
         classReportPane.setBorder(BorderFactory.createCompoundBorder(
                 mainPanel.getBorder(),
@@ -108,6 +115,8 @@ public class Report {
 
         classReportPane.setEditorKit(kit);
         classReportPane.setText(reportWriteable);
+
+        System.out.println(grades);
 
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
@@ -117,9 +126,33 @@ public class Report {
         });
     }
 
-    //need to implement before can be tested
+    public void display() {
+        frame.add(mainPanel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void createUIComponents() {
+        reportPane = new JEditorPane("text/html", "");
+    }
+
+    //I know its ugly but its not the most important thing right now
     public String getMostCommonGrade() {
-        return "to implement";
+        int[] grades = new int[]{0,0,0,0,0};
+        for (String student : this.grades.keySet()) {
+            if (this.grades.get(student) == 'A') {
+                grades[4]++;
+            } else if (this.grades.get(student) == 'B') {
+                grades[3]++;
+            } else if (this.grades.get(student) == 'C') {
+                grades[2]++;
+            } else if (this.grades.get(student) == 'D') {
+                grades[1]++;
+            } else {
+                grades[0]++;
+            }
+        }
+        return Constants.simpGrades[mode(grades)];
     }
 
     public String getAveragePercent() {
@@ -138,25 +171,13 @@ public class Report {
         return "to implement";
     }
 
-    public void display() {
-        frame.add(mainPanel);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    private Character findGrade(Score score) {
-        if (score.getPercent() > 90) return 'A';
-        int count = 0;
-        for (double i = 0; i <= 100; i += 10) {
-            if (score.getPercent() <= i) {
-                return Constants.grades[count];
-            }
-            count++;
+    private int mode(int[] arr) {
+        int maxIndex = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > arr[maxIndex]) maxIndex = i;
         }
-        return 'F';
+        return maxIndex;
     }
 
-    private void createUIComponents() {
-        reportPane = new JEditorPane("text/html", "");
-    }
+
 }
