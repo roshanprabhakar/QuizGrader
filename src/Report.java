@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.text.Style;
+import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
@@ -15,6 +17,8 @@ public class Report {
     private JTextField title;
     private JButton sendInformationButton;
     private JEditorPane reportPane;
+    private JTextField classReport;
+    private JEditorPane classReportPane;
 
     public JFrame getFrame() {
         return frame;
@@ -72,9 +76,6 @@ public class Report {
                 "}"
         );
 
-        System.out.println(writeable);
-
-
         reportPane.setBorder(BorderFactory.createCompoundBorder(
                 mainPanel.getBorder(),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
@@ -82,12 +83,53 @@ public class Report {
         reportPane.setEditorKit(kit);
         reportPane.setText(writeable);
 
+        HTMLEditorKit reportHtml = new HTMLEditorKit();
+        StyleSheet reportStyles = reportHtml.getStyleSheet();
+
+        String reportWriteable = "";
+
+        //all methods return html formatted strings
+        reportWriteable += "<p>";
+        reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br>";
+        reportWriteable += "Average percentage: " + getAveragePercent() + "<br>";
+        reportWriteable += "Lowest scorers: " + getLowestScorers() + "<br>";
+        reportWriteable += "Highest scorers: " + getHighestScoreres() + "<br>";
+        reportWriteable += "Tags (most to least common) " + getOrderedTags() + "<br>";
+
+        classReportPane.setBorder(BorderFactory.createCompoundBorder(
+                mainPanel.getBorder(),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+
+        classReportPane.setEditorKit(kit);
+        classReportPane.setText(reportWriteable);
+
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO Update this code
             }
         });
+    }
+
+    //need to implement before can be tested
+    public String getMostCommonGrade() {
+        return "to implement";
+    }
+
+    public String getAveragePercent() {
+        return "to implement";
+    }
+
+    public String getLowestScorers() {
+        return "to implement";
+    }
+
+    public String getHighestScoreres() {
+        return "to implement";
+    }
+
+    public String getOrderedTags() {
+        return "to implement";
     }
 
     public void display() {
