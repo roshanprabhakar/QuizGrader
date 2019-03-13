@@ -83,7 +83,7 @@ public class UserInteractiveGrading {
 //
 //        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print("");
 //
-//        new Report(scores, numOfProblems).display();
+//        new Report(scores, tags, numOfProblems).display();
 //        new IndividualVisualizer(tags, scores, numOfProblems).display();
 //
 //        Thread.sleep(10000000);
@@ -115,7 +115,7 @@ public class UserInteractiveGrading {
             }
         }
 
-        new Report(scoresTEST, numProblems).display();
+        new Report(scoresTEST, tagsTEST, numProblems).display();
         new IndividualVisualizer(tagsTEST, scoresTEST, numProblems).display();
 
         //end testing code

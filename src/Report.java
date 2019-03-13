@@ -20,6 +20,9 @@ public class Report {
     private JTextField classReport;
     private JEditorPane classReportPane;
 
+    private HashMap<String, HashMap<Integer, Score>> scores;
+    private HashMap<String, HashMap<Integer, ArrayList<String>>> tags;
+
     public JFrame getFrame() {
         return frame;
     }
@@ -28,7 +31,10 @@ public class Report {
         return mainPanel;
     }
 
-    public Report(HashMap<String, HashMap<Integer, Score>> scores, int numOfProblems) {
+    public Report(HashMap<String, HashMap<Integer, Score>> scores, HashMap<String, HashMap<Integer, ArrayList<String>>> tags, int numOfProblems) {
+
+        this.scores = scores;
+        this.tags = tags;
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet styleSheet = kit.getStyleSheet();
