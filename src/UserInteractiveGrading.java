@@ -34,60 +34,91 @@ public class UserInteractiveGrading {
 
     public void run() throws InterruptedException, IOException {
 
-        dataLoader.loadData("src" + File.separator + "RES");
-        numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
+//        dataLoader.loadData("src" + File.separator + "RES");
+//        numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
+//
+//        ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
+//
+//        setup();
+//
+//        //positioning stuff
+//        int newX = 0;
+//        int newY = 0;
+//
+//        boolean newLine = false;
+//
+//        for (int i = 1; i <= numOfProblems; i++) {
+//
+//            String page = getPageForNum(i);
+//            AnswerField ans = getAnswerFieldForNum(i);
+//
+//            for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
+//
+//                QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
+//                image.resize(scaleHeight, scaleWidth);
+//                CanvasContainer container = new CanvasContainer(student.getName(), image.getRegion(ans), ans.getProblemNum());
+//                canvi.add(container);
+//
+//                System.out.println(numberToCanvas);
+//                System.out.println(ans.getProblemNum());
+//                numberToCanvas.get(ans.getProblemNum()).add(container);
+//
+//                //position stuff
+//                if (newX + container.getWidth() > screenWidth) {
+//                    newX = 0;
+//                    newLine = true;
+//                }
+//
+//                if (newLine) {
+//                    newY += container.getHeight() + 20;
+//                    newLine = false;
+//                }
+//
+//                container.setLocation(newX, newY);
+//                newX += container.getWidth();
+//
+//                container.display();
+//            }
+//        }
+//
+//        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print("");
+//
+//        new Report(scores, numOfProblems).display();
+//        new IndividualVisualizer(tags, scores, numOfProblems).display();
+//
+//        Thread.sleep(10000000);
+//        System.exit(0);
 
-        ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
+        //Begin test code
+        //delete and uncomment when testing is done
+        HashMap<String, HashMap<Integer, ArrayList<String>>> tagsTEST = new HashMap<>();
+        HashMap<String, HashMap<Integer, Score>> scoresTEST = new HashMap<>();
 
-        setup();
+        String names[] = new String[]{"Roshan", "Young", "Kevin", "Justin"};
+        String possibleTags[] = new String[]{"off by one", "null pointer", "stack overflow", "not clean code"};
+        int numProblems = 5;
 
-        //positioning stuff
-        int newX = 0;
-        int newY = 0;
+        for (String name : names) {
 
-        boolean newLine = false;
+            tagsTEST.put(name, new HashMap<>());
+            scoresTEST.put(name, new HashMap<>());
 
-        for (int i = 1; i <= numOfProblems; i++) {
+            for (int i = 1; i <= numProblems; i++) {
 
-            String page = getPageForNum(i);
-            AnswerField ans = getAnswerFieldForNum(i);
+                tagsTEST.get(name).put(i, new ArrayList<>());
+                scoresTEST.get(name).put(i, new Score((int) (Math.random() * 10), (int) (Math.random() * 10)));
 
-            for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
-
-                QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
-                image.resize(scaleHeight, scaleWidth);
-                CanvasContainer container = new CanvasContainer(student.getName(), image.getRegion(ans), ans.getProblemNum());
-                canvi.add(container);
-
-                System.out.println(numberToCanvas);
-                System.out.println(ans.getProblemNum());
-                numberToCanvas.get(ans.getProblemNum()).add(container);
-
-                //position stuff
-                if (newX + container.getWidth() > screenWidth) {
-                    newX = 0;
-                    newLine = true;
+                int numTags = (int) (Math.random() * 5);
+                for (int j = 0; j < numTags; j++) {
+                    tagsTEST.get(name).get(i).add(possibleTags[(int) (Math.random() * possibleTags.length)]);
                 }
-
-                if (newLine) {
-                    newY += container.getHeight() + 20;
-                    newLine = false;
-                }
-
-                container.setLocation(newX, newY);
-                newX += container.getWidth();
-
-                container.display();
             }
         }
 
-        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print("");
+        new Report(scoresTEST, numProblems).display();
+        new IndividualVisualizer(tagsTEST, scoresTEST, numProblems).display();
 
-        new Report(scores, numOfProblems).display();
-        new IndividualVisualizer(tags, scores, numOfProblems).display();
-
-        Thread.sleep(10000000);
-        System.exit(0);
+        //end testing code
     }
 
     /**
