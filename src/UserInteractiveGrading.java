@@ -53,14 +53,15 @@ public class UserInteractiveGrading {
 
             for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
 
-                //Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
+                Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
 
                 QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
+                image.resize(Constants.scaleHeight, Constants.scaleWidth);
                 CanvasContainer container = new CanvasContainer(student.getName(), image.getRegion(ans), ans.getProblemNum());
 
                 //needed for statistical analysis
                 canvi.add(container);
-                //students.put(student.getName(), thisStudent);
+                students.put(student.getName(), thisStudent);
                 numberToCanvas.get(ans.getProblemNum()).add(container);
 
                 //position stuff
