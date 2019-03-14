@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class UserInteractiveGrading {
 
-    public static final int numPages = Integer.parseInt(JOptionPane.showInputDialog("How many pages in this test?")); //NEED TO UPDATE
+    public static final int numPages = Integer.parseInt(JOptionPane.showInputDialog("How many pages in this test?"));
 
     public DataLoader dataLoader = new DataLoader(numPages);
 
