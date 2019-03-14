@@ -71,6 +71,11 @@ public class Canvas {
                 UserInteractiveGrading.updateScoresForProblem(problemNum, score.getText().split("/")[1]);
 
                 UserInteractiveGrading.submittedProblems++;
+                
+                for (String tag : tags) {
+                    UserInteractiveGrading.students.get(name).addTag(problemNum, tag);    
+                }
+                UserInteractiveGrading.students.get(name).addScore(problemNum, scoreObject);
 
                 System.out.println("tags (specified): ");
                 System.out.println(UserInteractiveGrading.tags);

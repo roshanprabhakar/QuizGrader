@@ -25,6 +25,7 @@ public class Report {
     private HashMap<String, HashMap<Integer, Score>> scores;
     private HashMap<String, HashMap<Integer, ArrayList<String>>> tags;
     private HashMap<String, Character> grades;
+    private ArrayList<Student> students;
 
     public JFrame getFrame() {
         return frame;
@@ -52,18 +53,12 @@ public class Report {
         for (String student : scores.keySet()) {
             int suggestedTotal = 0;
             int suggestedEarned = 0;
-            writeable += "<q>";
-            writeable += "<b>" + student + "</b>" + ": ";
-            writeable += "</q>";
             writeable += "<p>";
+            writeable += "<b>" + student + "</b>" + ": ";
             for (int i = 1; i <= numOfProblems; i++) {
                 suggestedEarned += scores.get(student).get(i).getEarned();
                 suggestedTotal += scores.get(student).get(i).getPossible();
-                if (i != numOfProblems) {
-                    writeable += i + ": " + scores.get(student).get(i).toString() + ", ";
-                } else {
-                    writeable += i + ": " + scores.get(student).get(i).toString() + "<br>";
-                }
+                writeable += i + ": " + scores.get(student).get(i).toString() + ",      ";
 
             }
 
@@ -86,7 +81,7 @@ public class Report {
                         "font-size: 12px; " +
                         "font-family: Optima; " +
                         "background-color: #bec7d6;" +
-                "}"
+                        "}"
         );
 
         reportPane.setBorder(BorderFactory.createCompoundBorder(
@@ -104,7 +99,7 @@ public class Report {
         //all methods return html formatted strings
         reportWriteable += "<p>";
         reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br>";
-        reportWriteable += "Average percentage: " + getAveragePercent() + "<br>";
+        reportWriteable += "Average percentage: " + getAveragePercent() + "%<br>";
         reportWriteable += "Lowest scorers: " + getLowestScorers() + "<br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres() + "<br>";
         reportWriteable += "Tags (most to least common):x " + getOrderedTags() + "<br>";
@@ -138,7 +133,7 @@ public class Report {
 
     //I know its ugly but its not the most important thing right now
     public String getMostCommonGrade() {
-        int[] grades = new int[]{0,0,0,0,0};
+        int[] grades = new int[]{0, 0, 0, 0, 0};
         for (String student : this.grades.keySet()) {
             if (this.grades.get(student) == 'A') {
                 grades[4]++;
@@ -152,11 +147,18 @@ public class Report {
                 grades[0]++;
             }
         }
-        return Constants.simpGrades[mode(grades)];
+        return Constants.simpGrades[Constants.mode(grades)];
     }
 
-    public String getAveragePercent() {
-        return "to implement";
+    public double getAveragePercent() {
+        double totalPercent = 0;
+        int numStudents = UserInteractiveGrading.students.size();
+        for (String student : UserInteractiveGrading.students.keySet()) {
+            totalPercent += UserInteractiveGrading.students.get(student).getTotal().getPercent();
+            System.out.println(totalPercent);
+        }
+
+        return ((int) (totalPercent / numStudents) * 100) / 100;
     }
 
     public String getLowestScorers() {
@@ -171,13 +173,7 @@ public class Report {
         return "to implement";
     }
 
-    private int mode(int[] arr) {
-        int maxIndex = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] > arr[maxIndex]) maxIndex = i;
-        }
-        return maxIndex;
-    }
+
 
 
 }

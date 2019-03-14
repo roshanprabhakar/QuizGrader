@@ -33,11 +33,16 @@ public class Score {
     }
 
     public double getPercent() {
+        recalculatePercent();
         return percent;
     }
 
     public void setPercent(double percent) {
         this.percent = percent;
+    }
+
+    public void recalculatePercent() {
+        calculatePercent();
     }
 
     @Override

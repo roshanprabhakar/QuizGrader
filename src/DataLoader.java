@@ -55,6 +55,7 @@ public class DataLoader {
                 System.out.println(pages - i + 1);
             }
 
+            new File("src" + File.separator + "RES").delete();
             return true;
         }
 
@@ -62,6 +63,11 @@ public class DataLoader {
     }
 
     private void reverseFileOrder(File[] files) {
+        for (int i = 0; i < files.length / 2; i++) {
+            File temp = files[i];
+            files[i] = files[files.length - i - 1];
+            files[files.length - i - 1] = temp;
+        }
     }
 
 }

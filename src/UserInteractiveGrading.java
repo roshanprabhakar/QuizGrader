@@ -7,21 +7,15 @@ import java.util.HashMap;
 
 public class UserInteractiveGrading {
 
-    public static final int numPages = 1;
+    public static final int numPages = Integer.parseInt(JOptionPane.showInputDialog("How many pages in this test?")); //NEED TO UPDATE
 
     public DataLoader dataLoader = new DataLoader(numPages);
 
     public static int submittedProblems = 0;
     private int numOfStudents;
 
-    private final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    private final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-
     private HashMap<String, ArrayList<AnswerField>> ANSWER_FIELDS;
     private int numOfProblems;
-
-    private final int scaleWidth = 500; //scale all images to this width
-    private final int scaleHeight = 750; //scale all images to this height
 
     public static ArrayList<String> menuLabels = new ArrayList<>();
 
@@ -30,95 +24,70 @@ public class UserInteractiveGrading {
     //most important data structures for the program
     public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
-    public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>();
+    public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>(); //for updating score field
+    public static HashMap<String, Student> students = new HashMap<>();
 
     public void run() throws InterruptedException, IOException {
 
-//        dataLoader.loadData("src" + File.separator + "RES");
-//        numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
-//
-//        ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
-//
-//        setup();
-//
-//        //positioning stuff
-//        int newX = 0;
-//        int newY = 0;
-//
-//        boolean newLine = false;
-//
-//        for (int i = 1; i <= numOfProblems; i++) {
-//
-//            String page = getPageForNum(i);
-//            AnswerField ans = getAnswerFieldForNum(i);
-//
-//            for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
-//
-//                QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
-//                image.resize(scaleHeight, scaleWidth);
-//                CanvasContainer container = new CanvasContainer(student.getName(), image.getRegion(ans), ans.getProblemNum());
-//                canvi.add(container);
-//
-//                System.out.println(numberToCanvas);
-//                System.out.println(ans.getProblemNum());
-//                numberToCanvas.get(ans.getProblemNum()).add(container);
-//
-//                //position stuff
-//                if (newX + container.getWidth() > screenWidth) {
-//                    newX = 0;
-//                    newLine = true;
-//                }
-//
-//                if (newLine) {
-//                    newY += container.getHeight() + 20;
-//                    newLine = false;
-//                }
-//
-//                container.setLocation(newX, newY);
-//                newX += container.getWidth();
-//
-//                container.display();
-//            }
-//        }
-//
-//        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print("");
-//
-//        new Report(scores, tags, numOfProblems).display();
-//        new IndividualVisualizer(tags, scores, numOfProblems).display();
-//
-//        Thread.sleep(10000000);
-//        System.exit(0);
+        try {
+            dataLoader.loadData("src" + File.separator + "RES");
+        } catch (NullPointerException exception) {
+        }
 
-        //Begin test code
-        //delete and uncomment when testing is done
-        HashMap<String, HashMap<Integer, ArrayList<String>>> tagsTEST = new HashMap<>();
-        HashMap<String, HashMap<Integer, Score>> scoresTEST = new HashMap<>();
+        numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
 
-        String names[] = new String[]{"Roshan", "Young", "Kevin", "Justin"};
-        String possibleTags[] = new String[]{"off by one", "null pointer", "stack overflow", "not clean code"};
-        int numProblems = 5;
+        ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
 
-        for (String name : names) {
+        setup();
 
-            tagsTEST.put(name, new HashMap<>());
-            scoresTEST.put(name, new HashMap<>());
+        //positioning stuff
+        int newX = 0;
+        int newY = 0;
 
-            for (int i = 1; i <= numProblems; i++) {
+        boolean newLine = false;
 
-                tagsTEST.get(name).put(i, new ArrayList<>());
-                scoresTEST.get(name).put(i, new Score((int) (Math.random() * 10), (int) (Math.random() * 10)));
+        for (int i = 1; i <= numOfProblems; i++) {
 
-                int numTags = (int) (Math.random() * 5);
-                for (int j = 0; j < numTags; j++) {
-                    tagsTEST.get(name).get(i).add(possibleTags[(int) (Math.random() * possibleTags.length)]);
+            String page = getPageForNum(i);
+            AnswerField ans = getAnswerFieldForNum(i);
+
+            for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
+
+                //Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
+
+                QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
+                CanvasContainer container = new CanvasContainer(student.getName(), image.getRegion(ans), ans.getProblemNum());
+
+                //needed for statistical analysis
+                canvi.add(container);
+                //students.put(student.getName(), thisStudent);
+                numberToCanvas.get(ans.getProblemNum()).add(container);
+
+                //position stuff
+                if (newX + container.getWidth() > Constants.screenWidth) {
+                    newX = 0;
+                    newLine = true;
                 }
+
+                if (newLine) {
+                    newY += container.getHeight() + 20;
+                    newLine = false;
+                }
+
+                container.setLocation(newX, newY);
+                newX += container.getWidth();
+
+                container.display();
             }
         }
 
-        new Report(scoresTEST, tagsTEST, numProblems).display();
-        new IndividualVisualizer(tagsTEST, scoresTEST, numProblems).display();
+        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print("");
 
-        //end testing code
+        new Report(scores, tags, numOfProblems).display();
+        new IndividualVisualizer(tags, scores, numOfProblems).display();
+
+        Thread.sleep(10000000);
+        System.exit(0);
     }
 
     /**
@@ -137,7 +106,7 @@ public class UserInteractiveGrading {
             answers.put(page.getName(), new ArrayList<>());
 
             QGImage pageImage = new QGImage(Constants.imagePath + "BlankTest" + Constants.separator + page.getName());
-            pageImage.resize(scaleHeight, scaleWidth);
+            pageImage.resize(Constants.scaleHeight, Constants.scaleWidth);
             pageImage.display();
 
             int numOfAnswerFields = Integer.parseInt(JOptionPane.showInputDialog("How many answer fields on this page?"));
