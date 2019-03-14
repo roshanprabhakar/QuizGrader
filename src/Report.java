@@ -58,7 +58,7 @@ public class Report {
             for (int i = 1; i <= numOfProblems; i++) {
                 suggestedEarned += scores.get(student).get(i).getEarned();
                 suggestedTotal += scores.get(student).get(i).getPossible();
-                writeable += i + ": " + scores.get(student).get(i).toString() + ",      ";
+                writeable += i + ": " + scores.get(student).get(i).toString() + ", ";
 
             }
 
@@ -116,7 +116,7 @@ public class Report {
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Update this code
+                //TODO Generate CSV with all necessary data
             }
         });
     }

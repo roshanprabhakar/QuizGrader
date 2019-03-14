@@ -37,7 +37,6 @@ public class Canvas {
         customTags.setBackground(Color.LIGHT_GRAY);
         score.setBackground(Color.LIGHT_GRAY);
         submit.setForeground(Color.BLACK);
-
         mainPanel.setBackground(Color.DARK_GRAY);
         //----------
 
