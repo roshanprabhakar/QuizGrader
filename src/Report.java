@@ -50,26 +50,32 @@ public class Report {
         reportPane.setEditable(false);
 
         String writeable = "";
+
         for (String student : scores.keySet()) {
+
             int suggestedTotal = 0;
             int suggestedEarned = 0;
+
             writeable += "<p>";
-            writeable += "<b>" + student + "</b>" + ": ";
-            for (int i = 1; i <= numOfProblems; i++) {
+            writeable += "<b>" + student + "</b>" + ":   ";
+
+            for (Integer i = 1; i <= numOfProblems; i++) {
+
+                writeable += i + ": " + scores.get(student).get(i) + "  ";
+
                 suggestedEarned += scores.get(student).get(i).getEarned();
                 suggestedTotal += scores.get(student).get(i).getPossible();
-                writeable += (i + ":    " + scores.get(student).get(i).toString() + ",    ").replaceAll(" ", "&nbsp;"); //probably unicode for spaces not disregarded by html
-                ;
 
             }
 
             Score score = new Score(suggestedEarned, suggestedTotal);
             grades.put(student, Constants.findGrade(score));
 
-            writeable += "  total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>";
+            writeable += ("    total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>");
             writeable += "</p>";
             writeable += "<br>";
         }
+
 
         styleSheet.addRule(
                 "p {" +
@@ -89,6 +95,7 @@ public class Report {
                 mainPanel.getBorder(),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
 
+
         reportPane.setEditorKit(kit);
         reportPane.setText(writeable);
 
@@ -100,10 +107,12 @@ public class Report {
         //all methods return html formatted strings
         reportWriteable += "<p>";
         reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br>";
-        reportWriteable += "Average percentage: " + getAveragePercent() + "%<br>";
+        reportWriteable += "Average percentage: " + getAveragePercent() + "<br>";
         reportWriteable += "Lowest scorers: " + getLowestScorers() + "<br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres() + "<br>";
-        reportWriteable += "Tags (most to least common):x " + getOrderedTags() + "<br>";
+        reportWriteable += "Tags (most to least common): " + getOrderedTags() + "<br>";
+
+        reportWriteable.replaceAll(" ", "&nbsp");
 
         classReportPane.setBorder(BorderFactory.createCompoundBorder(
                 mainPanel.getBorder(),
@@ -112,7 +121,7 @@ public class Report {
         classReportPane.setEditorKit(kit);
         classReportPane.setText(reportWriteable);
 
-        System.out.println(grades);
+//        System.out.println(grades);
 
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
@@ -173,8 +182,6 @@ public class Report {
     public String getOrderedTags() {
         return "to implement";
     }
-
-
 
 
 }

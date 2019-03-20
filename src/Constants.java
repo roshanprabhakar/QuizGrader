@@ -16,6 +16,8 @@ public class Constants {
     public static final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
+    public static final int columnWidth = 15;
+
 
     public static char[] grades = new char[] {'F','F','F','F','F','F','D','C','B','A'};
     public static String[] simpGrades = new String[] {"F","D","C","B","A"};
@@ -56,6 +58,14 @@ public class Constants {
             if (arr[i] > arr[maxIndex]) maxIndex = i;
         }
         return maxIndex;
+    }
+
+    public static int max(ArrayList<Integer> arr) {
+        int max = arr.get(0);
+        for (int i = 1; i < arr.size(); i++) {
+            if (arr.get(i) > max) max = arr.get(i);
+        }
+        return max;
     }
 
     public static String generateSpaces(int num) {
