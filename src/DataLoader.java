@@ -43,7 +43,7 @@ public class DataLoader {
 
             //Makes the student directories
             File newDirectory = new File(Constants.StudentDirectoryPath + "1");
-            for (int i = pages; i < files.length; i += pages) {
+            for (int i = pages - 1; i < files.length; i += pages) {
                 newDirectory.mkdir();
                 int pageNumber = 1;
                 //Adds the student's pages to the student's directory
