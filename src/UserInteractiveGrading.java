@@ -222,7 +222,7 @@ public class UserInteractiveGrading {
 
     public static void updateScoresForProblem(int problemNum, String total) {
         for (CanvasContainer container : numberToCanvas.get(problemNum)) {
-            container.setscoreField(total);
+            container.setScoreField(total);
         }
     }
 }

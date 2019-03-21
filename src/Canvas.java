@@ -53,7 +53,7 @@ public class Canvas {
                 Constants.removeDuplicates(customTagsCollected);
 
                 for (String label : customTagsCollected) {
-                    tags.add(label);
+                    tags.add (label);
                     if (!UserInteractiveGrading.menuLabels.contains(label.toLowerCase()))
                         UserInteractiveGrading.menuLabels.add(label.toLowerCase());
                 }
@@ -150,8 +150,6 @@ public class Canvas {
     public void setScoreField(String total) {
         if (score.getText().trim().equals("Score/Total")) {
             score.setText("/" + total);
-        } else {
-            score.setText(score.getText() + "/" + total);
         }
     }
 }

@@ -25,6 +25,7 @@ public class Report {
     private HashMap<String, HashMap<Integer, Score>> scores;
     private HashMap<String, HashMap<Integer, ArrayList<String>>> tags;
     private HashMap<String, Character> grades;
+    private HashMap<String, Double> percentages;
     private ArrayList<Student> students;
 
     public JFrame getFrame() {
@@ -40,6 +41,7 @@ public class Report {
         this.scores = scores;
         this.tags = tags;
         this.grades = new HashMap<>();
+        this.percentages = new HashMap<>();
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet styleSheet = kit.getStyleSheet();
@@ -70,6 +72,7 @@ public class Report {
 
             Score score = new Score(suggestedEarned, suggestedTotal);
             grades.put(student, Constants.findGrade(score));
+            percentages.put(student, score.getPercent());
 
             writeable += ("    total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>");
             writeable += "</p>";
@@ -108,7 +111,7 @@ public class Report {
         reportWriteable += "<p>";
         reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br>";
         reportWriteable += "Average percentage: " + getAveragePercent() + "<br>";
-        reportWriteable += "Lowest scorers: " + getLowestScorers() + "<br>";
+        reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres() + "<br>";
         reportWriteable += "Tags (most to least common): " + getOrderedTags() + "<br>";
 
@@ -161,6 +164,7 @@ public class Report {
     }
 
     public double getAveragePercent() {
+
         double totalPercent = 0;
         int numStudents = UserInteractiveGrading.students.size();
         for (String student : UserInteractiveGrading.students.keySet()) {
@@ -171,8 +175,37 @@ public class Report {
         return ((int) (totalPercent / numStudents) * 100) / 100;
     }
 
-    public String getLowestScorers() {
-        return "to implement";
+    public String getLowestScorers(int n) {
+
+        ArrayList<String> lowest = new ArrayList<>();
+        HashMap<String, Double> copy = new HashMap<>(percentages);
+        for (int i = 0; i < n; i++) {
+            lowest.add(lowestScore(copy));
+            copy.remove(lowestScore(copy));
+        }
+
+        String out = "";
+        for (int i = 0; i < lowest.size(); i++) {
+            if (i != lowest.size() - 1) {
+                out += lowest.get(i) + ", ";
+            } else {
+                out += lowest.get(i);
+            }
+        }
+
+        return out;
+    }
+
+    private String lowestScore(HashMap<String, Double> percentages) {
+        String lowestName = "empty HashMap";
+        double lowestPercent = 101;
+        for (String student : percentages.keySet()) {
+            if (percentages.get(student) < lowestPercent) {
+                lowestName = student;
+                lowestPercent = percentages.get(student);
+            }
+        }
+        return lowestName;
     }
 
     public String getHighestScoreres() {
