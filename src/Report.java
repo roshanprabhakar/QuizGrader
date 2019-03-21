@@ -109,11 +109,11 @@ public class Report {
 
         //all methods return html formatted strings
         reportWriteable += "<p>";
-        reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br>";
-        reportWriteable += "Average percentage: " + getAveragePercent() + "<br>";
-        reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br>";
-        reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br>";
-        reportWriteable += "Tags (most to least common): " + getOrderedTags() + "<br>";
+        reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br><br>";
+        reportWriteable += "Average percentage: " + getAveragePercent() + "<br><br>";
+        reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br><br>";
+        reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br><br>";
+        reportWriteable += "Tags (most to least common): " + getOrderedTags() + "<br><br>";
 
         reportWriteable.replaceAll(" ", "&nbsp");
 
