@@ -112,7 +112,7 @@ public class Report {
         reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br>";
         reportWriteable += "Average percentage: " + getAveragePercent() + "<br>";
         reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br>";
-        reportWriteable += "Highest scorers: " + getHighestScoreres() + "<br>";
+        reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br>";
         reportWriteable += "Tags (most to least common): " + getOrderedTags() + "<br>";
 
         reportWriteable.replaceAll(" ", "&nbsp");
@@ -208,8 +208,37 @@ public class Report {
         return lowestName;
     }
 
-    public String getHighestScoreres() {
-        return "to implement";
+    public String getHighestScoreres(int n) {
+
+        ArrayList<String> highest = new ArrayList<>();
+        HashMap<String, Double> copy = new HashMap<>(percentages);
+        for (int i = 0; i < n; i++) {
+            highest.add(highestScore(copy));
+            copy.remove(highestScore(copy));
+        }
+
+        String out = "";
+        for (int i = 0; i < highest.size(); i++) {
+            if (i != highest.size() - 1) {
+                out += highest.get(i) + ", ";
+            } else {
+                out += highest.get(i);
+            }
+        }
+
+        return out;
+    }
+
+    private String highestScore(HashMap<String, Double> percentages) {
+        String highestName = "empty hashmap";
+        double highestPercentage = -1;
+        for (String student : percentages.keySet()) {
+            if (percentages.get(student) > highestPercentage) {
+                highestName = student;
+                highestPercentage = percentages.get(student);
+            }
+        }
+        return highestName;
     }
 
     public String getOrderedTags() {
