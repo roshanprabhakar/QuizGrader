@@ -26,7 +26,6 @@ public class Report {
     private HashMap<String, HashMap<Integer, ArrayList<String>>> tags;
     private HashMap<String, Character> grades;
     private HashMap<String, Double> percentages;
-    private ArrayList<Student> students;
 
     public JFrame getFrame() {
         return frame;
@@ -113,7 +112,7 @@ public class Report {
         reportWriteable += "Average percentage: " + getAveragePercent() + "<br><br>";
         reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br><br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br><br>";
-        reportWriteable += "Tags (most to least common): " + getOrderedTags() + "<br><br>";
+        reportWriteable += "Tags (most to least common): " + getOrderedTags(3) + "<br><br>";
 
         reportWriteable.replaceAll(" ", "&nbsp");
 
@@ -241,8 +240,42 @@ public class Report {
         return highestName;
     }
 
-    public String getOrderedTags() {
-        return "to implement";
+    public String getOrderedTags(int n) {
+
+        StringBuilder out = new StringBuilder();
+        ArrayList<String> tagsCopy = new ArrayList<>(UserInteractiveGrading.menuLabels);
+
+        for (int i = 0; i < n; i++) {
+            if (i < n - 1) {
+                out.append(mostFrequent(tagsCopy));
+                tagsCopy.remove(mostFrequent(tagsCopy));
+                out.append(", ");
+            } else {
+                out.append(mostFrequent(tagsCopy));
+                tagsCopy.remove(mostFrequent(tagsCopy));
+            }
+        }
+
+        return out.toString();
+    }
+
+    private String mostFrequent(ArrayList<String> labels) {
+        ArrayList<String> uniqueLabels = getUniqueLabels(labels);
+        int[] count = new int[uniqueLabels.size()];
+        for (String label : labels) {
+            count[uniqueLabels.indexOf(label)]++;
+        }
+        return uniqueLabels.get(Constants.mode(count));
+    }
+
+    private ArrayList<String> getUniqueLabels(ArrayList<String> labels) {
+        ArrayList<String> uniqueLabels = new ArrayList<>();
+        for (String label : labels) {
+            if (!uniqueLabels.contains(label)) {
+                uniqueLabels.add(label);
+            }
+        }
+        return uniqueLabels;
     }
 
 
