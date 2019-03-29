@@ -15,10 +15,9 @@ public class UserInteractiveGrading {
     private int numOfStudents;
 
     private HashMap<String, ArrayList<AnswerField>> ANSWER_FIELDS;
-    private int numOfProblems;
+    public static int numOfProblems;
 
     public static ArrayList<String> menuLabels = new ArrayList<>();
-
     public static ArrayList<CanvasContainer> canvi = new ArrayList<>();
 
     //most important data structures for the program
@@ -26,6 +25,10 @@ public class UserInteractiveGrading {
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
     public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>(); //for updating score field
     public static HashMap<String, Student> students = new HashMap<>();
+    public static HashMap<String, HashMap<Integer, Integer>> answeredCorrectly = new HashMap<>();
+    public static HashMap<String, Score> totals = new HashMap<>();
+    public static HashMap<String, Character> grades = new HashMap<>();
+    public static HashMap<String, Double> percentages = new HashMap<>();
 
     public void run() throws InterruptedException, IOException {
 

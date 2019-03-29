@@ -1,13 +1,13 @@
-import com.sun.tools.internal.jxc.ap.Const;
-
 import javax.swing.*;
-import javax.swing.text.Style;
-import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,8 +24,8 @@ public class Report {
 
     private HashMap<String, HashMap<Integer, Score>> scores;
     private HashMap<String, HashMap<Integer, ArrayList<String>>> tags;
-    private HashMap<String, Character> grades;
-    private HashMap<String, Double> percentages;
+
+    private HashMap<String, HashMap<Integer, Integer>> binary; //only needs to be accessed in this class
 
     public JFrame getFrame() {
         return frame;
@@ -39,8 +39,7 @@ public class Report {
 
         this.scores = scores;
         this.tags = tags;
-        this.grades = new HashMap<>();
-        this.percentages = new HashMap<>();
+        this.binary = new HashMap<>();
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet styleSheet = kit.getStyleSheet();
@@ -70,8 +69,10 @@ public class Report {
             }
 
             Score score = new Score(suggestedEarned, suggestedTotal);
-            grades.put(student, Constants.findGrade(score));
-            percentages.put(student, score.getPercent());
+
+            UserInteractiveGrading.grades.put(student, Constants.findGrade(score));
+            UserInteractiveGrading.percentages.put(student, score.getPercent());
+            UserInteractiveGrading.totals.put(student, new Score(suggestedEarned, suggestedTotal));
 
             writeable += ("    total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>");
             writeable += "</p>";
@@ -110,9 +111,24 @@ public class Report {
         reportWriteable += "<p>";
         reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br><br>";
         reportWriteable += "Average percentage: " + getAveragePercent() + "<br><br>";
+
         reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br><br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br><br>";
-        reportWriteable += "Tags (most to least common): " + getOrderedTags(3) + "<br><br>";
+
+        try {
+            reportWriteable += "Tags (most to least common): " + getOrderedTags(3) + "<br><br>";
+        } catch (IndexOutOfBoundsException e) {
+            try {
+                reportWriteable += "Tags (most to least common): " + getOrderedTags(2) + "<br><br>";
+            } catch (IndexOutOfBoundsException f) {
+                try {
+                    reportWriteable += "Tags (most to least common): " + getOrderedTags(1) + "<br><br>";
+                } catch (IndexOutOfBoundsException g) {
+
+                }
+            }
+        }
+
 
         reportWriteable.replaceAll(" ", "&nbsp");
 
@@ -128,7 +144,53 @@ public class Report {
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Generate CSV with all necessary data
+
+                File outDirectory = new File(Constants.outCSV);
+                if (!outDirectory.exists()) outDirectory.mkdir();
+
+                File csv_name_to_grade = new File(Constants.outCSV + File.separator + "scores.csv");
+
+
+                try {
+
+                    if (!csv_name_to_grade.exists()) csv_name_to_grade.createNewFile();
+                    BufferedWriter out = new BufferedWriter(new FileWriter(csv_name_to_grade));
+
+                    StringBuilder builder = new StringBuilder();
+                    StringBuilder title = new StringBuilder();
+
+                    title.append("name, ");
+
+                    for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
+                        title.append(i + ", ");
+                    }
+
+                    for (String student : scores.keySet()) {
+                        builder.append(student + ", ");
+
+
+                        System.out.print("scores.get(student): ");
+                        System.out.println(scores.get(student));
+                        for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
+                            builder.append(scores.get(student).get(i).getPercent() + ", ");
+                        }
+
+
+                        builder.append(UserInteractiveGrading.grades.get(student));
+                        builder.append("\n");
+                    }
+
+                    title.append("total, ");
+                    title.append("grade");
+
+                    out.write(title.toString() + "\n");
+                    out.write(builder.toString());
+
+                    out.close();
+
+                } catch (IOException exception) {
+                    System.out.println("Caught unknown IOException, could not generate File");
+                }
             }
         });
     }
@@ -146,14 +208,14 @@ public class Report {
     //I know its ugly but its not the most important thing right now
     public String getMostCommonGrade() {
         int[] grades = new int[]{0, 0, 0, 0, 0};
-        for (String student : this.grades.keySet()) {
-            if (this.grades.get(student) == 'A') {
+        for (String student : UserInteractiveGrading.grades.keySet()) {
+            if (UserInteractiveGrading.grades.get(student) == 'A') {
                 grades[4]++;
-            } else if (this.grades.get(student) == 'B') {
+            } else if (UserInteractiveGrading.grades.get(student) == 'B') {
                 grades[3]++;
-            } else if (this.grades.get(student) == 'C') {
+            } else if (UserInteractiveGrading.grades.get(student) == 'C') {
                 grades[2]++;
-            } else if (this.grades.get(student) == 'D') {
+            } else if (UserInteractiveGrading.grades.get(student) == 'D') {
                 grades[1]++;
             } else {
                 grades[0]++;
@@ -177,7 +239,7 @@ public class Report {
     public String getLowestScorers(int n) {
 
         ArrayList<String> lowest = new ArrayList<>();
-        HashMap<String, Double> copy = new HashMap<>(percentages);
+        HashMap<String, Double> copy = new HashMap<>(UserInteractiveGrading.percentages);
         for (int i = 0; i < n; i++) {
             lowest.add(lowestScore(copy));
             copy.remove(lowestScore(copy));
@@ -210,7 +272,7 @@ public class Report {
     public String getHighestScoreres(int n) {
 
         ArrayList<String> highest = new ArrayList<>();
-        HashMap<String, Double> copy = new HashMap<>(percentages);
+        HashMap<String, Double> copy = new HashMap<>(UserInteractiveGrading.percentages);
         for (int i = 0; i < n; i++) {
             highest.add(highestScore(copy));
             copy.remove(highestScore(copy));

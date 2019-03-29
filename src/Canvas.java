@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Canvas {
 
@@ -16,6 +17,7 @@ public class Canvas {
     private JTextField customTags;
     private JTextField score;
     private JButton submit;
+    private JCheckBox isCorrect;
 
     private QGImage image;
     private ArrayList<String> tags;
@@ -23,6 +25,8 @@ public class Canvas {
 
     private boolean canTagsDisappear = true;
     private boolean canScoreDisappear = true;
+
+    private boolean answeredCorrectly = false;
 
     public Canvas(QGImage image, String name, int problemNum) {
 
@@ -76,6 +80,13 @@ public class Canvas {
                 }
                 UserInteractiveGrading.students.get(name).addScore(problemNum, scoreObject);
 
+                UserInteractiveGrading.answeredCorrectly.put(name, new HashMap<>());
+                if (answeredCorrectly) {
+                    UserInteractiveGrading.answeredCorrectly.get(name).put(problemNum, 1);
+                }  else {
+                    UserInteractiveGrading.answeredCorrectly.get(name).put(problemNum, 0);
+                }
+
                 System.out.println("tags (specified): ");
                 System.out.println(UserInteractiveGrading.tags);
                 System.out.println("scores: ");
@@ -114,6 +125,12 @@ public class Canvas {
                 score.setCaretPosition(0);
             }
         });
+        isCorrect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                answeredCorrectly = true;
+            }
+        });
     }
 
     private void createUIComponents() {
@@ -145,6 +162,10 @@ public class Canvas {
             if (menu.getItemAt(i).equals(label)) return true;
         }
         return false;
+    }
+
+    public boolean isAnsweredCorrectly() {
+        return answeredCorrectly;
     }
 
     public void setScoreField(String total) {
