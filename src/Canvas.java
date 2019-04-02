@@ -57,7 +57,7 @@ public class Canvas {
                 Constants.removeDuplicates(customTagsCollected);
 
                 for (String label : customTagsCollected) {
-                    tags.add (label);
+                    tags.add(label);
                     if (!UserInteractiveGrading.menuLabels.contains(label.toLowerCase()))
                         UserInteractiveGrading.menuLabels.add(label.toLowerCase());
                 }
@@ -81,10 +81,21 @@ public class Canvas {
                 UserInteractiveGrading.students.get(name).addScore(problemNum, scoreObject);
 
                 UserInteractiveGrading.answeredCorrectly.put(name, new HashMap<>());
+
                 if (answeredCorrectly) {
                     UserInteractiveGrading.answeredCorrectly.get(name).put(problemNum, 1);
+                    System.out.println("---------BUG HERE-----------");
+                    System.out.println(answeredCorrectly);
+                    System.out.println(name);
+                    System.out.println(UserInteractiveGrading.answeredCorrectly.get(name));
+                    System.out.println("---------END BUG-------------");
                 }  else {
                     UserInteractiveGrading.answeredCorrectly.get(name).put(problemNum, 0);
+                    System.out.println("---------BUG HERE-----------");
+                    System.out.println(answeredCorrectly);
+                    System.out.println(name);
+                    System.out.println(UserInteractiveGrading.answeredCorrectly.get(name));
+                    System.out.println("---------END BUG-------------");
                 }
 
                 System.out.println("tags (specified): ");
@@ -95,6 +106,7 @@ public class Canvas {
                 System.out.println(UserInteractiveGrading.menuLabels);
                 System.out.println("number of submitted problems: ");
                 System.out.println(UserInteractiveGrading.submittedProblems);
+                System.out.println(UserInteractiveGrading.answeredCorrectly);
             }
         });
         menu.addActionListener(new ActionListener() {

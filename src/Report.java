@@ -115,6 +115,7 @@ public class Report {
         reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br><br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br><br>";
 
+        //make this execute recurssively
         try {
             reportWriteable += "Tags (most to least common): " + getOrderedTags(3) + "<br><br>";
         } catch (IndexOutOfBoundsException e) {
@@ -150,7 +151,6 @@ public class Report {
 
                 File csv_name_to_grade = new File(Constants.outCSV + File.separator + "scores.csv");
 
-
                 try {
 
                     if (!csv_name_to_grade.exists()) csv_name_to_grade.createNewFile();
@@ -175,12 +175,12 @@ public class Report {
                             builder.append(scores.get(student).get(i).getPercent() + ", ");
                         }
 
-
+                        builder.append(UserInteractiveGrading.totals.get(student).getPercent() + ", ");
                         builder.append(UserInteractiveGrading.grades.get(student));
                         builder.append("\n");
                     }
 
-                    title.append("total, ");
+                    title.append("total (%), ");
                     title.append("grade");
 
                     out.write(title.toString() + "\n");
@@ -191,6 +191,39 @@ public class Report {
                 } catch (IOException exception) {
                     System.out.println("Caught unknown IOException, could not generate File");
                 }
+
+                File outBinary = new File(Constants.outCSV + File.separator + "BinaryScores.csv");
+
+                try {
+
+                    if (!outBinary.exists()) outBinary.createNewFile();
+                    BufferedWriter out = new BufferedWriter(new FileWriter(outBinary));
+
+                    StringBuilder title = new StringBuilder();
+                    StringBuilder body = new StringBuilder();
+
+                    System.out.println("answered correctly: " + UserInteractiveGrading.answeredCorrectly);
+
+                    title.append("name, ");
+                    for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
+                        title.append(i + ", ");
+                    }
+                    for (String student : UserInteractiveGrading.answeredCorrectly.keySet()) {
+                        body.append(student + ", ");
+                        for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
+                            body.append(UserInteractiveGrading.answeredCorrectly.get(student).get(i) + ", ");
+                        }
+                        body.append("\n");
+                    }
+
+                    out.write(title + "\n");
+                    out.write(body.toString());
+                    out.close();
+
+                } catch (IOException exception) {
+                    System.out.println("could not generate binary reports file");
+                }
+
             }
         });
     }
