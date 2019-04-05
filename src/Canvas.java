@@ -109,6 +109,7 @@ public class Canvas {
                 System.out.println(UserInteractiveGrading.answeredCorrectly);
             }
         });
+
         menu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -118,6 +119,7 @@ public class Canvas {
                 menu.removeItem(menu.getSelectedItem());
             }
         });
+
         customTags.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -127,6 +129,7 @@ public class Canvas {
                 }
             }
         });
+
         score.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
