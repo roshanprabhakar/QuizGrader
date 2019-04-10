@@ -23,7 +23,7 @@ public class UserInteractiveGrading {
     //most important data structures for the program
     public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
-    public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>(); //for updating score field
+    public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
     public static HashMap<String, Student> students = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Integer>> answeredCorrectly = new HashMap<>();
     public static HashMap<String, Score> totals = new HashMap<>();
@@ -35,7 +35,6 @@ public class UserInteractiveGrading {
         try {
             dataLoader.loadData("src" + File.separator + "RES");
         } catch (NullPointerException exception) {
-            System.out.println("Data already loaded");
         }
 
         numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
@@ -56,6 +55,9 @@ public class UserInteractiveGrading {
             AnswerField ans = getAnswerFieldForNum(i);
 
             for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
+
+                answeredCorrectly.put(student.getName(), new HashMap<>());
+                System.out.println(answeredCorrectly);
 
                 Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
 
