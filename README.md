@@ -1,6 +1,10 @@
 # QuizGrader
 An interactive grader that aims to reduce the time it takes to grade free response test answers and give teachers feedback on their students' performance on tests.
 
+![Alt text](Logo.png?raw=true "Title")
+
+
+
 ## Usage
 
 ### Prerequisites
@@ -16,7 +20,7 @@ Runnable on any IDE (I prefer IntelliJ for easy setup and cloning).
 
 ### Running QuizGrader
 
-# TODO Have a demo of QuizGrader here
+# [TODO](TODO.md) Have a demo of QuizGrader here
 
 
 ## Built With
