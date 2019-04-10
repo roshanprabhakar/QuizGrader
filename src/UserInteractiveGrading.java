@@ -35,6 +35,7 @@ public class UserInteractiveGrading {
         try {
             dataLoader.loadData("src" + File.separator + "RES");
         } catch (NullPointerException exception) {
+            System.out.println("Data already loaded");
         }
 
         numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
