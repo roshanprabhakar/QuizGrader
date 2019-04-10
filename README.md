@@ -4,7 +4,7 @@ An interactive grader that aims to reduce the time it takes to grade free respon
 ## Usage
 
 ### Prerequisites
-Make sure that the jdk is 64 bit and the project language level is at 8. 
+64 bit JDK, project language level 8
 
 ### Installing
 
