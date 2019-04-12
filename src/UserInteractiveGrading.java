@@ -25,7 +25,7 @@ public class UserInteractiveGrading {
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
     public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
     public static HashMap<String, Student> students = new HashMap<>();
-    public static HashMap<String, HashMap<Integer, Integer>> answeredCorrectly = new HashMap<>();
+    public static HashMap<String, HashMap<Integer, Integer>> answeredCorrectly = new HashMap<>(); //need to change the name 
     public static HashMap<String, Score> totals = new HashMap<>();
     public static HashMap<String, Character> grades = new HashMap<>();
     public static HashMap<String, Double> percentages = new HashMap<>();

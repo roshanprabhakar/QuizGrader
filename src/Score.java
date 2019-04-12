@@ -24,6 +24,9 @@ public class Score {
 
     public void setEarned(double earned) {
         this.earned = earned;
+        try {
+            calculatePercent();
+        } catch (NullPointerException e) {}
     }
 
     public double getPossible() {
@@ -32,15 +35,14 @@ public class Score {
 
     public void setPossible(double possible) {
         this.possible = possible;
+        try {
+            calculatePercent();
+        } catch (NullPointerException e) {}
     }
 
     public double getPercent() {
         recalculatePercent();
         return percent;
-    }
-
-    public void setPercent(double percent) {
-        this.percent = percent;
     }
 
     public void recalculatePercent() {

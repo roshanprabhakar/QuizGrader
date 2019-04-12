@@ -42,15 +42,12 @@ public class Constants {
     }
 
     public static Character findGrade(Score score) {
-        if (score.getPercent() > 90) return 'A';
-        int count = 0;
-        for (double i = 0; i <= 100; i += 10) {
-            if (score.getPercent() <= i) {
-                return Constants.grades[count];
+        for (double i = 0; i < 100; i += 10) {
+            if (score.getPercent() >= i && score.getPercent() < i + 10) {
+                return grades[(int)(i / 10)];
             }
-            count++;
         }
-        return 'F';
+        return 'A';
     }
 
     public static int mode(int[] arr) {

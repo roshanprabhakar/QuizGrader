@@ -69,7 +69,6 @@ public class Report {
             }
 
             Score score = new Score(suggestedEarned, suggestedTotal);
-
             UserInteractiveGrading.grades.put(student, Constants.findGrade(score));
             UserInteractiveGrading.percentages.put(student, score.getPercent());
             UserInteractiveGrading.totals.put(student, new Score(suggestedEarned, suggestedTotal));
@@ -91,7 +90,7 @@ public class Report {
                         "font-size: 12px; " +
                         "font-family: Optima; " +
                         "background-color: #bec7d6;" +
-                        "}"
+                        "padding: 10px;" + "}"
         );
 
         reportPane.setBorder(BorderFactory.createCompoundBorder(
@@ -110,7 +109,7 @@ public class Report {
         //all methods return html formatted strings
         reportWriteable += "<p>";
         reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br><br>";
-        reportWriteable += "Average percentage: " + getAveragePercent() + "<br><br>";
+        reportWriteable += "Average percentage: " + getAveragePercent() + "%<br><br>";
 
         reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br><br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br><br>";
@@ -162,7 +161,6 @@ public class Report {
         reportPane = new JEditorPane("text/html", "");
     }
 
-    //I know its ugly but its not the most important thing right now
     public String getMostCommonGrade() {
         int[] grades = new int[]{0, 0, 0, 0, 0};
         for (String student : UserInteractiveGrading.grades.keySet()) {
