@@ -108,26 +108,27 @@ public class Report {
 
         //all methods return html formatted strings
         reportWriteable += "<p>";
-        reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br><br>";
-        reportWriteable += "Average percentage: " + getAveragePercent() + "%<br><br>";
+        reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br>";
+        reportWriteable += "Average percentage: " + getAveragePercent() + "%<br>";
 
-        reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br><br>";
-        reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br><br>";
+        reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br>";
+        reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br>";
 
-        //make this execute recurssively
+        //make this execute recursively
         try {
-            reportWriteable += "Tags (most to least common): " + getOrderedTags(3) + "<br><br>";
+            reportWriteable += "Tags (most to least common): " + getOrderedTags(3) + "<br>";
         } catch (IndexOutOfBoundsException e) {
             try {
-                reportWriteable += "Tags (most to least common): " + getOrderedTags(2) + "<br><br>";
+                reportWriteable += "Tags (most to least common): " + getOrderedTags(2) + "<br>";
             } catch (IndexOutOfBoundsException f) {
                 try {
-                    reportWriteable += "Tags (most to least common): " + getOrderedTags(1) + "<br><br>";
+                    reportWriteable += "Tags (most to least common): " + getOrderedTags(1) + "<br>";
                 } catch (IndexOutOfBoundsException g) {
 
                 }
             }
         }
+
 
 
         reportWriteable.replaceAll(" ", "&nbsp");
@@ -138,8 +139,6 @@ public class Report {
 
         classReportPane.setEditorKit(kit);
         classReportPane.setText(reportWriteable);
-
-//        System.out.println(grades);
 
         sendInformationButton.addActionListener(new ActionListener() {
             @Override

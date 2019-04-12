@@ -103,6 +103,17 @@ public class QGImage implements MouseListener {
         image = dimg;
     }
 
+    public QGImage resize(int newH, int newW, boolean forPaneInput) {
+        Image tmp = image.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        image = dimg;
+        return this;
+    }
+
+
     public void display() {
         frame.getContentPane().setLayout(new FlowLayout());
         frame.getContentPane().add(new JLabel(new ImageIcon(image)));

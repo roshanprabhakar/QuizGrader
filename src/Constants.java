@@ -1,5 +1,9 @@
+import jdk.nashorn.internal.scripts.JO;
+
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Constants {
@@ -72,5 +76,14 @@ public class Constants {
             out.append(" ");
         }
         return out.toString();
+    }
+
+    public static JOptionPane getModifiedPane(JOptionPane pane) {
+        try {
+            pane.setIcon(new ImageIcon("smallLogo.png"));
+        } catch (Exception e) {
+            System.out.println("Couldn't load input dialogue");
+        }
+        return pane;
     }
 }

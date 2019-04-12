@@ -1,3 +1,5 @@
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -7,7 +9,7 @@ import java.util.HashMap;
 
 public class UserInteractiveGrading {
 
-    public static final int numPages = Integer.parseInt(JOptionPane.showInputDialog("How many pages in this test?"));
+    public static final int numPages = parsePaneInput("How many pages?", "smallLogo.png");
 
     public DataLoader dataLoader = new DataLoader(numPages);
 
@@ -116,7 +118,7 @@ public class UserInteractiveGrading {
             pageImage.resize(Constants.scaleHeight, Constants.scaleWidth);
             pageImage.display();
 
-            int numOfAnswerFields = Integer.parseInt(JOptionPane.showInputDialog("How many answer fields on this page?"));
+            int numOfAnswerFields = parsePaneInput("How many answer fields on this page?", "smallLogo.png");
 
             for (int i = 0; i < numOfAnswerFields; i++) {
                 num++;
@@ -214,6 +216,17 @@ public class UserInteractiveGrading {
         for (int i = 1; i <= numOfProblems; i++) {
             numberToCanvas.put(i, new ArrayList<>());
         }
+    }
+
+    private static Integer parsePaneInput(String inputDialogue, String filepath) {
+        return Integer.parseInt((String) JOptionPane.showInputDialog(
+                null,
+                inputDialogue,
+                "QUIZ GRADER",
+                JOptionPane.INFORMATION_MESSAGE,
+                new QGImage(filepath).resize(100,120, true).getIcon(),
+                null,
+                ""));
     }
 
     public static void updateCanvi() {
