@@ -1,7 +1,7 @@
 # QuizGrader
 An interactive grader that aims to reduce the time it takes to grade free response test answers and give teachers feedback on their students' performance on tests.
 
-![Alt text](Logo.png?raw=true "Title")
+![Alt text](QuizGrader.png?raw=true "Title")
 
 
 
