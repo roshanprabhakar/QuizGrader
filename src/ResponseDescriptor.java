@@ -44,6 +44,16 @@ public class ResponseDescriptor {
                 }
             }
         });
+
+        frame.add(mainPanel);
+        frame.setPreferredSize(new Dimension(400, 300));
+        frame.pack();
+
+        frame.setLocation(new Point(
+                Constants.getLocationOfMouse()[0] - frame.getWidth() / 2,
+                Constants.getLocationOfMouse()[1] - frame.getHeight() / 2
+        ));
+
     }
 
     public String getText() {
@@ -51,9 +61,6 @@ public class ResponseDescriptor {
     }
 
     public void display() {
-        frame.add(mainPanel);
-        frame.setPreferredSize(new Dimension(400, 300));
-        frame.pack();
         frame.setVisible(true);
     }
 
@@ -68,8 +75,8 @@ public class ResponseDescriptor {
 
         styleSheet.addRule("" +
                 "p {" +
-                "padding: 10px;" +
-                "letter-spacing: 2px;" +
+                "font-size: 14px;" +
+                "font-family: Optima; " +
                 "}");
 
         comment.setBorder(BorderFactory.createCompoundBorder(

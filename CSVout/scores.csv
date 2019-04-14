@@ -1,4 +1,4 @@
-name    ,1   ,2    ,total (%),grade
-Student0,90.0,50.0 ,70.0     ,C
-Student1,60.0,100.0,80.0     ,B
-Student2,80.0,40.0 ,60.0     ,D
+name    ,1     ,total (%),grade
+Student0,1000.0,1000.0   ,A
+Student1,100.0 ,100.0    ,A
+Student2,90.0  ,90.0     ,A

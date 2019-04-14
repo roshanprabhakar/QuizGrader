@@ -86,4 +86,10 @@ public class Constants {
         }
         return pane;
     }
+
+    public static int[] getLocationOfMouse() {
+        int mouseX = MouseInfo.getPointerInfo().getLocation().x;
+        int mouseY = MouseInfo.getPointerInfo().getLocation().y;
+        return new int[]{mouseX, mouseY};
+    }
 }

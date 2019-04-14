@@ -149,8 +149,8 @@ public class UserInteractiveGrading {
             continue;
         }
 
-        field.setTopX(getLocationOfMouse()[0]);
-        field.setTopY(getLocationOfMouse()[1]);
+        field.setTopX(Constants.getLocationOfMouse()[0]);
+        field.setTopY(Constants.getLocationOfMouse()[1]);
 
         //allows time for the user to drag the mouse
         while (page.mouseIsPressed()) {
@@ -158,8 +158,8 @@ public class UserInteractiveGrading {
             continue;
         }
 
-        field.setBottomX(getLocationOfMouse()[0]);
-        field.setBottomY(getLocationOfMouse()[1]);
+        field.setBottomX(Constants.getLocationOfMouse()[0]);
+        field.setBottomY(Constants.getLocationOfMouse()[1]);
 
         field.setHeight(Math.abs(field.getTopY() - field.getBottomY()));
         field.setWidth(Math.abs(field.getTopX() - field.getBottomX()));
@@ -171,15 +171,6 @@ public class UserInteractiveGrading {
         page.closeRectangleView();
 
         return field;
-    }
-
-    /**
-     * @return
-     */
-    private int[] getLocationOfMouse() {
-        int mouseX = MouseInfo.getPointerInfo().getLocation().x;
-        int mouseY = MouseInfo.getPointerInfo().getLocation().y;
-        return new int[]{mouseX, mouseY};
     }
 
     private String getPageForNum(int num) {

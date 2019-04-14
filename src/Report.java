@@ -86,7 +86,6 @@ public class Report {
                         "max-width: 100%; " +
                         "line-height: 1.5; " +
                         "line-height: 25pt; " +
-                        "line-height: 25pt; " +
                         "font-size: 12px; " +
                         "font-family: Optima; " +
                         "background-color: #bec7d6;" +
@@ -114,22 +113,8 @@ public class Report {
         reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br>";
         reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br>";
 
-        //make this execute recursively
-        try {
-            reportWriteable += "Tags (most to least common): " + getOrderedTags(3) + "<br>";
-        } catch (IndexOutOfBoundsException e) {
-            try {
-                reportWriteable += "Tags (most to least common): " + getOrderedTags(2) + "<br>";
-            } catch (IndexOutOfBoundsException f) {
-                try {
-                    reportWriteable += "Tags (most to least common): " + getOrderedTags(1) + "<br>";
-                } catch (IndexOutOfBoundsException g) {
-
-                }
-            }
-        }
-
-
+        //recursion
+        reportWriteable += "Tags (most to least common): " + catchOrderedTags(3) + "<br>";
 
         reportWriteable.replaceAll(" ", "&nbsp");
 
@@ -148,6 +133,15 @@ public class Report {
                 generator.organizeGradeData();
             }
         });
+    }
+
+    private String catchOrderedTags(int n) {
+        if (n == 0) return "";
+        try {
+            return getOrderedTags(n);
+        } catch (IndexOutOfBoundsException e) {
+            return catchOrderedTags(n - 1);
+        }
     }
 
     public void display() {
@@ -212,9 +206,12 @@ public class Report {
     }
 
     private String lowestScore(HashMap<String, Double> percentages) {
+        System.out.println("##################################");
+        System.out.println(percentages);
         String lowestName = "empty HashMap";
         double lowestPercent = 101;
         for (String student : percentages.keySet()) {
+            System.out.println(student);
             if (percentages.get(student) < lowestPercent) {
                 lowestName = student;
                 lowestPercent = percentages.get(student);
@@ -265,7 +262,9 @@ public class Report {
             if (i < n - 1) {
                 out.append(mostFrequent(tagsCopy));
                 tagsCopy.remove(mostFrequent(tagsCopy));
-                out.append(", ");
+                if (i != n - 1) {
+                    out.append(", ");
+                }
             } else {
                 out.append(mostFrequent(tagsCopy));
                 tagsCopy.remove(mostFrequent(tagsCopy));
