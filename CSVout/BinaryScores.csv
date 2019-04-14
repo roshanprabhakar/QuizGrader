@@ -1,4 +1,4 @@
-name, 1, 
-Student0, 0, 
-Student1, 0, 
-Student2, 0, 
+name    ,1,2,
+Student0,1,0,
+Student1,0,1,
+Student2,1,0,

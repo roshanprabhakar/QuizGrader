@@ -1,5 +1,3 @@
-import jdk.nashorn.internal.scripts.JO;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -27,10 +25,11 @@ public class UserInteractiveGrading {
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
     public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
     public static HashMap<String, Student> students = new HashMap<>();
-    public static HashMap<String, HashMap<Integer, Integer>> answeredCorrectly = new HashMap<>(); //need to change the name 
+    public static HashMap<String, HashMap<Integer, Integer>> conceptUnderstood = new HashMap<>(); //need to change the name
     public static HashMap<String, Score> totals = new HashMap<>();
     public static HashMap<String, Character> grades = new HashMap<>();
     public static HashMap<String, Double> percentages = new HashMap<>();
+    public static HashMap<String, HashMap<Integer, String>> comments = new HashMap<>();
 
     public void run() throws InterruptedException, IOException {
 
@@ -58,8 +57,8 @@ public class UserInteractiveGrading {
 
             for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
 
-                answeredCorrectly.put(student.getName(), new HashMap<>());
-                System.out.println(answeredCorrectly);
+                conceptUnderstood.put(student.getName(), new HashMap<>());
+                System.out.println(conceptUnderstood);
 
                 Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
 
@@ -212,6 +211,7 @@ public class UserInteractiveGrading {
                 tags.get(student.getName()).put(i + 1, new ArrayList<>());
             }
             scores.put(student.getName(), new HashMap<>());
+            comments.put(student.getName(), new HashMap<>());
         }
         for (int i = 1; i <= numOfProblems; i++) {
             numberToCanvas.put(i, new ArrayList<>());

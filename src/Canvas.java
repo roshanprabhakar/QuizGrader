@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Canvas {
 
@@ -17,7 +16,8 @@ public class Canvas {
     private JTextField customTags;
     private JTextField score;
     private JButton submit;
-    private JCheckBox isCorrect;
+    private JCheckBox conceptUnderstood;
+    private JButton comment;
 
     private QGImage image;
     private ArrayList<String> tags;
@@ -27,6 +27,8 @@ public class Canvas {
     private boolean canScoreDisappear = true;
 
     private boolean answeredCorrectly = false;
+
+    private boolean commentWritten = false;
 
     public Canvas(QGImage image, String name, int problemNum) {
 
@@ -81,10 +83,17 @@ public class Canvas {
                 UserInteractiveGrading.students.get(name).addScore(problemNum, scoreObject);
 
                 if (answeredCorrectly) {
-                    UserInteractiveGrading.answeredCorrectly.get(name).put(problemNum, 1);
+                    UserInteractiveGrading.conceptUnderstood.get(name).put(problemNum, 1);
                 }  else {
-                    UserInteractiveGrading.answeredCorrectly.get(name).put(problemNum, 0);
+                    UserInteractiveGrading.conceptUnderstood.get(name).put(problemNum, 0);
                 }
+
+                if (!commentWritten) {
+                    UserInteractiveGrading.comments.get(name).put(problemNum, "");
+                }
+
+                System.out.println("Comment written: ");
+                System.out.println(UserInteractiveGrading.comments.get(name).get(problemNum));
 
                 System.out.println("tags (specified): ");
                 System.out.println(UserInteractiveGrading.tags);
@@ -94,7 +103,7 @@ public class Canvas {
                 System.out.println(UserInteractiveGrading.menuLabels);
                 System.out.println("number of submitted problems: ");
                 System.out.println(UserInteractiveGrading.submittedProblems);
-                System.out.println(UserInteractiveGrading.answeredCorrectly);
+                System.out.println(UserInteractiveGrading.conceptUnderstood);
             }
         });
 
@@ -128,10 +137,22 @@ public class Canvas {
                 score.setCaretPosition(0);
             }
         });
-        isCorrect.addActionListener(new ActionListener() {
+
+        conceptUnderstood.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 answeredCorrectly = true;
+            }
+        });
+
+        comment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ResponseDescriptor descriptor = new ResponseDescriptor(name, problemNum);
+                descriptor.display();
+                if (!descriptor.getText().equals("")) {
+                    commentWritten = true;
+                }
             }
         });
     }
