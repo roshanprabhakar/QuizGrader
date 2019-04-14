@@ -8,11 +8,11 @@
 - Update QuizGrader after getting more feedback
 - Release it eventually
 
-##Technical TODO
-1. Reposition each problem Canvas
-2. Reposition the ResponseDescriptor so it doesn't cover up the associated canvas
+##Technical TODO (not in priority order)
+1. reposition each problem Canvas
 3. rewrite position code for canvas (right in UserInteractiveGrader)
 4. fix get region code (it gets a slightly lower region currently)
+5. write all println to the LOG file
 
 ## Suggestions (Open to the public)
     

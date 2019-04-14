@@ -7,6 +7,7 @@ public class CSVgenerator {
 
     private File name_to_grade;
     private File outBinary;
+    private File comments;
 
     public CSVgenerator() {
 
@@ -15,6 +16,7 @@ public class CSVgenerator {
             File outDirectory = new File(Constants.outCSV);
             name_to_grade = new File(Constants.outCSV + File.separator + "scores.csv");
             outBinary = new File(Constants.outCSV + File.separator + "BinaryScores.csv");
+            comments = new File(Constants.outCSV + File.separator + "comments.csv");
 
             if (!outDirectory.exists()) {outDirectory.mkdir();}
         } catch (Exception e) {
@@ -101,5 +103,24 @@ public class CSVgenerator {
             System.out.println("could not generate or populate binary reports file");
         }
 
+    }
+
+    public void writeComments() {
+        try {
+
+            if (!comments.exists()) comments.createNewFile();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(comments));
+
+            for (String student : UserInteractiveGrading.comments.keySet()) {
+                writer.write(student + ", ");
+                for (Integer problemNum : UserInteractiveGrading.comments.get(student).keySet()) {
+                    writer.write(UserInteractiveGrading.comments.get(student).get(problemNum) + ", ");
+                }
+                writer.write("\n");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Could not generate csv for comments");
+        }
     }
 }
