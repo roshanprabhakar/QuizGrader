@@ -131,6 +131,7 @@ public class Report {
                 CSVgenerator generator = new CSVgenerator();
                 generator.organizeBinaryData();
                 generator.organizeGradeData();
+                generator.writeComments();
             }
         });
     }

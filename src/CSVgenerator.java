@@ -111,13 +111,27 @@ public class CSVgenerator {
             if (!comments.exists()) comments.createNewFile();
             BufferedWriter writer = new BufferedWriter(new FileWriter(comments));
 
+            //first row
+            StringBuilder title = new StringBuilder();
+
+            //rows 1 to n
+            StringBuilder body = new StringBuilder();
+
+            title.append("student, ");
+
             for (String student : UserInteractiveGrading.comments.keySet()) {
-                writer.write(student + ", ");
-                for (Integer problemNum : UserInteractiveGrading.comments.get(student).keySet()) {
-                    writer.write(UserInteractiveGrading.comments.get(student).get(problemNum) + ", ");
+                body.append(student + ", ");
+                for (int i = 1; i < UserInteractiveGrading.numOfProblems; i++) {
+                    title.append(i);
+                    body.append(UserInteractiveGrading.comments.get(student).get(i));
+                    if (i != UserInteractiveGrading.numOfProblems - 1) body.append(",");
                 }
-                writer.write("\n");
+                body.append("\n");
             }
+
+            writer.write(title.toString() + "\n");
+            writer.write(body.toString());
+            writer.close();
 
         } catch (IOException e) {
             System.out.println("Could not generate csv for comments");
