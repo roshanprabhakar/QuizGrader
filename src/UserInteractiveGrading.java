@@ -95,7 +95,9 @@ public class UserInteractiveGrading {
         new Report(scores, tags, numOfProblems).display();
         new IndividualVisualizer(tags, scores, numOfProblems).display();
 
-        Thread.sleep(10000000);
+        logger.close();
+
+        Thread.sleep(10000000); //keeping everything open (replace this)
         System.exit(0);
     }
 

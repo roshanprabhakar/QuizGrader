@@ -16,7 +16,16 @@ public class Logger {
         try {
             writer = new BufferedWriter(new FileWriter(log));
         } catch (IOException e) {
-            System.out.println("could not configure writer for log");
+            System.out.println("[QUIZ GRADER] could not configure writer for Logger");
+        }
+    }
+
+    public void close() {
+        try {
+            writer.write(out);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("[QUIZ GRADER] could not write data to the logger");
         }
     }
 

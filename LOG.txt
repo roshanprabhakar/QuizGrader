@@ -1,0 +1,69 @@
+null{Student2={}}
+{Student1={}, Student2={}}
+{Student0={}, Student1={}, Student2={}}
+Comment written: 
+
+tags (specified): 
+{Student0={1=[]}, Student1={1=[]}, Student2={1=[]}}
+scores: 
+{Student0={}, Student1={}, Student2={1=9.0/10.0}}
+all tags: 
+[]
+number of submitted problems: 
+1
+{Student0={}, Student1={}, Student2={1=0}}
+Comment written: 
+
+tags (specified): 
+{Student0={1=[]}, Student1={1=[]}, Student2={1=[]}}
+scores: 
+{Student0={}, Student1={1=10.0/10.0}, Student2={1=9.0/10.0}}
+all tags: 
+[]
+number of submitted problems: 
+2
+{Student0={}, Student1={1=0}, Student2={1=0}}
+Comment written: 
+
+tags (specified): 
+{Student0={1=[]}, Student1={1=[]}, Student2={1=[]}}
+scores: 
+{Student0={1=9.0/10.0}, Student1={1=10.0/10.0}, Student2={1=9.0/10.0}}
+all tags: 
+[]
+number of submitted problems: 
+3
+{Student0={1=0}, Student1={1=0}, Student2={1=0}}
+4
+A
+4
+A
+4
+A
+90.0
+190.0
+280.0
+-------- lowest scores ----------
+{Student0=90.0, Student1=100.0, Student2=90.0}
+Student0
+Student1
+Student2
+-------- lowest scores ----------
+{Student0=90.0, Student1=100.0, Student2=90.0}
+Student0
+Student1
+Student2
+-------- lowest scores ----------
+{Student1=100.0, Student2=90.0}
+Student1
+Student2
+-------- lowest scores ----------
+{Student1=100.0, Student2=90.0}
+Student1
+Student2
+-------- lowest scores ----------
+{Student1=100.0}
+Student1
+-------- lowest scores ----------
+{Student1=100.0}
+Student1

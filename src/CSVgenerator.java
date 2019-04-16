@@ -41,7 +41,7 @@ public class CSVgenerator {
             title.append("name, ");
 
             for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
-                title.append(i + ", ");
+                title.append(i + " (%), ");
             }
 
             for (String student : UserInteractiveGrading.scores.keySet()) {

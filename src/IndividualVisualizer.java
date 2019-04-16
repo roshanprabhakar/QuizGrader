@@ -59,7 +59,7 @@ public class IndividualVisualizer {
                 nameClicked = true;
                 namesTextField.setText(namesMenu.getSelectedItem().toString());
                 if (nameClicked && numberClicked) {
-                    System.out.println("both clicked");
+                    UserInteractiveGrading.logger.log("both clicked");
                     updateInfo(namesMenu.getSelectedItem().toString(), problemNumMenu.getSelectedIndex());
                 }
             }
@@ -72,7 +72,7 @@ public class IndividualVisualizer {
                 numberClicked = true;
                 numberTextField.setText(problemNumMenu.getSelectedItem().toString());
                 if (nameClicked && numberClicked) {
-                    System.out.println("both clicked");
+                    UserInteractiveGrading.logger.log("both clicked");
                     updateInfo(namesMenu.getSelectedItem().toString(), problemNumMenu.getSelectedIndex());
                 }
             }

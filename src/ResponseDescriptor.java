@@ -40,7 +40,7 @@ public class ResponseDescriptor {
                     frame.setVisible(false);
                     UserInteractiveGrading.comments.get(student).put(problemNum, comment.getDocument().getText(0, comment.getDocument().getLength()));
                 } catch (Exception exception) {
-                    System.out.println("Could not record comment!");
+                    UserInteractiveGrading.logger.log("Could not record comment!");
                 }
             }
         });

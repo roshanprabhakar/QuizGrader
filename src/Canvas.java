@@ -92,18 +92,17 @@ public class Canvas {
                     UserInteractiveGrading.comments.get(name).put(problemNum, "");
                 }
 
-                System.out.println("Comment written: ");
-                System.out.println(UserInteractiveGrading.comments.get(name).get(problemNum));
-
-                System.out.println("tags (specified): ");
-                System.out.println(UserInteractiveGrading.tags);
-                System.out.println("scores: ");
-                System.out.println(UserInteractiveGrading.scores);
-                System.out.println("all tags: ");
-                System.out.println(UserInteractiveGrading.menuLabels);
-                System.out.println("number of submitted problems: ");
-                System.out.println(UserInteractiveGrading.submittedProblems);
-                System.out.println(UserInteractiveGrading.conceptUnderstood);
+                UserInteractiveGrading.logger.log("Comment written: ");
+                UserInteractiveGrading.logger.log(UserInteractiveGrading.comments.get(name).get(problemNum));
+                UserInteractiveGrading.logger.log("tags (specified): ");
+                UserInteractiveGrading.logger.log(UserInteractiveGrading.tags);
+                UserInteractiveGrading.logger.log("scores: ");
+                UserInteractiveGrading.logger.log(UserInteractiveGrading.scores);
+                UserInteractiveGrading.logger.log("all tags: ");
+                UserInteractiveGrading.logger.log(UserInteractiveGrading.menuLabels);
+                UserInteractiveGrading.logger.log("number of submitted problems: ");
+                UserInteractiveGrading.logger.log(UserInteractiveGrading.submittedProblems);
+                UserInteractiveGrading.logger.log(UserInteractiveGrading.conceptUnderstood);
             }
         });
 

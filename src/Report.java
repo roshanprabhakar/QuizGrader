@@ -150,29 +150,13 @@ public class Report {
         reportPane = new JEditorPane("text/html", "");
     }
 
-//    public String getMostCommonGrade() {
-//        int[] grades = new int[]{0, 0, 0, 0, 0};
-//        for (String student : UserInteractiveGrading.grades.keySet()) {
-//            if (UserInteractiveGrading.grades.get(student) == 'A') {
-//                grades[4]++;
-//            } else if (UserInteractiveGrading.grades.get(student) == 'B') {
-//                grades[3]++;
-//            } else if (UserInteractiveGrading.grades.get(student) == 'C') {
-//                grades[2]++;
-//            } else if (UserInteractiveGrading.grades.get(student) == 'D') {
-//                grades[1]++;
-//            } else {
-//                grades[0]++;
-//            }
-//        }
-//        return Constants.simpGrades[Constants.mode(grades)];
-//    }
-
     public String getMostCommonGrade() {
         int[] grades = new int[5];
         for (String student : UserInteractiveGrading.grades.keySet()) {
-            System.out.println(Constants.indexOfSimpGrades(UserInteractiveGrading.grades.get(student)));
-            System.out.println(UserInteractiveGrading.grades.get(student));
+
+            UserInteractiveGrading.logger.log(Constants.indexOfSimpGrades(UserInteractiveGrading.grades.get(student)));
+            UserInteractiveGrading.logger.log(UserInteractiveGrading.grades.get(student));
+
             grades[Constants.indexOfSimpGrades(UserInteractiveGrading.grades.get(student))]++;
         }
         return Constants.simpGrades[Constants.mode(grades)];
@@ -184,7 +168,8 @@ public class Report {
         int numStudents = UserInteractiveGrading.students.size();
         for (String student : UserInteractiveGrading.students.keySet()) {
             totalPercent += UserInteractiveGrading.students.get(student).getTotal().getPercent();
-            System.out.println(totalPercent);
+
+            UserInteractiveGrading.logger.log(totalPercent);
         }
 
         return ((int) (totalPercent / numStudents) * 100) / 100;
@@ -212,12 +197,16 @@ public class Report {
     }
 
     private String lowestScore(HashMap<String, Double> percentages) {
-        System.out.println("-------- lowest scores ----------");
-        System.out.println(percentages);
+
+        UserInteractiveGrading.logger.log("-------- lowest scores ----------");
+        UserInteractiveGrading.logger.log(percentages);
+
         String lowestName = "empty HashMap";
         double lowestPercent = 101;
         for (String student : percentages.keySet()) {
-            System.out.println(student);
+
+            UserInteractiveGrading.logger.log(student);
+
             if (percentages.get(student) < lowestPercent) {
                 lowestName = student;
                 lowestPercent = percentages.get(student);

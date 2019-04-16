@@ -13,6 +13,7 @@
 4. fix get region code (it gets a slightly lower region currently)
 5. write all println to the LOG file
 7. refactor UserInteractiveGrading to UserInteractiveGrader
+8. find way to keep all visualizers open until user closes them
 
 ## Suggestions (Open to the public)
     
