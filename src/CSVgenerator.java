@@ -127,15 +127,28 @@ public class CSVgenerator {
             title.append("student, ");
 
             for (String student : UserInteractiveGrading.comments.keySet()) {
-                System.out.println("sutdent: " + student);
+
+                System.out.println("student: " + student);
                 body.append(student + ", ");
-                for (int i = 1; i < numOfProblems; i++) {
+
+                boolean recordedTitle = false;
+                for (int i = 1; i <= numOfProblems; i++) {
                     System.out.println("number: " + i);
-                    title.append(i);
-                    body.append(UserInteractiveGrading.comments.get(student).get(i));
+
+                    if (!recordedTitle) {
+                        title.append(i + ", ");
+                        recordedTitle = true;
+                    }
+
+                    if (UserInteractiveGrading.comments.get(student).get(i).equals("")) {
+                        body.append("no comment for problem: " + i);
+                    } else {
+                        body.append(UserInteractiveGrading.comments.get(student).get(i));
+                    }
+
                     if (i != UserInteractiveGrading.numOfProblems - 1) body.append(",");
                     System.out.println("title: " + title);
-                    System.out.println("body" + body);
+                    System.out.println("body: " + body);
                 }
                 body.append("\n");
             }
