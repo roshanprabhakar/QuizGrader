@@ -14,6 +14,7 @@
 7. refactor UserInteractiveGrading to UserInteractiveGrader
 8. find way to keep all visualizers open until user closes them
 9. write code to even spaces between scores in report visualizer
+10. fix readme
 
 ## Suggestions (Open to the public)
     
