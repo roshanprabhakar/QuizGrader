@@ -14,18 +14,15 @@ import java.util.HashMap;
 public class Report {
 
     private JFrame frame;
-
     private JPanel mainPanel;
+
     private JTextField title;
     private JButton sendInformationButton;
     private JEditorPane reportPane;
     private JTextField classReport;
     private JEditorPane classReportPane;
 
-    private HashMap<String, HashMap<Integer, Score>> scores;
-    private HashMap<String, HashMap<Integer, ArrayList<String>>> tags;
-
-    private HashMap<String, HashMap<Integer, Integer>> binary; //only needs to be accessed in this class
+    private int numOfProblems;
 
     public JFrame getFrame() {
         return frame;
@@ -37,15 +34,13 @@ public class Report {
 
     public Report(HashMap<String, HashMap<Integer, Score>> scores, HashMap<String, HashMap<Integer, ArrayList<String>>> tags, int numOfProblems) {
 
-        this.scores = scores;
-        this.tags = tags;
-        this.binary = new HashMap<>();
-
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet styleSheet = kit.getStyleSheet();
 
         frame = new JFrame("Class Report");
         frame.setPreferredSize(new Dimension(800, 700));
+
+        this.numOfProblems = numOfProblems;
 
         reportPane.setEditable(false);
 
@@ -128,7 +123,7 @@ public class Report {
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CSVgenerator generator = new CSVgenerator();
+                CSVgenerator generator = new CSVgenerator(numOfProblems);
                 generator.organizeBinaryData();
                 generator.organizeGradeData();
                 generator.writeComments();
@@ -155,20 +150,30 @@ public class Report {
         reportPane = new JEditorPane("text/html", "");
     }
 
+//    public String getMostCommonGrade() {
+//        int[] grades = new int[]{0, 0, 0, 0, 0};
+//        for (String student : UserInteractiveGrading.grades.keySet()) {
+//            if (UserInteractiveGrading.grades.get(student) == 'A') {
+//                grades[4]++;
+//            } else if (UserInteractiveGrading.grades.get(student) == 'B') {
+//                grades[3]++;
+//            } else if (UserInteractiveGrading.grades.get(student) == 'C') {
+//                grades[2]++;
+//            } else if (UserInteractiveGrading.grades.get(student) == 'D') {
+//                grades[1]++;
+//            } else {
+//                grades[0]++;
+//            }
+//        }
+//        return Constants.simpGrades[Constants.mode(grades)];
+//    }
+
     public String getMostCommonGrade() {
-        int[] grades = new int[]{0, 0, 0, 0, 0};
+        int[] grades = new int[5];
         for (String student : UserInteractiveGrading.grades.keySet()) {
-            if (UserInteractiveGrading.grades.get(student) == 'A') {
-                grades[4]++;
-            } else if (UserInteractiveGrading.grades.get(student) == 'B') {
-                grades[3]++;
-            } else if (UserInteractiveGrading.grades.get(student) == 'C') {
-                grades[2]++;
-            } else if (UserInteractiveGrading.grades.get(student) == 'D') {
-                grades[1]++;
-            } else {
-                grades[0]++;
-            }
+            System.out.println(Constants.indexOfSimpGrades(UserInteractiveGrading.grades.get(student)));
+            System.out.println(UserInteractiveGrading.grades.get(student));
+            grades[Constants.indexOfSimpGrades(UserInteractiveGrading.grades.get(student))]++;
         }
         return Constants.simpGrades[Constants.mode(grades)];
     }
@@ -207,7 +212,7 @@ public class Report {
     }
 
     private String lowestScore(HashMap<String, Double> percentages) {
-        System.out.println("##################################");
+        System.out.println("-------- lowest scores ----------");
         System.out.println(percentages);
         String lowestName = "empty HashMap";
         double lowestPercent = 101;

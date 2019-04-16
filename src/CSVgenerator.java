@@ -9,7 +9,9 @@ public class CSVgenerator {
     private File outBinary;
     private File comments;
 
-    public CSVgenerator() {
+    private int numOfProblems;
+
+    public CSVgenerator(int numOfProblems) {
 
         //Generate needed file container
         try {
@@ -22,6 +24,8 @@ public class CSVgenerator {
         } catch (Exception e) {
             System.out.println("Could not create CSV folder");
         }
+
+        this.numOfProblems = numOfProblems;
     }
 
     public void organizeGradeData() {
@@ -107,6 +111,7 @@ public class CSVgenerator {
 
     public void writeComments() {
         System.out.println("------------- Writing Comments -------------");
+        System.out.println(UserInteractiveGrading.comments);
 
         try {
 
@@ -122,11 +127,15 @@ public class CSVgenerator {
             title.append("student, ");
 
             for (String student : UserInteractiveGrading.comments.keySet()) {
+                System.out.println("sutdent: " + student);
                 body.append(student + ", ");
-                for (int i = 1; i < UserInteractiveGrading.numOfProblems; i++) {
+                for (int i = 1; i < numOfProblems; i++) {
+                    System.out.println("number: " + i);
                     title.append(i);
                     body.append(UserInteractiveGrading.comments.get(student).get(i));
                     if (i != UserInteractiveGrading.numOfProblems - 1) body.append(",");
+                    System.out.println("title: " + title);
+                    System.out.println("body" + body);
                 }
                 body.append("\n");
             }

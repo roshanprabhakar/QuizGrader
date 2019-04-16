@@ -92,4 +92,11 @@ public class Constants {
         int mouseY = MouseInfo.getPointerInfo().getLocation().y;
         return new int[]{mouseX, mouseY};
     }
+
+    public static int indexOfSimpGrades(Character chr) {
+        for (int i = 0; i < simpGrades.length; i++) {
+            if (simpGrades[i].equals(chr.toString())) return i;
+        }
+        return -1;
+    }
 }
