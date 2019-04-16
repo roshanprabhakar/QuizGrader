@@ -126,22 +126,22 @@ public class CSVgenerator {
 
             title.append("student, ");
 
+            for (int i = 1; i < numOfProblems; i++) {
+                title.append(i + ", ");
+            }
+
             for (String student : UserInteractiveGrading.comments.keySet()) {
 
                 System.out.println("student: " + student);
                 body.append(student + ", ");
 
-                boolean recordedTitle = false;
                 for (int i = 1; i <= numOfProblems; i++) {
                     System.out.println("number: " + i);
 
-                    if (!recordedTitle) {
-                        title.append(i + ", ");
-                        recordedTitle = true;
-                    }
-
+                    System.out.println("######################");
+                    System.out.println(UserInteractiveGrading.comments.get(student));
                     if (UserInteractiveGrading.comments.get(student).get(i).equals("")) {
-                        body.append("no comment for problem: " + i);
+                        body.append("no comment");
                     } else {
                         body.append(UserInteractiveGrading.comments.get(student).get(i));
                     }
