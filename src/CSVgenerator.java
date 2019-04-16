@@ -106,6 +106,8 @@ public class CSVgenerator {
     }
 
     public void writeComments() {
+        System.out.println("------------- Writing Comments -------------");
+
         try {
 
             if (!comments.exists()) comments.createNewFile();
