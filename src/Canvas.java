@@ -35,8 +35,11 @@ public class Canvas {
         this.image = image;
         this.tags = new ArrayList<>();
 
-        frame = new JFrame();
+        frame = new JFrame(name + " #" + problemNum);
         frame.add(mainPanel);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         //Color scheme
         menu.setBackground(Color.LIGHT_GRAY);

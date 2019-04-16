@@ -38,6 +38,8 @@ public class Report {
         StyleSheet styleSheet = kit.getStyleSheet();
 
         frame = new JFrame("Class Report");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         frame.setPreferredSize(new Dimension(800, 700));
 
         this.numOfProblems = numOfProblems;

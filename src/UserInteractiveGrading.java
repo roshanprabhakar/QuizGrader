@@ -1,3 +1,5 @@
+import jdk.internal.util.xml.impl.Input;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -9,7 +11,7 @@ public class UserInteractiveGrading {
 
     public static Logger logger = new Logger();
 
-    public static final int numPages = parsePaneInput("How many pages in this Assessment?", "smallLogo.png");
+    public static final int numPages = Integer.parseInt(new InputPane("How many pages in this assessment?").centered().getInput());
 
     public DataLoader dataLoader = new DataLoader(numPages);
 
@@ -91,7 +93,7 @@ public class UserInteractiveGrading {
             }
         }
 
-        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print(""); //keep this print,
+        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print(""); //keep this print
 
         new Report(scores, tags, numOfProblems).display();
         new IndividualVisualizer(tags, scores, numOfProblems).display();
@@ -99,14 +101,11 @@ public class UserInteractiveGrading {
         logger.close(); //move this after all visualizers have closed
 
         Thread.sleep(10000000); //keeping everything open (replace this)
+
+
         System.exit(0);
     }
 
-    /**
-     * @return
-     * @throws InterruptedException
-     * @throws IOException
-     */
     private HashMap<String, ArrayList<AnswerField>> loadAllAnswerFields() throws InterruptedException, IOException {
 
         HashMap<String, ArrayList<AnswerField>> answers = new HashMap<>();
@@ -121,7 +120,7 @@ public class UserInteractiveGrading {
             pageImage.resize(Constants.scaleHeight, Constants.scaleWidth);
             pageImage.display();
 
-            int numOfAnswerFields = parsePaneInput("How many answer fields on this page?", "smallLogo.png");
+            int numOfAnswerFields = Integer.parseInt(new InputPane("How many answer fields on this page?").getInput());
 
             for (int i = 0; i < numOfAnswerFields; i++) {
                 num++;
@@ -131,17 +130,10 @@ public class UserInteractiveGrading {
             pageImage.close();
         }
 
-//        Thread.sleep(1000);
         numOfProblems = num;
         return answers;
     }
 
-    /**
-     * @param page
-     * @param problemNum
-     * @return
-     * @throws InterruptedException
-     */
     private AnswerField recordAnswerField(QGImage page, int problemNum) throws InterruptedException {
 
         //AnswerField where we append mouse locations
@@ -211,17 +203,6 @@ public class UserInteractiveGrading {
         for (int i = 1; i <= numOfProblems; i++) {
             numberToCanvas.put(i, new ArrayList<>());
         }
-    }
-
-    private static Integer parsePaneInput(String inputDialogue, String filepath) {
-        return Integer.parseInt((String) JOptionPane.showInputDialog(
-                null,
-                inputDialogue,
-                "QUIZ GRADER",
-                JOptionPane.INFORMATION_MESSAGE,
-                new QGImage(filepath).resize(100,120, true).getIcon(),
-                null,
-                ""));
     }
 
     public static void updateCanvi() {
