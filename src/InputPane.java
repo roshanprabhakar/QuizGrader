@@ -21,7 +21,7 @@ public class InputPane {
         clicked = false;
 
         frame = new JFrame("QUIZ GRADER");
-        frame.setPreferredSize(new Dimension(620, 230));
+        frame.setSize(new Dimension(620, 230));
         frame.add(mainPanel);
 
         message.setText(messageDialogue);
