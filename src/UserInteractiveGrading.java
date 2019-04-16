@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +6,9 @@ import java.util.HashMap;
 
 public class UserInteractiveGrading {
 
-    public static final int numPages = parsePaneInput("How many pages?", "smallLogo.png");
+    public static Logger logger = new Logger();
+
+    public static final int numPages = parsePaneInput("How many pages in this Assessment?", "smallLogo.png");
 
     public DataLoader dataLoader = new DataLoader(numPages);
 
@@ -58,7 +59,7 @@ public class UserInteractiveGrading {
             for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
 
                 conceptUnderstood.put(student.getName(), new HashMap<>());
-                System.out.println(conceptUnderstood);
+                logger.log(conceptUnderstood);
 
                 Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
 
@@ -89,7 +90,7 @@ public class UserInteractiveGrading {
             }
         }
 
-        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print("");
+        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print(""); //keep this print,
 
         new Report(scores, tags, numOfProblems).display();
         new IndividualVisualizer(tags, scores, numOfProblems).display();

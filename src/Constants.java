@@ -78,15 +78,6 @@ public class Constants {
         return out.toString();
     }
 
-    public static JOptionPane getModifiedPane(JOptionPane pane) {
-        try {
-            pane.setIcon(new ImageIcon("smallLogo.png"));
-        } catch (Exception e) {
-            System.out.println("Couldn't load input dialogue");
-        }
-        return pane;
-    }
-
     public static int[] getLocationOfMouse() {
         int mouseX = MouseInfo.getPointerInfo().getLocation().x;
         int mouseY = MouseInfo.getPointerInfo().getLocation().y;

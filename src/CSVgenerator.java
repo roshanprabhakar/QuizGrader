@@ -22,7 +22,7 @@ public class CSVgenerator {
 
             if (!outDirectory.exists()) {outDirectory.mkdir();}
         } catch (Exception e) {
-            System.out.println("Could not create CSV folder");
+            UserInteractiveGrading.logger.log("Could not create CSV folder");
         }
 
         this.numOfProblems = numOfProblems;
@@ -48,8 +48,8 @@ public class CSVgenerator {
                 builder.append(student + ", ");
 
 
-                System.out.print("scores.get(student): ");
-                System.out.println(UserInteractiveGrading.scores.get(student));
+                UserInteractiveGrading.logger.log("scores.get(student): ");
+                UserInteractiveGrading.logger.log(UserInteractiveGrading.scores.get(student));
                 for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
                     builder.append(UserInteractiveGrading.scores.get(student).get(i).getPercent() + ", ");
                 }
@@ -68,7 +68,7 @@ public class CSVgenerator {
             out.close();
 
         } catch (Exception e) {
-            System.out.println("Could not populate scores.csv");
+            UserInteractiveGrading.logger.log("Could not populate scores.csv");
         }
     }
 
@@ -85,7 +85,7 @@ public class CSVgenerator {
             //body of file
             StringBuilder body = new StringBuilder();
 
-            System.out.println("answered correctly: " + UserInteractiveGrading.conceptUnderstood);
+            UserInteractiveGrading.logger.log("answered correctly: " + UserInteractiveGrading.conceptUnderstood);
 
             title.append("name, ");
             for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
@@ -104,14 +104,14 @@ public class CSVgenerator {
             out.close();
 
         } catch (IOException exception) {
-            System.out.println("could not generate or populate binary reports file");
+            UserInteractiveGrading.logger.log("could not generate or populate binary reports file");
         }
 
     }
 
     public void writeComments() {
-        System.out.println("------------- Writing Comments -------------");
-        System.out.println(UserInteractiveGrading.comments);
+        UserInteractiveGrading.logger.log("------------- Writing Comments -------------");
+        UserInteractiveGrading.logger.log(UserInteractiveGrading.comments);
 
         try {
 
@@ -126,20 +126,20 @@ public class CSVgenerator {
 
             title.append("student, ");
 
-            for (int i = 1; i < numOfProblems; i++) {
+            for (int i = 1; i <= numOfProblems; i++) {
                 title.append(i + ", ");
             }
 
             for (String student : UserInteractiveGrading.comments.keySet()) {
 
-                System.out.println("student: " + student);
+                UserInteractiveGrading.logger.log("student: " + student);
                 body.append(student + ", ");
 
                 for (int i = 1; i <= numOfProblems; i++) {
-                    System.out.println("number: " + i);
+                    UserInteractiveGrading.logger.log("number: " + i);
 
-                    System.out.println("######################");
-                    System.out.println(UserInteractiveGrading.comments.get(student));
+                    UserInteractiveGrading.logger.log("######################");
+                    UserInteractiveGrading.logger.log(UserInteractiveGrading.comments.get(student));
                     if (UserInteractiveGrading.comments.get(student).get(i).equals("")) {
                         body.append("no comment");
                     } else {
@@ -147,8 +147,8 @@ public class CSVgenerator {
                     }
 
                     if (i != UserInteractiveGrading.numOfProblems - 1) body.append(",");
-                    System.out.println("title: " + title);
-                    System.out.println("body: " + body);
+                    UserInteractiveGrading.logger.log("title: " + title);
+                    UserInteractiveGrading.logger.log("body: " + body);
                 }
                 body.append("\n");
             }
@@ -158,7 +158,7 @@ public class CSVgenerator {
             writer.close();
 
         } catch (IOException e) {
-            System.out.println("Could not generate csv for comments");
+            UserInteractiveGrading.logger.log("Could not generate csv for comments");
         }
     }
 }

@@ -52,7 +52,7 @@ public class DataLoader {
                     pageNumber++;
                 }
                 newDirectory = new File(Constants.StudentDirectoryPath + Integer.toString(pages - i + 1));
-                System.out.println(pages - i + 1);
+                UserInteractiveGrading.logger.log(pages - i + 1);
             }
 
             new File("src" + File.separator + "RES").delete();

@@ -24,7 +24,7 @@ public class Main {
             UserInteractiveGrading userInteractiveGrading = new UserInteractiveGrading();
             userInteractiveGrading.run();
         } catch (IOException e) {
-            System.err.println("Unhandled IOException!");
+            UserInteractiveGrading.logger.log("Unhandled IOException while initializing the grader!");
         }
     }
 }
