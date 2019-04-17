@@ -1,5 +1,3 @@
-import jdk.internal.util.xml.impl.Input;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -15,10 +13,10 @@ public class UserInteractiveGrading {
 
     public static final int numPages = parsePaneInput("How many pages in this assessment?", "smallLogo.png");
 
-
     public DataLoader dataLoader = new DataLoader(numPages);
 
     public static int submittedProblems = 0;
+    public static int logCount = 0;
     private int numOfStudents;
 
     private HashMap<String, ArrayList<AnswerField>> ANSWER_FIELDS;
@@ -101,10 +99,13 @@ public class UserInteractiveGrading {
         new Report(scores, tags, numOfProblems).display();
         new IndividualVisualizer(tags, scores, numOfProblems).display();
 
-        logger.close(); //move this after all visualizers have closed
+        logCount++;
 
-        Thread.sleep(10000000); //keeping everything open (replace this)
+        while (logCount != 2) {
+            System.out.print("");
+        }
 
+        logger.close();
 
         System.exit(0);
     }
@@ -197,10 +198,23 @@ public class UserInteractiveGrading {
         return null;
     }
 
-    private static Integer parsePaneInput(String inputDialogue, String filepath) {
+    private static Integer parsePaneInput(String inputDialog, String filepath) {
+
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(0,0,0));
+
+//        new JOptionPane().showInputDialog(panel, "QUIZ GRADER", JOptionPane.INFORMATION_MESSAGE, new QGImage(filepath).resize(100,120, true).getIcon(), null, null);
+
+
+//        JOptionPane pane = new JOptionPane();
+//        pane.setIcon(new QGImage(filepath).resize(100,120, true).getIcon());
+//        pane.setBackground(new Color(0,0,0));
+//        return Integer.parseInt(pane.showInputDialog(inputDialog));
+
+
         return Integer.parseInt((String) JOptionPane.showInputDialog(
                 null,
-                inputDialogue,
+                inputDialog,
                 "QUIZ GRADER",
                 JOptionPane.INFORMATION_MESSAGE,
                 new QGImage(filepath).resize(100,120, true).getIcon(),

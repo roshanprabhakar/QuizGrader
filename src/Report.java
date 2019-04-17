@@ -129,6 +129,8 @@ public class Report {
                 generator.organizeBinaryData();
                 generator.organizeGradeData();
                 generator.writeComments();
+
+                UserInteractiveGrading.logCount++;
             }
         });
     }

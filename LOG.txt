@@ -1,0 +1,99 @@
+null{Student2={}}
+{Student1={}, Student2={}}
+{Student0={}, Student1={}, Student2={}}
+Comment written: 
+comment
+tags (specified): 
+{Student0={1=[]}, Student1={1=[]}, Student2={1=[]}}
+scores: 
+{Student0={}, Student1={}, Student2={1=9.0/10.0}}
+all tags: 
+[]
+number of submitted problems: 
+1
+{Student0={}, Student1={}, Student2={1=0}}
+Comment written: 
+
+tags (specified): 
+{Student0={1=[]}, Student1={1=[]}, Student2={1=[]}}
+scores: 
+{Student0={}, Student1={1=9.0/10.0}, Student2={1=9.0/10.0}}
+all tags: 
+[]
+number of submitted problems: 
+2
+{Student0={}, Student1={1=0}, Student2={1=0}}
+Comment written: 
+
+tags (specified): 
+{Student0={1=[]}, Student1={1=[]}, Student2={1=[]}}
+scores: 
+{Student0={1=4.0/10.0}, Student1={1=9.0/10.0}, Student2={1=9.0/10.0}}
+all tags: 
+[]
+number of submitted problems: 
+3
+{Student0={1=0}, Student1={1=0}, Student2={1=0}}
+0
+F
+4
+A
+4
+A
+40.0
+130.0
+220.0
+-------- lowest scores ----------
+{Student0=40.0, Student1=90.0, Student2=90.0}
+Student0
+Student1
+Student2
+-------- lowest scores ----------
+{Student0=40.0, Student1=90.0, Student2=90.0}
+Student0
+Student1
+Student2
+-------- lowest scores ----------
+{Student1=90.0, Student2=90.0}
+Student1
+Student2
+-------- lowest scores ----------
+{Student1=90.0, Student2=90.0}
+Student1
+Student2
+-------- lowest scores ----------
+{Student2=90.0}
+Student2
+-------- lowest scores ----------
+{Student2=90.0}
+Student2
+answered correctly: {Student0={1=0}, Student1={1=0}, Student2={1=0}}
+scores.get(student): 
+{1=4.0/10.0}
+scores.get(student): 
+{1=9.0/10.0}
+scores.get(student): 
+{1=9.0/10.0}
+------------- Writing Comments -------------
+{Student0={1=}, Student1={1=}, Student2={1=comment}}
+student: Student0
+number: 1
+######################
+{1=}
+title: student, 1, 
+body: Student0, no comment,
+student: Student1
+number: 1
+######################
+{1=}
+title: student, 1, 
+body: Student0, no comment,
+Student1, no comment,
+student: Student2
+number: 1
+######################
+{1=comment}
+title: student, 1, 
+body: Student0, no comment,
+Student1, no comment,
+Student2, comment,
