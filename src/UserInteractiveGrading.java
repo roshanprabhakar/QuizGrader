@@ -11,7 +11,10 @@ public class UserInteractiveGrading {
 
     public static Logger logger = new Logger();
 
-    public static final int numPages = Integer.parseInt(new InputPane("How many pages in this assessment?").centered().getInput());
+//    public static final int numPages = Integer.parseInt(new InputPane("How many pages in this assessment?").centered().getInput());
+
+    public static final int numPages = parsePaneInput("How many pages in this assessment?", "smallLogo.png");
+
 
     public DataLoader dataLoader = new DataLoader(numPages);
 
@@ -120,7 +123,10 @@ public class UserInteractiveGrading {
             pageImage.resize(Constants.scaleHeight, Constants.scaleWidth);
             pageImage.display();
 
-            int numOfAnswerFields = Integer.parseInt(new InputPane("How many answer fields on this page?").getInput());
+//            int numOfAnswerFields = Integer.parseInt(new InputPane("How many answer fields on this page?").getInput());
+
+            int numOfAnswerFields = parsePaneInput("How many pages?", "smallLogo.png");
+
 
             for (int i = 0; i < numOfAnswerFields; i++) {
                 num++;
@@ -189,6 +195,17 @@ public class UserInteractiveGrading {
             }
         }
         return null;
+    }
+
+    private static Integer parsePaneInput(String inputDialogue, String filepath) {
+        return Integer.parseInt((String) JOptionPane.showInputDialog(
+                null,
+                inputDialogue,
+                "QUIZ GRADER",
+                JOptionPane.INFORMATION_MESSAGE,
+                new QGImage(filepath).resize(100,120, true).getIcon(),
+                null,
+                ""));
     }
 
     private void setup() {
