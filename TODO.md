@@ -16,6 +16,6 @@
 9. write code to even spaces between scores in report visualizer
 10. fix readme
 11. reposition each InputPane for how many AnswerFields
-12. put old code for inputpane from uig from previous commits in github 
+12. put old code for InputPane from UIG from previous commits in github 
 
 ## Suggestions (Open to the public)

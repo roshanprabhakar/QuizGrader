@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class InputPane {
 
@@ -16,13 +18,20 @@ public class InputPane {
     private boolean clicked;
     private String input;
 
+    private int labelWidth = 150;
+    private int labelHeight = 120;
+
     public InputPane(String messageDialogue) {
 
         clicked = false;
 
         frame = new JFrame("QUIZ GRADER");
-        frame.setSize(new Dimension(620, 230));
         frame.add(mainPanel);
+        frame.pack();
+
+        submit.setOpaque(true);
+        submit.setBorderPainted(false);
+        submit.setBackground(new Color(200, 197, 255));
 
         message.setText(messageDialogue);
 
@@ -33,15 +42,29 @@ public class InputPane {
                 clicked = true;
             }
         });
+        submit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                submit.setBackground(new Color(141, 140, 180));
+            }
+        });
+        submit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                submit.setBackground(new Color(200, 197, 255));
+            }
+        });
     }
 
-    public JFrame display() {
+    public void display() {
         frame.setVisible(true);
-        return frame;
+        pack();
     }
 
     public String getInput() {
-        JFrame frame = display();
+        display();
         while (!clicked) {
             System.out.print("");
         }
@@ -54,6 +77,25 @@ public class InputPane {
         return this;
     }
 
+    public void pack() {
+
+        int width = 0;
+        frame.pack();
+
+        width += labelWidth;
+        for (int i = 0; i < message.getText().split("").length; i++) {
+            width += message.getFont().getSize();
+        }
+
+        width *= (double) 3/4; // this ratio seems to work
+
+        setSize(width, frame.getHeight());
+    }
+
+    public void setSize(int width, int height) {
+        frame.setSize(new Dimension(width, height));
+    }
+
     public int getWidth() {
         return frame.getWidth();
     }
@@ -63,11 +105,12 @@ public class InputPane {
     }
 
     public InputPane centered() {
+        pack();
         setLocation((int) Constants.screenWidth / 2 - getWidth() / 2, (int) Constants.screenHeight / 2 - getHeight() / 2);
         return this;
     }
 
     private void createUIComponents() {
-        imageLabel = new JLabel(new QGImage("smallLogo.png").resize(200,250, true).getIcon());
+        imageLabel = new JLabel(new QGImage("smallLogo.png").resize(labelHeight, labelWidth, true).getIcon());
     }
 }
