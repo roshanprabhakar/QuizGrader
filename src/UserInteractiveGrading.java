@@ -124,7 +124,7 @@ public class UserInteractiveGrading {
             pageImage.resize(Constants.scaleHeight, Constants.scaleWidth);
             pageImage.display();
 
-            int numOfAnswerFields = Integer.parseInt(new InputPane("How many answer fields on this page?").centered().getInput());
+            int numOfAnswerFields = Integer.parseInt(new InputPane("How many answerfields on this page?").centered().getInput());
 
 //            int numOfAnswerFields = parsePaneInput("How many Answer Fields on this page", "smallLogo.png");
 
