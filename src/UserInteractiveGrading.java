@@ -47,7 +47,7 @@ public class UserInteractiveGrading {
 
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
 
-        setup();
+        this.setup();
 
         //positioning stuff
         int newX = 0;
