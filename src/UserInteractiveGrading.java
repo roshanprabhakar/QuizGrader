@@ -200,7 +200,7 @@ public class UserInteractiveGrading {
     private static Integer parsePaneInput(String inputDialog, String filepath) {
 
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(0,0,0));
+        panel.setBackground(new Color(0, 0, 0));
 
 //        new JOptionPane().showInputDialog(panel, "QUIZ GRADER", JOptionPane.INFORMATION_MESSAGE, new QGImage(filepath).resize(100,120, true).getIcon(), null, null);
 
@@ -216,7 +216,7 @@ public class UserInteractiveGrading {
                 inputDialog,
                 "QUIZ GRADER",
                 JOptionPane.INFORMATION_MESSAGE,
-                new QGImage(filepath).resize(100,120, true).getIcon(),
+                new QGImage(filepath).resize(100, 120, true).getIcon(),
                 null,
                 ""));
     }
