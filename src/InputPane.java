@@ -33,20 +33,27 @@ public class InputPane {
         submit.setBorderPainted(false);
         submit.setBackground(new Color(200, 197, 255));
 
+        submit.setBorder(BorderFactory.createLineBorder(new Color(200, 197, 255), 1));
+
+
         message.setText(messageDialogue);
+        inputTextField.setCaretPosition(0);
 
         submit.addActionListener(new ActionListener() {
             @Override
+            @SuppressWarnings("Dublicates")
             public void actionPerformed(ActionEvent e) {
                 input = inputTextField.getText();
                 clicked = true;
             }
         });
+
         submit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 submit.setBackground(new Color(141, 140, 180));
+                submit.setBorder(BorderFactory.createLineBorder(new Color(141, 140, 180), 1));
             }
         });
         submit.addMouseListener(new MouseAdapter() {
@@ -54,8 +61,20 @@ public class InputPane {
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
                 submit.setBackground(new Color(200, 197, 255));
+                submit.setBorder(BorderFactory.createLineBorder(new Color(200, 197, 255), 1));
+
             }
         });
+
+        Action action = new AbstractAction() {
+            @Override
+            @SuppressWarnings("Dublicates")
+            public void actionPerformed(ActionEvent e) {
+                input = inputTextField.getText();
+                clicked = true;
+            }
+        };
+        inputTextField.addActionListener(action);
     }
 
     public void display() {
@@ -87,7 +106,7 @@ public class InputPane {
             width += message.getFont().getSize();
         }
 
-        width *= (double) 3/4; // this ratio seems to work
+        width *= 2.7 / 4; // this ratio seems to work
 
         setSize(width, frame.getHeight());
     }
