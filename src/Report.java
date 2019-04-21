@@ -121,10 +121,13 @@ public class Report {
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 CSVgenerator generator = new CSVgenerator(numOfProblems);
+
                 generator.organizeBinaryData();
                 generator.organizeGradeData();
                 generator.writeComments();
+                generator.writeTags();
 
                 UserInteractiveGrading.logCount++;
             }

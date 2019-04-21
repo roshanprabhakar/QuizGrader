@@ -27,6 +27,7 @@ public class CSVgenerator {
             tags = new File(Constants.outCSV + File.separator + "tags.csv");
 
             if (!outDirectory.exists()) {outDirectory.mkdir();}
+
         } catch (Exception e) {
             UserInteractiveGrading.logger.log("Could not create CSV folder");
         }
@@ -178,9 +179,7 @@ public class CSVgenerator {
             StringBuilder title = new StringBuilder();
             StringBuilder body = new StringBuilder();
 
-            title.append("Student");
-
-            HashMap<String, HashMap<Integer, ArrayList<String>>> tags = UserInteractiveGrading.tags;
+            title.append("student, ");
 
             for (int i = 1; i <= numOfProblems; i++) {
                 title.append(i + ", ");
@@ -188,11 +187,10 @@ public class CSVgenerator {
 
             title.append("\n");
 
-            for (String student : tags.keySet()) {
+            for (String student : UserInteractiveGrading.tags.keySet()) {
                 body.append(student + ", ");
-                for (int i = 1; i < numOfProblems; i++) {
-                    body.append(tags.get(student).get(i));
-                    if (i == numOfProblems) body.append("\n");
+                for (int i = 1; i <= numOfProblems; i++) {
+                    body.append(UserInteractiveGrading.tags.get(student).get(i) + ", ");
                 }
                 body.append("\n");
             }
