@@ -2,12 +2,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CSVgenerator {
 
     private File name_to_grade;
     private File outBinary;
     private File comments;
+    private File tags;
 
     private int numOfProblems;
 
@@ -15,10 +18,13 @@ public class CSVgenerator {
 
         //Generate needed file container
         try {
+
             File outDirectory = new File(Constants.outCSV);
+
             name_to_grade = new File(Constants.outCSV + File.separator + "scores.csv");
             outBinary = new File(Constants.outCSV + File.separator + "BinaryScores.csv");
             comments = new File(Constants.outCSV + File.separator + "comments.csv");
+            tags = new File(Constants.outCSV + File.separator + "tags.csv");
 
             if (!outDirectory.exists()) {outDirectory.mkdir();}
         } catch (Exception e) {
@@ -141,12 +147,11 @@ public class CSVgenerator {
                     UserInteractiveGrading.logger.log("######################");
                     UserInteractiveGrading.logger.log(UserInteractiveGrading.comments.get(student));
                     if (UserInteractiveGrading.comments.get(student).get(i).equals("")) {
-                        body.append("no comment");
+                        body.append("no comment,");
                     } else {
                         body.append(UserInteractiveGrading.comments.get(student).get(i));
                     }
 
-                    if (i != UserInteractiveGrading.numOfProblems - 1) body.append(",");
                     UserInteractiveGrading.logger.log("title: " + title);
                     UserInteractiveGrading.logger.log("body: " + body);
                 }
@@ -159,6 +164,46 @@ public class CSVgenerator {
 
         } catch (IOException e) {
             UserInteractiveGrading.logger.log("Could not generate csv for comments");
+        }
+    }
+
+    public void writeTags() {
+
+        try {
+
+            if (!tags.exists()) tags.createNewFile();
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tags));
+
+            StringBuilder title = new StringBuilder();
+            StringBuilder body = new StringBuilder();
+
+            title.append("Student");
+
+            HashMap<String, HashMap<Integer, ArrayList<String>>> tags = UserInteractiveGrading.tags;
+
+            for (int i = 1; i <= numOfProblems; i++) {
+                title.append(i + ", ");
+            }
+
+            title.append("\n");
+
+            for (String student : tags.keySet()) {
+                body.append(student + ", ");
+                for (int i = 1; i < numOfProblems; i++) {
+                    body.append(tags.get(student).get(i));
+                    if (i == numOfProblems) body.append("\n");
+                }
+                body.append("\n");
+            }
+
+            writer.write(title.toString());
+            writer.write(body.toString());
+
+            writer.close();
+
+        } catch (IOException e) {
+            UserInteractiveGrading.logger.log("Could not generate csv for tags");
         }
     }
 }

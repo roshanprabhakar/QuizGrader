@@ -238,7 +238,7 @@ public class UserInteractiveGrading {
     public static void updateCanvi() {
         for (CanvasContainer container : canvi) {
             for (String label : menuLabels) {
-                if (!container.contains(label)) {
+                if (!container.contains(label) && !label.contains("<o>")) {
                     container.addLabel(label);
                 }
             }
