@@ -190,6 +190,7 @@ public class CSVgenerator {
             for (String student : UserInteractiveGrading.tags.keySet()) {
                 body.append(student + ", ");
                 for (int i = 1; i <= numOfProblems; i++) {
+                    UserInteractiveGrading.tags.get(student).get(i).remove("<o>");
                     body.append(UserInteractiveGrading.tags.get(student).get(i) + ", ");
                 }
                 body.append("\n");
