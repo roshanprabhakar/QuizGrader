@@ -18,9 +18,6 @@ public class InputPane {
     private boolean clicked;
     private String input;
 
-    private int labelWidth = 150;
-    private int labelHeight = 120;
-
     public InputPane(String messageDialogue) {
 
         clicked = false;
@@ -31,13 +28,13 @@ public class InputPane {
 
         submit.setOpaque(true);
         submit.setBorderPainted(false);
-        submit.setBackground(new Color(200, 197, 255));
+        submit.setBackground(new Color(200, 197, 255, 255));
 
         submit.setBorder(BorderFactory.createLineBorder(new Color(200, 197, 255), 1));
 
-
         message.setText(messageDialogue);
-        inputTextField.setCaretPosition(0);
+        message.setBorder(null);
+
 
         submit.addActionListener(new ActionListener() {
             @Override
@@ -52,8 +49,14 @@ public class InputPane {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                submit.setBackground(new Color(141, 140, 180));
-                submit.setBorder(BorderFactory.createLineBorder(new Color(141, 140, 180), 1));
+
+                for (int i = 0; i < 30; i++) {
+                    submit.setBackground(new Color(200, 197, 255,255 - Constants.increment * i));
+                    submit.setBorder(BorderFactory.createLineBorder(new Color(200, 197, 255 - i * Constants.increment), 1));
+                    try {Thread.sleep(200);} catch (InterruptedException exception) {}
+                }
+
+                int alpha = 0;
             }
         });
         submit.addMouseListener(new MouseAdapter() {
@@ -80,6 +83,7 @@ public class InputPane {
     public void display() {
         frame.setVisible(true);
         pack();
+        inputTextField.setCaretPosition(0);
     }
 
     public String getInput() {
@@ -101,7 +105,7 @@ public class InputPane {
         int width = 0;
         frame.pack();
 
-        width += labelWidth;
+        width += Constants.labelWidth;
         for (int i = 0; i < message.getText().split("").length; i++) {
             width += message.getFont().getSize();
         }
@@ -130,6 +134,6 @@ public class InputPane {
     }
 
     private void createUIComponents() {
-        imageLabel = new JLabel(new QGImage("smallLogo.png").resize(labelHeight, labelWidth, true).getIcon());
+        imageLabel = new JLabel(new QGImage("smallLogo.png").resize(Constants.labelHeight, Constants.labelWidth, true).getIcon());
     }
 }

@@ -19,6 +19,10 @@ public class Constants {
 
     public static final int columnWidth = 15;
 
+    public static final int labelWidth = 150;
+    public static final int labelHeight = 120;
+
+    public static final int increment = 2;
 
     public static char[] grades = new char[] {'F','F','F','F','F','F','D','C','B','A'};
     public static String[] simpGrades = new String[] {"F","D","C","B","A"};

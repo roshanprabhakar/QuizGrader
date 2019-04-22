@@ -67,13 +67,17 @@ public class Canvas {
                         UserInteractiveGrading.menuLabels.add(label.toLowerCase());
                 }
 
+                //deal with
                 scoreObject = new Score(Double.parseDouble(score.getText().split("/")[0]), Double.parseDouble(score.getText().split("/")[1]));
+
+                UserInteractiveGrading.scores.get(name).put(problemNum, scoreObject);
+                UserInteractiveGrading.students.get(name).addScore(problemNum, scoreObject);
+
                 frame.setVisible(false);
 
                 for (String tag : tags) {
                     UserInteractiveGrading.tags.get(name).get(problemNum).add(tag);
                 }
-                UserInteractiveGrading.scores.get(name).put(problemNum, scoreObject);
 
                 UserInteractiveGrading.updateCanvi();
                 UserInteractiveGrading.updateScoresForProblem(problemNum, score.getText().split("/")[1]);
@@ -83,7 +87,6 @@ public class Canvas {
                 for (String tag : tags) {
                     UserInteractiveGrading.students.get(name).addTag(problemNum, tag);    
                 }
-                UserInteractiveGrading.students.get(name).addScore(problemNum, scoreObject);
 
                 if (answeredCorrectly) {
                     UserInteractiveGrading.conceptUnderstood.get(name).put(problemNum, 1);
