@@ -35,7 +35,6 @@ public class InputPane {
         message.setText(messageDialogue);
         message.setBorder(null);
 
-
         submit.addActionListener(new ActionListener() {
             @Override
             @SuppressWarnings("Dublicates")
@@ -50,19 +49,16 @@ public class InputPane {
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
 
-                for (int i = 0; i < 30; i++) {
-                    submit.setBackground(new Color(200, 197, 255,255 - Constants.increment * i));
-                    submit.setBorder(BorderFactory.createLineBorder(new Color(200, 197, 255 - i * Constants.increment), 1));
-                    try {Thread.sleep(200);} catch (InterruptedException exception) {}
-                }
+                submit.setBackground(new Color(184, 149, 198));
+                submit.setBorder(BorderFactory.createLineBorder(new Color(184, 149, 198), 1));
 
-                int alpha = 0;
             }
         });
         submit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
+
                 submit.setBackground(new Color(200, 197, 255));
                 submit.setBorder(BorderFactory.createLineBorder(new Color(200, 197, 255), 1));
 

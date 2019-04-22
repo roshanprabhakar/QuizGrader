@@ -77,7 +77,7 @@ public class UserInteractiveGrading {
                 numberToCanvas.get(ans.getProblemNum()).add(container);
 
                 //position stuff
-                if (newX + container.getWidth() > Constants.screenWidth) {
+                if (newX + container.getWidth() + 20 > Constants.screenWidth) {
                     newX = 0;
                     newLine = true;
                 }
@@ -88,7 +88,7 @@ public class UserInteractiveGrading {
                 }
 
                 container.setLocation(newX, newY);
-                newX += container.getWidth();
+                newX += container.getWidth() + 20;
 
                 container.display();
             }
