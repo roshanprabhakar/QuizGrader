@@ -39,7 +39,7 @@ public class UserInteractiveGrading {
     public void run() throws InterruptedException, IOException {
 
         try {
-            dataLoader.loadData("src" + File.separator + "RES");
+            dataLoader.sortData("src" + File.separator + "RES");
         } catch (NullPointerException exception) {
         }
 

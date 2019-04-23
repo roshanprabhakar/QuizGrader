@@ -1,6 +1,16 @@
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import processing.core.PConstants;
+import processing.core.PImage;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataLoader {
     private int pages;
@@ -10,7 +20,54 @@ public class DataLoader {
         this.pages = pages;
     }
 
-    public boolean loadData(String directory) {
+    public void loadData(String multipagePDF) {
+
+        ArrayList<BufferedImage> images = new ArrayList<>();
+
+        PDDocument pdf = null;
+
+        try {
+            pdf = PDDocument.load(new File(multipagePDF));
+        } catch (IOException e) {
+            UserInteractiveGrading.logger.log("Couldn't load pdf");
+            UserInteractiveGrading.logger.log("DID YOU ADD THE ASSETS FOLDER TO YOUR CLASS PATH IN ECLIPSE?");
+            UserInteractiveGrading.logger.log(e.getStackTrace());
+        }
+
+        List<PDPage> pages = pdf.getDocumentCatalog().getAllPages();
+
+        for (PDPage page : pages) {
+            try {
+                images.add(page.convertToImage());
+
+            } catch (IOException e) {
+                UserInteractiveGrading.logger.log("problem converting to image");
+                UserInteractiveGrading.logger.log(e.getStackTrace());
+            }
+        }
+
+        try {
+            pdf.close();
+        } catch (IOException e) {
+            UserInteractiveGrading.logger.log("could not close PDF parser!");
+        }
+
+        File res = new File("src" + File.separator + "RES");
+        if (!res.exists()) {res.mkdir();}
+
+        //write images to files inside res
+        for (int i = 0; i < images.size(); i++) {
+            try {
+                File newPage = new File("page" + i + ".png");
+                ImageIO.write(images.get(i), "png", newPage);
+            } catch (IOException e) {
+                UserInteractiveGrading.logger.log("page" + i + " unable to load");
+                System.exit(0);
+            }
+        }
+    }
+
+    public boolean sortData(String directory) {
 
         // renaming the file and moving it to a new location
         /*
@@ -68,6 +125,14 @@ public class DataLoader {
             files[i] = files[files.length - i - 1];
             files[files.length - i - 1] = temp;
         }
+    }
+
+    private ArrayList<BufferedImage> convertToBufferedImageList(ArrayList<PImage> startImages) {
+        ArrayList<BufferedImage> out = new ArrayList<>();
+        for (PImage image : startImages) {
+            out.add((BufferedImage) image.getImage());
+        }
+        return out;
     }
 
 }
