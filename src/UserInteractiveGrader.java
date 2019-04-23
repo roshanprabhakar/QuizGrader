@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserInteractiveGrading {
+public class UserInteractiveGrader {
 
     public static Logger logger = new Logger();
 
