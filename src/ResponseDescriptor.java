@@ -38,9 +38,9 @@ public class ResponseDescriptor {
             public void actionPerformed(ActionEvent e) {
                 try {
                     frame.setVisible(false);
-                    UserInteractiveGrading.comments.get(student).put(problemNum, comment.getDocument().getText(0, comment.getDocument().getLength()));
+                    UserInteractiveGrader.comments.get(student).put(problemNum, comment.getDocument().getText(0, comment.getDocument().getLength()));
                 } catch (Exception exception) {
-                    UserInteractiveGrading.logger.log("Could not record comment!");
+                    UserInteractiveGrader.logger.log("Could not record comment!");
                 }
             }
         });
