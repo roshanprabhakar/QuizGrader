@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataLoader {
+
     private int pages;
     private int numStudents;
 
@@ -67,10 +68,13 @@ public class DataLoader {
             }
         }
 
-        try {
-            ImageIO.write(images.get(images.size() - 1), "png", new File(Constants.res + "BlankTest.png"));
-        } catch (IOException e) {
-            UserInteractiveGrading.logger.log("Could not load the setup test");
+        for (int i = 0; i < this.pages; i++) {
+            try {
+                ImageIO.write(images.get(i), "png", new File(Constants.res + "aaBlankTestPage" + i + ".png"));
+            } catch (IOException e) {
+//                UserInteractiveGrading.logger.log("Could not load startup page: (first " + this.pages + " pages)");\
+                e.printStackTrace();
+            }
         }
     }
 

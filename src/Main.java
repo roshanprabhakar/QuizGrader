@@ -1,9 +1,11 @@
+import java.io.File;
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 //        runUserInteractiveGradingSystem();
-        new DataLoader(1).loadData(Constants.pdfIn + "QGTestData.pdf");
+//        new DataLoader(2).loadData(Constants.pdfIn + "QGTestData.pdf");
+        new DataLoader(2).sortData(Constants.res);
     }
 
     /**
