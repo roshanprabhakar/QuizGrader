@@ -2,8 +2,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CSVgenerator {
 
@@ -29,7 +27,7 @@ public class CSVgenerator {
             if (!outDirectory.exists()) {outDirectory.mkdir();}
 
         } catch (Exception e) {
-            UserInteractiveGrading.logger.log("Could not create CSV folder");
+            UserInteractiveGrader.logger.log("Could not create CSV folder");
         }
 
         this.numOfProblems = numOfProblems;
@@ -47,22 +45,22 @@ public class CSVgenerator {
 
             title.append("name, ");
 
-            for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
+            for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
                 title.append(i + " (%), ");
             }
 
-            for (String student : UserInteractiveGrading.scores.keySet()) {
+            for (String student : UserInteractiveGrader.scores.keySet()) {
                 builder.append(student + ", ");
 
 
-                UserInteractiveGrading.logger.log("scores.get(student): ");
-                UserInteractiveGrading.logger.log(UserInteractiveGrading.scores.get(student));
-                for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
-                    builder.append(UserInteractiveGrading.scores.get(student).get(i).getPercent() + ", ");
+                UserInteractiveGrader.logger.log("scores.get(student): ");
+                UserInteractiveGrader.logger.log(UserInteractiveGrader.scores.get(student));
+                for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
+                    builder.append(UserInteractiveGrader.scores.get(student).get(i).getPercent() + ", ");
                 }
 
-                builder.append(UserInteractiveGrading.totals.get(student).getPercent() + ", ");
-                builder.append(UserInteractiveGrading.grades.get(student));
+                builder.append(UserInteractiveGrader.totals.get(student).getPercent() + ", ");
+                builder.append(UserInteractiveGrader.grades.get(student));
                 builder.append("\n");
             }
 
@@ -75,7 +73,7 @@ public class CSVgenerator {
             out.close();
 
         } catch (Exception e) {
-            UserInteractiveGrading.logger.log("Could not populate scores.csv");
+            UserInteractiveGrader.logger.log("Could not populate scores.csv");
         }
     }
 
@@ -92,16 +90,16 @@ public class CSVgenerator {
             //body of file
             StringBuilder body = new StringBuilder();
 
-            UserInteractiveGrading.logger.log("answered correctly: " + UserInteractiveGrading.conceptUnderstood);
+            UserInteractiveGrader.logger.log("answered correctly: " + UserInteractiveGrader.conceptUnderstood);
 
             title.append("name, ");
-            for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
+            for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
                 title.append(i + ", ");
             }
-            for (String student : UserInteractiveGrading.conceptUnderstood.keySet()) {
+            for (String student : UserInteractiveGrader.conceptUnderstood.keySet()) {
                 body.append(student + ", ");
-                for (int i = 1; i <= UserInteractiveGrading.numOfProblems; i++) {
-                    body.append(UserInteractiveGrading.conceptUnderstood.get(student).get(i) + ", ");
+                for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
+                    body.append(UserInteractiveGrader.conceptUnderstood.get(student).get(i) + ", ");
                 }
                 body.append("\n");
             }
@@ -111,14 +109,14 @@ public class CSVgenerator {
             out.close();
 
         } catch (IOException exception) {
-            UserInteractiveGrading.logger.log("could not generate or populate binary reports file");
+            UserInteractiveGrader.logger.log("could not generate or populate binary reports file");
         }
 
     }
 
     public void writeComments() {
-        UserInteractiveGrading.logger.log("------------- Writing Comments -------------");
-        UserInteractiveGrading.logger.log(UserInteractiveGrading.comments);
+        UserInteractiveGrader.logger.log("------------- Writing Comments -------------");
+        UserInteractiveGrader.logger.log(UserInteractiveGrader.comments);
 
         try {
 
@@ -137,24 +135,24 @@ public class CSVgenerator {
                 title.append(i + ", ");
             }
 
-            for (String student : UserInteractiveGrading.comments.keySet()) {
+            for (String student : UserInteractiveGrader.comments.keySet()) {
 
-                UserInteractiveGrading.logger.log("student: " + student);
+                UserInteractiveGrader.logger.log("student: " + student);
                 body.append(student + ", ");
 
                 for (int i = 1; i <= numOfProblems; i++) {
-                    UserInteractiveGrading.logger.log("number: " + i);
+                    UserInteractiveGrader.logger.log("number: " + i);
 
-                    UserInteractiveGrading.logger.log("######################");
-                    UserInteractiveGrading.logger.log(UserInteractiveGrading.comments.get(student));
-                    if (UserInteractiveGrading.comments.get(student).get(i).equals("")) {
+                    UserInteractiveGrader.logger.log("######################");
+                    UserInteractiveGrader.logger.log(UserInteractiveGrader.comments.get(student));
+                    if (UserInteractiveGrader.comments.get(student).get(i).equals("")) {
                         body.append("no comment,");
                     } else {
-                        body.append(UserInteractiveGrading.comments.get(student).get(i));
+                        body.append(UserInteractiveGrader.comments.get(student).get(i));
                     }
 
-                    UserInteractiveGrading.logger.log("title: " + title);
-                    UserInteractiveGrading.logger.log("body: " + body);
+                    UserInteractiveGrader.logger.log("title: " + title);
+                    UserInteractiveGrader.logger.log("body: " + body);
                 }
                 body.append("\n");
             }
@@ -164,7 +162,7 @@ public class CSVgenerator {
             writer.close();
 
         } catch (IOException e) {
-            UserInteractiveGrading.logger.log("Could not generate csv for comments");
+            UserInteractiveGrader.logger.log("Could not generate csv for comments");
         }
     }
 
@@ -187,11 +185,11 @@ public class CSVgenerator {
 
             title.append("\n");
 
-            for (String student : UserInteractiveGrading.tags.keySet()) {
+            for (String student : UserInteractiveGrader.tags.keySet()) {
                 body.append(student + ", ");
                 for (int i = 1; i <= numOfProblems; i++) {
-                    UserInteractiveGrading.tags.get(student).get(i).remove("<o>");
-                    body.append(UserInteractiveGrading.tags.get(student).get(i) + ", ");
+                    UserInteractiveGrader.tags.get(student).get(i).remove("<o>");
+                    body.append(UserInteractiveGrader.tags.get(student).get(i) + ", ");
                 }
                 body.append("\n");
             }
@@ -202,7 +200,7 @@ public class CSVgenerator {
             writer.close();
 
         } catch (IOException e) {
-            UserInteractiveGrading.logger.log("Could not generate csv for tags");
+            UserInteractiveGrader.logger.log("Could not generate csv for tags");
         }
     }
 }
