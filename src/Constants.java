@@ -11,6 +11,7 @@ public class Constants {
     public static final String StudentDirectoryPath = StudentResponsePath + separator + "Student";
     public static final String outCSV = "CSVout";
     public static final String pdfIn = "PDFInput" + separator;
+    public static final String res = "src" + File.separator + "RES" + File.separator;
 
     public static final int scaleWidth = 500; //scale all images to this width
     public static final int scaleHeight = 750; //scale all images to this height

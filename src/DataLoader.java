@@ -58,13 +58,19 @@ public class DataLoader {
         //write images to files inside res
         for (int i = 0; i < images.size(); i++) {
             try {
-                File newPage = new File("src" + File.separator + "RES" + File.separator + "page" + i + ".png");
+                File newPage = new File(Constants.res + "page" + i + ".png");
                 newPage.createNewFile();
                 ImageIO.write(images.get(i), "png", newPage);
             } catch (IOException e) {
                 UserInteractiveGrading.logger.log("page" + i + " unable to load");
                 System.exit(0);
             }
+        }
+
+        try {
+            ImageIO.write(images.get(images.size() - 1), "png", new File(Constants.res + "BlankTest.png"));
+        } catch (IOException e) {
+            UserInteractiveGrading.logger.log("Could not load the setup test");
         }
     }
 
