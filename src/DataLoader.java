@@ -1,6 +1,4 @@
-import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 
 public class DataLoader {
     private int pages;
@@ -52,7 +50,7 @@ public class DataLoader {
                     pageNumber++;
                 }
                 newDirectory = new File(Constants.StudentDirectoryPath + Integer.toString(pages - i + 1));
-                UserInteractiveGrading.logger.log(pages - i + 1);
+                UserInteractiveGrader.logger.log(pages - i + 1);
             }
 
             new File("src" + File.separator + "RES").delete();
