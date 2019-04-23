@@ -62,9 +62,9 @@ public class Report {
             }
 
             Score score = new Score(suggestedEarned, suggestedTotal);
-            UserInteractiveGrading.grades.put(student, Constants.findGrade(score));
-            UserInteractiveGrading.percentages.put(student, score.getPercent());
-            UserInteractiveGrading.totals.put(student, new Score(suggestedEarned, suggestedTotal));
+            UserInteractiveGrader.grades.put(student, Constants.findGrade(score));
+            UserInteractiveGrader.percentages.put(student, score.getPercent());
+            UserInteractiveGrader.totals.put(student, new Score(suggestedEarned, suggestedTotal));
 
             writeable += ("    total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>");
             writeable += "</p>";
@@ -129,7 +129,7 @@ public class Report {
                 generator.writeComments();
                 generator.writeTags();
 
-                UserInteractiveGrading.logCount++;
+                UserInteractiveGrader.logCount++;
             }
         });
     }
@@ -155,12 +155,12 @@ public class Report {
 
     public String getMostCommonGrade() {
         int[] grades = new int[5];
-        for (String student : UserInteractiveGrading.grades.keySet()) {
+        for (String student : UserInteractiveGrader.grades.keySet()) {
 
-            UserInteractiveGrading.logger.log(Constants.indexOfSimpGrades(UserInteractiveGrading.grades.get(student)));
-            UserInteractiveGrading.logger.log(UserInteractiveGrading.grades.get(student));
+            UserInteractiveGrader.logger.log(Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student)));
+            UserInteractiveGrader.logger.log(UserInteractiveGrader.grades.get(student));
 
-            grades[Constants.indexOfSimpGrades(UserInteractiveGrading.grades.get(student))]++;
+            grades[Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student))]++;
         }
         return Constants.simpGrades[Constants.mode(grades)];
     }
@@ -168,11 +168,11 @@ public class Report {
     public double getAveragePercent() {
 
         double totalPercent = 0;
-        int numStudents = UserInteractiveGrading.students.size();
-        for (String student : UserInteractiveGrading.students.keySet()) {
-            totalPercent += UserInteractiveGrading.students.get(student).getTotal().getPercent();
+        int numStudents = UserInteractiveGrader.students.size();
+        for (String student : UserInteractiveGrader.students.keySet()) {
+            totalPercent += UserInteractiveGrader.students.get(student).getTotal().getPercent();
 
-            UserInteractiveGrading.logger.log(totalPercent);
+            UserInteractiveGrader.logger.log(totalPercent);
         }
 
         return ((int) (totalPercent / numStudents) * 100) / 100;
@@ -181,7 +181,7 @@ public class Report {
     public String getLowestScorers(int n) {
 
         ArrayList<String> lowest = new ArrayList<>();
-        HashMap<String, Double> copy = new HashMap<>(UserInteractiveGrading.percentages);
+        HashMap<String, Double> copy = new HashMap<>(UserInteractiveGrader.percentages);
         for (int i = 0; i < n; i++) {
             lowest.add(lowestScore(copy));
             copy.remove(lowestScore(copy));
@@ -201,14 +201,14 @@ public class Report {
 
     private String lowestScore(HashMap<String, Double> percentages) {
 
-        UserInteractiveGrading.logger.log("-------- lowest scores ----------");
-        UserInteractiveGrading.logger.log(percentages);
+        UserInteractiveGrader.logger.log("-------- lowest scores ----------");
+        UserInteractiveGrader.logger.log(percentages);
 
         String lowestName = "empty HashMap";
         double lowestPercent = 101;
         for (String student : percentages.keySet()) {
 
-            UserInteractiveGrading.logger.log(student);
+            UserInteractiveGrader.logger.log(student);
 
             if (percentages.get(student) < lowestPercent) {
                 lowestName = student;
@@ -221,7 +221,7 @@ public class Report {
     public String getHighestScoreres(int n) {
 
         ArrayList<String> highest = new ArrayList<>();
-        HashMap<String, Double> copy = new HashMap<>(UserInteractiveGrading.percentages);
+        HashMap<String, Double> copy = new HashMap<>(UserInteractiveGrader.percentages);
         for (int i = 0; i < n; i++) {
             highest.add(highestScore(copy));
             copy.remove(highestScore(copy));
@@ -254,7 +254,7 @@ public class Report {
     public String getOrderedTags(int n) {
 
         StringBuilder out = new StringBuilder();
-        ArrayList<String> tagsCopy = new ArrayList<>(UserInteractiveGrading.menuLabels);
+        ArrayList<String> tagsCopy = new ArrayList<>(UserInteractiveGrader.menuLabels);
 
         for (int i = 0; i < n; i++) {
             if (i < n - 1) {
