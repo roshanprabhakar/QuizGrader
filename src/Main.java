@@ -3,7 +3,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 //        runUserInteractiveGradingSystem();
-        new DataLoader(1).loadData(Constants.pdfIn);
+        new DataLoader(1).loadData(Constants.pdfIn + "QGTestData.pdf");
     }
 
     /**

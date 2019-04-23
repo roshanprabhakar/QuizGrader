@@ -58,7 +58,8 @@ public class DataLoader {
         //write images to files inside res
         for (int i = 0; i < images.size(); i++) {
             try {
-                File newPage = new File("page" + i + ".png");
+                File newPage = new File("src" + File.separator + "RES" + File.separator + "page" + i + ".png");
+                newPage.createNewFile();
                 ImageIO.write(images.get(i), "png", newPage);
             } catch (IOException e) {
                 UserInteractiveGrading.logger.log("page" + i + " unable to load");
