@@ -3,9 +3,9 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-//        runUserInteractiveGradingSystem();
+        runUserInteractiveGradingSystem();
 //        new DataLoader(2).loadData(Constants.pdfIn + "QGTestData.pdf");
-        new DataLoader(2).sortData(Constants.res);
+//        new DataLoader(2).sortData(Constants.res);
     }
 
     /**
@@ -24,10 +24,10 @@ public class Main {
 
     public static void runUserInteractiveGradingSystem() throws InterruptedException {
         try {
-            UserInteractiveGrading userInteractiveGrading = new UserInteractiveGrading();
-            userInteractiveGrading.run();
+            UserInteractiveGrader userInteractiveGrader = new UserInteractiveGrader();
+            userInteractiveGrader.run();
         } catch (IOException e) {
-            UserInteractiveGrading.logger.log("Unhandled IOException while initializing the grader!");
+            UserInteractiveGrader.logger.log("Unhandled IOException while initializing the grader!");
         }
     }
 }

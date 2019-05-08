@@ -63,52 +63,52 @@ public class Canvas {
 
                 for (String label : customTagsCollected) {
                     tags.add(label);
-                    if (!UserInteractiveGrading.menuLabels.contains(label.toLowerCase()))
-                        UserInteractiveGrading.menuLabels.add(label.toLowerCase());
+                    if (!UserInteractiveGrader.menuLabels.contains(label.toLowerCase()))
+                        UserInteractiveGrader.menuLabels.add(label.toLowerCase());
                 }
 
                 //deal with
                 scoreObject = new Score(Double.parseDouble(score.getText().split("/")[0]), Double.parseDouble(score.getText().split("/")[1]));
 
-                UserInteractiveGrading.scores.get(name).put(problemNum, scoreObject);
-                UserInteractiveGrading.students.get(name).addScore(problemNum, scoreObject);
+                UserInteractiveGrader.scores.get(name).put(problemNum, scoreObject);
+                UserInteractiveGrader.students.get(name).addScore(problemNum, scoreObject);
 
                 frame.setVisible(false);
 
                 for (String tag : tags) {
-                    UserInteractiveGrading.tags.get(name).get(problemNum).add(tag);
+                    UserInteractiveGrader.tags.get(name).get(problemNum).add(tag);
                 }
 
-                UserInteractiveGrading.updateCanvi();
-                UserInteractiveGrading.updateScoresForProblem(problemNum, score.getText().split("/")[1]);
+                UserInteractiveGrader.updateCanvi();
+                UserInteractiveGrader.updateScoresForProblem(problemNum, score.getText().split("/")[1]);
 
-                UserInteractiveGrading.submittedProblems++;
+                UserInteractiveGrader.submittedProblems++;
                 
                 for (String tag : tags) {
-                    UserInteractiveGrading.students.get(name).addTag(problemNum, tag);    
+                    UserInteractiveGrader.students.get(name).addTag(problemNum, tag);
                 }
 
                 if (answeredCorrectly) {
-                    UserInteractiveGrading.conceptUnderstood.get(name).put(problemNum, 1);
+                    UserInteractiveGrader.conceptUnderstood.get(name).put(problemNum, 1);
                 }  else {
-                    UserInteractiveGrading.conceptUnderstood.get(name).put(problemNum, 0);
+                    UserInteractiveGrader.conceptUnderstood.get(name).put(problemNum, 0);
                 }
 
                 if (!commentWritten) {
-                    UserInteractiveGrading.comments.get(name).put(problemNum, "");
+                    UserInteractiveGrader.comments.get(name).put(problemNum, "");
                 }
 
-                UserInteractiveGrading.logger.log("Comment written: ");
-                UserInteractiveGrading.logger.log(UserInteractiveGrading.comments.get(name).get(problemNum));
-                UserInteractiveGrading.logger.log("tags (specified): ");
-                UserInteractiveGrading.logger.log(UserInteractiveGrading.tags);
-                UserInteractiveGrading.logger.log("scores: ");
-                UserInteractiveGrading.logger.log(UserInteractiveGrading.scores);
-                UserInteractiveGrading.logger.log("all tags: ");
-                UserInteractiveGrading.logger.log(UserInteractiveGrading.menuLabels);
-                UserInteractiveGrading.logger.log("number of submitted problems: ");
-                UserInteractiveGrading.logger.log(UserInteractiveGrading.submittedProblems);
-                UserInteractiveGrading.logger.log(UserInteractiveGrading.conceptUnderstood);
+                UserInteractiveGrader.logger.log("Comment written: ");
+                UserInteractiveGrader.logger.log(UserInteractiveGrader.comments.get(name).get(problemNum));
+                UserInteractiveGrader.logger.log("tags (specified): ");
+                UserInteractiveGrader.logger.log(UserInteractiveGrader.tags);
+                UserInteractiveGrader.logger.log("scores: ");
+                UserInteractiveGrader.logger.log(UserInteractiveGrader.scores);
+                UserInteractiveGrader.logger.log("all tags: ");
+                UserInteractiveGrader.logger.log(UserInteractiveGrader.menuLabels);
+                UserInteractiveGrader.logger.log("number of submitted problems: ");
+                UserInteractiveGrader.logger.log(UserInteractiveGrader.submittedProblems);
+                UserInteractiveGrader.logger.log(UserInteractiveGrader.conceptUnderstood);
             }
         });
 

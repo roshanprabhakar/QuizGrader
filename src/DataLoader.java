@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
 
 public class DataLoader {
 
@@ -28,11 +29,11 @@ public class DataLoader {
         PDDocument pdf = null;
 
         try {
-            pdf = PDDocument.load(new File(multipagePDF));
+            pdf = PDDocument.load(new File(Constants.pdfIn + multipagePDF));
         } catch (IOException e) {
-            UserInteractiveGrading.logger.log("Couldn't load pdf");
-            UserInteractiveGrading.logger.log("DID YOU ADD THE ASSETS FOLDER TO YOUR CLASS PATH IN ECLIPSE?");
-            UserInteractiveGrading.logger.log(e.getStackTrace());
+            UserInteractiveGrader.logger.log("Couldn't load pdf");
+            UserInteractiveGrader.logger.log("DID YOU ADD THE ASSETS FOLDER TO YOUR CLASS PATH IN ECLIPSE?");
+            UserInteractiveGrader.logger.log(e.getStackTrace());
         }
 
         List<PDPage> pages = pdf.getDocumentCatalog().getAllPages();
@@ -42,15 +43,15 @@ public class DataLoader {
                 images.add(page.convertToImage());
 
             } catch (IOException e) {
-                UserInteractiveGrading.logger.log("problem converting to image");
-                UserInteractiveGrading.logger.log(e.getStackTrace());
+                UserInteractiveGrader.logger.log("problem converting to image");
+                UserInteractiveGrader.logger.log(e.getStackTrace());
             }
         }
 
         try {
             pdf.close();
         } catch (IOException e) {
-            UserInteractiveGrading.logger.log("could not close PDF parser!");
+            UserInteractiveGrader.logger.log("could not close PDF parser!");
         }
 
         File res = new File("src" + File.separator + "RES");
@@ -63,7 +64,7 @@ public class DataLoader {
                 newPage.createNewFile();
                 ImageIO.write(images.get(i), "png", newPage);
             } catch (IOException e) {
-                UserInteractiveGrading.logger.log("page" + i + " unable to load");
+                UserInteractiveGrader.logger.log("page" + i + " unable to load");
                 System.exit(0);
             }
         }
@@ -72,7 +73,7 @@ public class DataLoader {
             try {
                 ImageIO.write(images.get(i), "png", new File(Constants.res + "aaBlankTestPage" + i + ".png"));
             } catch (IOException e) {
-//                UserInteractiveGrading.logger.log("Could not load startup page: (first " + this.pages + " pages)");\
+//                UserInteractiveGrading.logger.log("Could not load startup page: (first " + this.pages + " pages)");
                 e.printStackTrace();
             }
         }
@@ -120,7 +121,7 @@ public class DataLoader {
                     pageNumber++;
                 }
                 newDirectory = new File(Constants.StudentDirectoryPath + Integer.toString(pages - i + 1));
-                UserInteractiveGrading.logger.log(pages - i + 1);
+                UserInteractiveGrader.logger.log(pages - i + 1);
             }
 
             new File("src" + File.separator + "RES").delete();

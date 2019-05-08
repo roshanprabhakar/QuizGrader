@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserInteractiveGrading {
+public class UserInteractiveGrader {
 
     public static Logger logger = new Logger();
 
@@ -17,9 +17,9 @@ public class UserInteractiveGrading {
 
     public static int submittedProblems = 0;
     public static int logCount = 0;
-    private int numOfStudents;
 
-    private HashMap<String, ArrayList<AnswerField>> ANSWER_FIELDS;
+    public int numOfStudents;
+    public static HashMap<String, ArrayList<AnswerField>> ANSWER_FIELDS;
     public static int numOfProblems;
 
     public static ArrayList<String> menuLabels = new ArrayList<>();
@@ -37,7 +37,7 @@ public class UserInteractiveGrading {
     public static HashMap<String, HashMap<Integer, String>> comments = new HashMap<>();
 
     public void run() throws InterruptedException, IOException {
-
+        
         try {
             dataLoader.sortData("src" + File.separator + "RES");
         } catch (NullPointerException exception) {
