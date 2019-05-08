@@ -37,7 +37,9 @@ public class UserInteractiveGrader {
     public static HashMap<String, HashMap<Integer, String>> comments = new HashMap<>();
 
     public void run() throws InterruptedException, IOException {
-        
+
+        dataLoader.loadData("QGTestData.pdf");
+
         try {
             dataLoader.sortData("src" + File.separator + "RES");
         } catch (NullPointerException exception) {
