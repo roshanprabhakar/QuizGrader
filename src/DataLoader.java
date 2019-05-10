@@ -118,13 +118,17 @@ public class DataLoader {
         }
 
         //moving blank test pages
-        File blankTestDir = new File(Constants.imagePath + "BlankTestPages");
+        File blankTestDir = new File(Constants.imagePath + "BlankTestPages" + Constants.separator);
         if (!blankTestDir.exists()) blankTestDir.mkdir();
 
-        for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
+        System.out.println("-------------------------------------");
+
+        for (int i = 1; i <= pages; i++) {
 
             File origin = new File(Constants.res + "BlankTestPage" + i + ".png");
-            File goal = new File(Constants.blankTest + "page" + i);
+            System.out.println("origin: " + origin.getAbsolutePath());
+            File goal = new File(Constants.blankTest + "page" + i + ".png");
+            System.out.println("goal: " + goal.getAbsolutePath());
 
             move(origin, goal);
         }

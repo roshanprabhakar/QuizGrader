@@ -115,14 +115,14 @@ public class UserInteractiveGrader {
     private HashMap<String, ArrayList<AnswerField>> loadAllAnswerFields() throws InterruptedException, IOException {
 
         HashMap<String, ArrayList<AnswerField>> answers = new HashMap<>();
-        File[] blankTest = new File(Constants.imagePath + "BlankTest" + Constants.separator).listFiles();
+        File[] blankTest = new File(Constants.blankTest).listFiles();
 
         int num = 0;
         for (File page : blankTest) {
 
             answers.put(page.getName(), new ArrayList<>());
 
-            QGImage pageImage = new QGImage(Constants.imagePath + "BlankTest" + Constants.separator + page.getName());
+            QGImage pageImage = new QGImage(Constants.blankTest + page.getName());
             pageImage.resize(Constants.scaleHeight, Constants.scaleWidth);
             pageImage.display();
 
