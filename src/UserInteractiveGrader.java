@@ -45,8 +45,7 @@ public class UserInteractiveGrader {
         } catch (NullPointerException exception) {
         }
 
-        numOfStudents = new File(Constants.StudentResponsePath).listFiles().length;
-
+        numOfStudents = new File(Constants.studentResponses).listFiles().length;
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
 
         this.setup();
@@ -62,7 +61,7 @@ public class UserInteractiveGrader {
             String page = getPageForNum(i);
             AnswerField ans = getAnswerFieldForNum(i);
 
-            for (File student : new File(Constants.StudentResponsePath).listFiles()) { //student will be the name of the student
+            for (File student : new File(Constants.studentResponses).listFiles()) { //student will be the name of the student
 
                 conceptUnderstood.put(student.getName(), new HashMap<>());
                 logger.log(conceptUnderstood);
@@ -224,7 +223,7 @@ public class UserInteractiveGrader {
     }
 
     private void setup() {
-        for (File student : new File(Constants.StudentResponsePath).listFiles()) {
+        for (File student : new File(Constants.studentResponses).listFiles()) {
             tags.put(student.getName(), new HashMap<>());
             for (int i = 0; i < numOfProblems; i++) {
                 tags.get(student.getName()).put(i + 1, new ArrayList<>());

@@ -67,6 +67,7 @@ public class DataLoader {
         //write images to files inside res
         for (int i = 0; i < images.size(); i++) {
             try {
+                System.out.println("creating file: " + i);
                 File newPage = new File(Constants.res + "page" + i + ".png");
                 newPage.createNewFile();
                 ImageIO.write(images.get(i), "png", newPage);
@@ -104,32 +105,21 @@ public class DataLoader {
             if (!thisStudent.exists()) thisStudent.mkdir();
         }
 
-        int pageNum = 0;
-        int innerPageNum = 1;
-        int student = 0;
-        int studentCounter = 0;
+        int pageNum = 0; //for accessing files in RES
+        for (int student = 0; student < students.size(); student++) { //problem with indexing paper
+            for (int pageInTest = 1; pageInTest <= pages; pageInTest++) {
 
-        for (int i = 0; i < students.size(); i++) {
-            innerPageNum = 1;
-            for (int pageInTest = 0; pageInTest < UserInteractiveGrader.numPages; pageInTest++) {
+                File origin = new File(Constants.res + "page" + pageNum + ".png");
+                File goal = new File(Constants.studentResponses + students.get(student) + Constants.separator + "page" + pageInTest + ".png");
+                System.out.println(pageInTest);
 
-                File page = new File("src" + Constants.separator + "RES" + Constants.separator + "page" + pageNum + ".png");
-                System.out.println(page.getAbsolutePath());
+                System.out.println("origin: " + origin.getAbsolutePath());
+                System.out.println("goal: " + goal.getAbsolutePath());
 
-                try {
-                    System.out.println(page.getAbsolutePath());
-                    Files.move(Paths.get(page.getAbsolutePath()), Paths.get("src" + Constants.separator + "ScannedImageSources" + Constants.separator +
-                            "StudentResponses" + Constants.separator + students.get(student) + Constants.separator + "page" + innerPageNum + ".png"));
-                } catch (IOException e) {
-//                    UserInteractiveGrader.logger.log("could not move files from RES to ScannedImageSources");
-                    e.printStackTrace();
-                }
+                move(origin, goal);
 
                 pageNum++;
-                innerPageNum++;
             }
-            studentCounter++;
-            if (studentCounter % pages == 0) student++;
         }
     }
 
@@ -150,20 +140,8 @@ public class DataLoader {
         return students;
     }
 
-    private void reverseFileOrder(File[] files) {
-        for (int i = 0; i < files.length / 2; i++) {
-            File temp = files[i];
-            files[i] = files[files.length - i - 1];
-            files[files.length - i - 1] = temp;
-        }
-    }
-
-    private ArrayList<BufferedImage> convertToBufferedImageList(ArrayList<PImage> startImages) {
-        ArrayList<BufferedImage> out = new ArrayList<>();
-        for (PImage image : startImages) {
-            out.add((BufferedImage) image.getImage());
-        }
-        return out;
+    private void move(File origin, File goal) {
+        origin.renameTo(goal);
     }
 
 }
