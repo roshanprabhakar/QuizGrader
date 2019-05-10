@@ -15,6 +15,7 @@ public class DataLoader {
     private int pages;
     private int numStudents;
 
+    //TODO Create GUI for loading and sorting progress
     public DataLoader(int pages) {
         this.pages = pages;
     }
