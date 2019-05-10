@@ -1,12 +1,10 @@
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-//        runUserInteractiveGradingSystem();
-        DataLoader loader = new DataLoader(2);
-        loader.loadData("QGTestData.pdf");
+        runUserInteractiveGradingSystem();
+//        DataLoader loader = new DataLoader(2);
+//        loader.loadData("QGTestData.pdf");
 //        loader.sortData();
     }
 

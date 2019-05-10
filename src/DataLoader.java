@@ -1,19 +1,14 @@
-import javafx.scene.shape.Path;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import processing.core.PConstants;
-import processing.core.PImage;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.Buffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.File;
 
 public class DataLoader {
 
@@ -129,7 +124,7 @@ public class DataLoader {
         for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
 
             File origin = new File(Constants.res + "BlankTestPage" + i + ".png");
-            File goal = new File(Constants.imagePath + "BlankTestPages" + Constants.separator + "page" + i);
+            File goal = new File(Constants.blankTest + "page" + i);
 
             move(origin, goal);
         }

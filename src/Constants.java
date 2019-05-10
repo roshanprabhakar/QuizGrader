@@ -7,7 +7,7 @@ public class Constants {
     public static final String separator = File.separator;
     public static final String imagePath = "src" + separator + "ScannedImageSources" + separator;
     public static final String studentResponses = imagePath + "StudentResponses" + separator;
-    public static final String blankTestPath = imagePath + "BlankTest" + separator;
+    public static final String blankTest = imagePath + "BlankTest" + separator;
     public static final String outCSV = "CSVout";
     public static final String pdfIn = "PDFInput" + separator;
     public static final String res = "src" + File.separator + "RES" + File.separator;
