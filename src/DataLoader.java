@@ -121,6 +121,19 @@ public class DataLoader {
                 pageNum++;
             }
         }
+
+        //moving blank test pages
+        File blankTestDir = new File(Constants.imagePath + "BlankTestPages");
+        if (!blankTestDir.exists()) blankTestDir.mkdir();
+
+        for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
+
+            File origin = new File(Constants.res + "BlankTestPage" + i + ".png");
+            File goal = new File(Constants.imagePath + "BlankTestPages" + Constants.separator + "page" + i);
+
+            move(origin, goal);
+        }
+
     }
 
     private ArrayList<String> getStudentList(String namesFile) {

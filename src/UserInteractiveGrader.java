@@ -38,7 +38,8 @@ public class UserInteractiveGrader {
 
     public void run() throws InterruptedException, IOException {
 
-        dataLoader.loadData("QGTestData.pdf");
+        dataLoader.loadData("QGTestData.pdf"); //TODO add check to see if <generated> already exists
+        dataLoader.sortData();
 
         try {
             dataLoader.sortData();

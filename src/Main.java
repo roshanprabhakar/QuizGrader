@@ -6,8 +6,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 //        runUserInteractiveGradingSystem();
         DataLoader loader = new DataLoader(2);
-//        loader.loadData("QGTestData.pdf");
-        loader.sortData();
+        loader.loadData("QGTestData.pdf");
+//        loader.sortData();
     }
 
     /**
