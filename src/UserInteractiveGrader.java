@@ -41,7 +41,7 @@ public class UserInteractiveGrader {
         dataLoader.loadData("QGTestData.pdf");
 
         try {
-            dataLoader.sortData("src" + File.separator + "RES");
+            dataLoader.sortData();
         } catch (NullPointerException exception) {
         }
 
