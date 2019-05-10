@@ -38,13 +38,17 @@ public class UserInteractiveGrader {
 
     public void run() throws InterruptedException, IOException {
 
-        dataLoader.loadData("QGTestData.pdf"); //TODO add check to see if <generated> already exists
-        dataLoader.sortData();
+         //TODO add check to see if <generated> already exists
 
-        try {
-            dataLoader.sortData();
-        } catch (NullPointerException exception) {
+        if (!fileExists("src/ScannedImageSources")) {
+            try {
+                dataLoader.sortData();
+            } catch (NullPointerException e){
+                System.out.println("Null Pointer when sorting data");
+            }
+
         }
+
 
         numOfStudents = new File(Constants.studentResponses).listFiles().length;
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
@@ -110,6 +114,11 @@ public class UserInteractiveGrader {
         logger.close();
 
         System.exit(0);
+    }
+
+    private boolean fileExists(String filepath) {
+        File file = new File(filepath);
+        return file.exists();
     }
 
     private HashMap<String, ArrayList<AnswerField>> loadAllAnswerFields() throws InterruptedException, IOException {
