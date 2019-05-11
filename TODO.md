@@ -1,7 +1,7 @@
 # TODO List
 
 ## Our List
-- Handling mul
+- Handling mu
 - Desktop app
 - UI (color scheme and window positioning)
 - Enter testing phase
