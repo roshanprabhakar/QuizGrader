@@ -46,7 +46,6 @@ public class UserInteractiveGrader {
             } catch (NullPointerException e){
                 System.out.println("Null Pointer when loading and sorting data");
             }
-
         }
 
 
