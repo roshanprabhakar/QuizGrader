@@ -8,7 +8,7 @@
 - Update QuizGrader after getting more feedback
 - Release it eventually
 
-##Technical TODO (not in priority order)
+## Technical TODO (not in priority order)
 3. rewrite position code for canvas (right in UserInteractiveGrader)
 4. fix get region code (it gets a slightly lower region currently)
 7. refactor UserInteractiveGrader to UserInteractiveGrader
