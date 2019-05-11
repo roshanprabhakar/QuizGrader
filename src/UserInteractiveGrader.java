@@ -38,13 +38,13 @@ public class UserInteractiveGrader {
 
     public void run() throws InterruptedException, IOException {
 
-         //TODO add check to see if <generated> already exists
 
         if (!fileExists("src/ScannedImageSources")) {
             try {
+                dataLoader.loadData("QGTestData.pdf");
                 dataLoader.sortData();
             } catch (NullPointerException e){
-                System.out.println("Null Pointer when sorting data");
+                System.out.println("Null Pointer when loading and sorting data");
             }
 
         }
