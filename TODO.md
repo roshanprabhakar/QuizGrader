@@ -1,7 +1,7 @@
 # TODO List
 
 ## Our List
-- Handling multipage pd
+- Handling multipage p
 - Desktop app
 - UI (color scheme and window positioning)
 - Enter testing phase
