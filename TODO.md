@@ -1,7 +1,7 @@
 # TODO List
 
 ## Our List
-- Hand
+- Han
 - Desktop app
 - UI (color scheme and window positioning)
 - Enter testing phase
