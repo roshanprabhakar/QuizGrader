@@ -7,12 +7,9 @@ import java.util.HashMap;
 
 public class UserInteractiveGrader {
 
-    public static Logger logger = new Logger();
-
     public static final int numPages = Integer.parseInt(new InputPane("How many pages in this assessment?").centered().getInput());
 
-//    public static final int numPages = parsePaneInput("How many pages in this assessment?", "smallLogo.png");
-
+    public static Logger logger = new Logger();
     public DataLoader dataLoader = new DataLoader(numPages);
 
     public static int submittedProblems = 0;

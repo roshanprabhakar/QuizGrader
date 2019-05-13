@@ -37,6 +37,15 @@ public class ProgressPane {
 
     public void display() {
         frame.pack();
+        moveToPreferredLocation(); //needs to be called after pack()
         frame.setVisible(true);
+    }
+
+    private void moveToPreferredLocation() {
+        frame.setLocation((int) Constants.screenWidth / 2 - frame.getWidth() / 2, (int) Constants.screenHeight / 2 - frame.getHeight() / 2);
+    }
+
+    public void close() {
+        frame.setVisible(false);
     }
 }

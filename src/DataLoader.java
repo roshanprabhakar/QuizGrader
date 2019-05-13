@@ -15,7 +15,6 @@ public class DataLoader {
     private int pages;
     private ProgressPane progressPane;
 
-    //TODO Create GUI for loading and sorting progress
     public DataLoader(int pages) {
         this.pages = pages;
         progressPane = new ProgressPane();
@@ -110,6 +109,7 @@ public class DataLoader {
         }
 
         progressPane.setMessage("Data loading complete!");
+        progressPane.close();
     }
 
     /**
@@ -117,6 +117,7 @@ public class DataLoader {
      **/
     public void sortData() {
 
+        progressPane.display();
         ArrayList<String> students = getStudentList("names.txt");
 
         File scannedSources = new File("src" + Constants.separator + "ScannedImageSources");
@@ -174,6 +175,7 @@ public class DataLoader {
 
         studentResDir.delete();
         progressPane.setMessage("Complete!");
+        progressPane.close();
     }
 
     private ArrayList<String> getStudentList(String namesFile) {
