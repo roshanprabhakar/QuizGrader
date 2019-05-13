@@ -13,11 +13,13 @@ import java.util.List;
 public class DataLoader {
 
     private int pages;
-    private int numStudents;
+    private ProgressPane progressPane;
 
     //TODO Create GUI for loading and sorting progress
     public DataLoader(int pages) {
         this.pages = pages;
+        progressPane = new ProgressPane();
+        progressPane.display();
     }
 
     /**
@@ -40,14 +42,24 @@ public class DataLoader {
 
         List<PDPage> pages = pdf.getDocumentCatalog().getAllPages();
 
+        progressPane.setMessage("reading from scanned pdf...");
+
+        int counter = 1;
         for (PDPage page : pages) {
+
+            int percent = (int)((double) counter / pages.size() * 100) * 3;
+            progressPane.setProgressBarPercentage(percent);
+
             try {
                 images.add(page.convertToImage());
             } catch (IOException e) {
                 UserInteractiveGrader.logger.log("problem converting to image");
                 UserInteractiveGrader.logger.log(e.getStackTrace());
             }
+
+            counter++;
         }
+        progressPane.resetProgressBar();
 
         try {
             pdf.close();
@@ -60,27 +72,44 @@ public class DataLoader {
             res.mkdir();
         }
 
+        progressPane.setMessage("Writing scanned images...");
+
         //write images to files inside res
         for (int i = 0; i < images.size(); i++) {
+
+            int percent = (int)((double) i / images.size() * 100) * 3;
+
             try {
-                System.out.println("creating file: " + i);
+
+                progressPane.setProgressBarPercentage(percent);
+
                 File newPage = new File(Constants.res + "page" + i + ".png");
                 newPage.createNewFile();
                 ImageIO.write(images.get(i), "png", newPage);
+
             } catch (IOException e) {
+
                 UserInteractiveGrader.logger.log("page" + i + " unable to load");
                 System.exit(0);
+
             }
         }
 
+        progressPane.setMessage("converting loaded images to readable...");
+
         for (int i = 0; i < this.pages; i++) {
+
+            int percent = (int)((double) i / pages.size() * 100) * 3;
+            progressPane.setProgressBarPercentage(percent);
+
             try {
                 ImageIO.write(images.get(i), "png", new File(Constants.res + "BlankTestPage" + (i + 1) + ".png"));
             } catch (IOException e) {
-//                UserInteractiveGrading.logger.log("Could not load startup page: (first " + this.pages + " pages)");
-                e.printStackTrace();
+                UserInteractiveGrader.logger.log("Could not load startup page: (first " + this.pages + " pages)");
             }
         }
+
+        progressPane.setMessage("Data loading complete!");
     }
 
     /**
@@ -101,16 +130,22 @@ public class DataLoader {
             if (!thisStudent.exists()) thisStudent.mkdir();
         }
 
+        progressPane.setMessage("Sorting Data...");
+
         int pageNum = 0; //for accessing files in RES
         for (int student = 0; student < students.size(); student++) { //problem with indexing paper
+
+            progressPane.setMessage("sorting for student: " + students.get(student));
             for (int pageInTest = 1; pageInTest <= pages; pageInTest++) {
+
+                progressPane.setProgressBarPercentage((int)((double) pageInTest / pages * 100) * 3);
 
                 File origin = new File(Constants.res + "page" + pageNum + ".png");
                 File goal = new File(Constants.studentResponses + students.get(student) + Constants.separator + "page" + pageInTest + ".png");
-                System.out.println(pageInTest);
+                UserInteractiveGrader.logger.log(pageInTest);
 
-                System.out.println("origin: " + origin.getAbsolutePath());
-                System.out.println("goal: " + goal.getAbsolutePath());
+                UserInteractiveGrader.logger.log("origin: " + origin.getAbsolutePath());
+                UserInteractiveGrader.logger.log("goal: " + goal.getAbsolutePath());
 
                 move(origin, goal);
 
@@ -124,16 +159,21 @@ public class DataLoader {
 
         System.out.println("-------------------------------------");
 
+        progressPane.setMessage("Initializing blank test...");
         for (int i = 1; i <= pages; i++) {
 
+            progressPane.setProgressBarPercentage((int)((double) i / pages * 100) * 3);
+
             File origin = new File(Constants.res + "BlankTestPage" + i + ".png");
-            System.out.println("origin: " + origin.getAbsolutePath());
+            UserInteractiveGrader.logger.log("origin: " + origin.getAbsolutePath());
             File goal = new File(Constants.blankTest + "page" + i + ".png");
-            System.out.println("goal: " + goal.getAbsolutePath());
+            UserInteractiveGrader.logger.log("goal: " + goal.getAbsolutePath());
 
             move(origin, goal);
         }
 
+        studentResDir.delete();
+        progressPane.setMessage("Complete!");
     }
 
     private ArrayList<String> getStudentList(String namesFile) {
@@ -156,7 +196,6 @@ public class DataLoader {
     private void move(File origin, File goal) {
         origin.renameTo(goal);
     }
-
 }
 
 //    public boolean sortData(String directory) {
