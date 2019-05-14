@@ -173,7 +173,6 @@ public class DataLoader {
             move(origin, goal);
         }
 
-        studentResDir.delete();
         progressPane.setMessage("Complete!");
         progressPane.close();
     }

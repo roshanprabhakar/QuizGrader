@@ -17,6 +17,11 @@ public class ProgressPane {
 
         progressBar.setMinimum(0);
         progressBar.setMaximum(300);
+
+        header.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
+        frame.pack();
+
     }
 
     public void setMessage(String message) {
