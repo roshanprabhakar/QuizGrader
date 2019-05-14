@@ -53,4 +53,9 @@ public class ProgressPane {
     public void close() {
         frame.setVisible(false);
     }
+
+    public void appendMessage(String message) {
+        header.setText(header.getText() + message);
+    }
+
 }

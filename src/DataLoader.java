@@ -48,6 +48,7 @@ public class DataLoader {
 
             int percent = (int)((double) counter / pages.size() * 100) * 3;
             progressPane.setProgressBarPercentage(percent);
+            progressPane.appendMessage(" " + percent / 3 + "% ");
 
             try {
                 images.add(page.convertToImage());
@@ -57,8 +58,8 @@ public class DataLoader {
             }
 
             counter++;
+            progressPane.setMessage("reading from scanned pdf...");
         }
-        progressPane.resetProgressBar();
 
         try {
             pdf.close();
@@ -72,8 +73,6 @@ public class DataLoader {
         }
 
         progressPane.setMessage("Writing scanned images...");
-
-        //write images to files inside res
         for (int i = 0; i < images.size(); i++) {
 
             int percent = (int)((double) i / images.size() * 100) * 3;
@@ -81,6 +80,7 @@ public class DataLoader {
             try {
 
                 progressPane.setProgressBarPercentage(percent);
+                progressPane.appendMessage(" " + percent / 3 + "% ");
 
                 File newPage = new File(Constants.res + "page" + i + ".png");
                 newPage.createNewFile();
@@ -92,20 +92,23 @@ public class DataLoader {
                 System.exit(0);
 
             }
+
+            progressPane.setMessage("Writing scanned images...");
         }
 
         progressPane.setMessage("converting loaded images to readable...");
-
         for (int i = 0; i < this.pages; i++) {
 
             int percent = (int)((double) i / pages.size() * 100) * 3;
             progressPane.setProgressBarPercentage(percent);
+            progressPane.appendMessage(" " + percent / 3 + "% ");
 
             try {
                 ImageIO.write(images.get(i), "png", new File(Constants.res + "BlankTestPage" + (i + 1) + ".png"));
             } catch (IOException e) {
                 UserInteractiveGrader.logger.log("Could not load startup page: (first " + this.pages + " pages)");
             }
+            progressPane.setMessage("converting loaded images to readable...");
         }
 
         progressPane.setMessage("Data loading complete!");
@@ -140,6 +143,7 @@ public class DataLoader {
             for (int pageInTest = 1; pageInTest <= pages; pageInTest++) {
 
                 progressPane.setProgressBarPercentage((int)((double) pageInTest / pages * 100) * 3);
+                progressPane.appendMessage(" " + (int)((double) pageInTest / pages * 100) + "% ");
 
                 File origin = new File(Constants.res + "page" + pageNum + ".png");
                 File goal = new File(Constants.studentResponses + students.get(student) + Constants.separator + "page" + pageInTest + ".png");
@@ -151,6 +155,7 @@ public class DataLoader {
                 move(origin, goal);
 
                 pageNum++;
+                progressPane.setMessage("sorting for student: " + students.get(student));
             }
         }
 
@@ -164,6 +169,7 @@ public class DataLoader {
         for (int i = 1; i <= pages; i++) {
 
             progressPane.setProgressBarPercentage((int)((double) i / pages * 100) * 3);
+            progressPane.appendMessage(" " + (int)((double) i / pages * 100) + "% ");
 
             File origin = new File(Constants.res + "BlankTestPage" + i + ".png");
             UserInteractiveGrader.logger.log("origin: " + origin.getAbsolutePath());
@@ -171,6 +177,7 @@ public class DataLoader {
             UserInteractiveGrader.logger.log("goal: " + goal.getAbsolutePath());
 
             move(origin, goal);
+            progressPane.setMessage("Initializing blank test...");
         }
 
         progressPane.setMessage("Complete!");
