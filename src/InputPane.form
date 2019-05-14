@@ -6,7 +6,8 @@
       <xy x="71" y="216" width="449" height="204"/>
     </constraints>
     <properties>
-      <background color="-13749966"/>
+      <background color="-16777216"/>
+      <enabled value="false"/>
     </properties>
     <border type="none"/>
     <children>
@@ -49,7 +50,7 @@
           </grid>
         </constraints>
         <properties>
-          <background color="-13749966"/>
+          <background color="-16777216"/>
           <editable value="false"/>
           <enabled value="true"/>
           <font name="Heiti SC" size="18"/>
