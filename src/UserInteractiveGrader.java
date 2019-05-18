@@ -45,6 +45,8 @@ public class UserInteractiveGrader {
             }
         }
 
+        dataLoader.sortData();
+
 
         numOfStudents = new File(Constants.studentResponses).listFiles().length;
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
@@ -77,7 +79,7 @@ public class UserInteractiveGrader {
                 canvi.add(container);
                 students.put(student.getName(), thisStudent);
                 numberToCanvas.get(ans.getProblemNum()).add(container);
-
+                
                 //position stuff
                 if (newX + container.getWidth() + 20 > Constants.screenWidth) {
                     newX = 0;
@@ -98,7 +100,7 @@ public class UserInteractiveGrader {
 
         while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print(""); //keep this print
 
-        new Report(scores, tags, numOfProblems).display();
+        new Report(numOfProblems).display();
         new IndividualVisualizer(tags, scores, numOfProblems).display();
 
         logCount++;

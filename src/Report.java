@@ -13,38 +13,35 @@ public class Report {
     private JPanel mainPanel;
 
     private JTextField title;
-    private JButton sendInformationButton;
-    private JEditorPane reportPane;
     private JTextField classReport;
+
+    private JButton sendInformationButton;
     private JEditorPane classReportPane;
 
-    private int numOfProblems;
-
-    public JFrame getFrame() {
-        return frame;
-    }
+    private JEditorPane reportPane;
+    private JScrollPane scrollPane;
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
-    public Report(HashMap<String, HashMap<Integer, Score>> scores, HashMap<String, HashMap<Integer, ArrayList<String>>> tags, int numOfProblems) {
+    public Report(int numOfProblems) {
 
         HTMLEditorKit kit = new HTMLEditorKit();
         StyleSheet styleSheet = kit.getStyleSheet();
 
+        reportPane = new JEditorPane();
+        scrollPane = new JScrollPane(reportPane);
+
         frame = new JFrame("Class Report");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(scrollPane);
 
         frame.setPreferredSize(new Dimension(800, 700));
 
-        this.numOfProblems = numOfProblems;
-
-        reportPane.setEditable(false);
-
         String writeable = "";
 
-        for (String student : scores.keySet()) {
+        for (String student : UserInteractiveGrader.scores.keySet()) {
 
             int suggestedTotal = 0;
             int suggestedEarned = 0;
@@ -54,10 +51,10 @@ public class Report {
 
             for (Integer i = 1; i <= numOfProblems; i++) {
 
-                writeable += i + ": " + scores.get(student).get(i) + "  ";
+                writeable += i + ": " + UserInteractiveGrader.scores.get(student).get(i) + "  ";
 
-                suggestedEarned += scores.get(student).get(i).getEarned();
-                suggestedTotal += scores.get(student).get(i).getPossible();
+                suggestedEarned += UserInteractiveGrader.scores.get(student).get(i).getEarned();
+                suggestedTotal += UserInteractiveGrader.scores.get(student).get(i).getPossible();
 
             }
 
@@ -289,6 +286,10 @@ public class Report {
             }
         }
         return uniqueLabels;
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 
 
