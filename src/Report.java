@@ -7,19 +7,21 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static javax.swing.BorderFactory.createEmptyBorder;
+
 public class Report {
 
     private JFrame frame;
     private JPanel mainPanel;
 
-    private JTextField title;
-    private JTextField classReport;
-
     private JButton sendInformationButton;
-    private JEditorPane classReportPane;
+    private JScrollPane scroller;
 
-    private JEditorPane reportPane;
-    private JScrollPane scrollPane;
+    private JEditorPane classReportPane;
+    private JEditorPane totalReportPane;
+
+    private int numOfProblems;
+
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -27,47 +29,17 @@ public class Report {
 
     public Report(int numOfProblems) {
 
-        HTMLEditorKit kit = new HTMLEditorKit();
-        StyleSheet styleSheet = kit.getStyleSheet();
-
-        reportPane = new JEditorPane();
-        scrollPane = new JScrollPane(reportPane);
-
         frame = new JFrame("Class Report");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(scrollPane);
-
         frame.setPreferredSize(new Dimension(800, 700));
 
-        String writeable = "";
+        removeBorder(totalReportPane);
+        removeBorder(classReportPane);
 
-        for (String student : UserInteractiveGrader.scores.keySet()) {
+        this.numOfProblems = numOfProblems;
 
-            int suggestedTotal = 0;
-            int suggestedEarned = 0;
-
-            writeable += "<p>";
-            writeable += "<b>" + student + "</b>" + ":   ";
-
-            for (Integer i = 1; i <= numOfProblems; i++) {
-
-                writeable += i + ": " + UserInteractiveGrader.scores.get(student).get(i) + "  ";
-
-                suggestedEarned += UserInteractiveGrader.scores.get(student).get(i).getEarned();
-                suggestedTotal += UserInteractiveGrader.scores.get(student).get(i).getPossible();
-
-            }
-
-            Score score = new Score(suggestedEarned, suggestedTotal);
-            UserInteractiveGrader.grades.put(student, Constants.findGrade(score));
-            UserInteractiveGrader.percentages.put(student, score.getPercent());
-            UserInteractiveGrader.totals.put(student, new Score(suggestedEarned, suggestedTotal));
-
-            writeable += ("    total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>");
-            writeable += "</p>";
-            writeable += "<br>";
-        }
-
+        HTMLEditorKit kit = new HTMLEditorKit();
+        StyleSheet styleSheet = kit.getStyleSheet();
 
         styleSheet.addRule(
                 "p {" +
@@ -82,38 +54,11 @@ public class Report {
                         "padding: 10px;" + "}"
         );
 
-        reportPane.setBorder(BorderFactory.createCompoundBorder(
-                mainPanel.getBorder(),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-
-
-        reportPane.setEditorKit(kit);
-        reportPane.setText(writeable);
-
-        HTMLEditorKit reportHtml = new HTMLEditorKit();
-        StyleSheet reportStyles = reportHtml.getStyleSheet();
-
-        String reportWriteable = "";
-
-        //all methods return html formatted strings
-        reportWriteable += "<p>";
-        reportWriteable += "Most common grade: " + getMostCommonGrade() + "<br>";
-        reportWriteable += "Average percentage: " + getAveragePercent() + "%<br>";
-
-        reportWriteable += "Lowest scorers: " + getLowestScorers(3) + "<br>";
-        reportWriteable += "Highest scorers: " + getHighestScoreres(3) + "<br>";
-
-        //recursion
-        reportWriteable += "Tags (most to least common): " + catchOrderedTags(3) + "<br>";
-
-        reportWriteable.replaceAll(" ", "&nbsp");
-
-        classReportPane.setBorder(BorderFactory.createCompoundBorder(
-                mainPanel.getBorder(),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        totalReportPane.setEditorKit(kit);
+        totalReportPane.setText(getScoreReport());
 
         classReportPane.setEditorKit(kit);
-        classReportPane.setText(reportWriteable);
+        classReportPane.setText(getClassReport());
 
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
@@ -126,10 +71,75 @@ public class Report {
                 generator.writeComments();
                 generator.writeTags();
 
+
                 UserInteractiveGrader.logCount++;
             }
         });
     }
+
+    private void createUIComponents() {
+        totalReportPane = new JEditorPane("text/html", "");
+        scroller.setBorder(createEmptyBorder());
+    }
+
+    private void removeBorder(JComponent component) {
+        component.setBorder(BorderFactory.createCompoundBorder(
+                mainPanel.getBorder(),
+                createEmptyBorder(5, 10, 5, 10))
+        );
+    }
+
+    private String getClassReport() {
+        StringBuilder reportWriteable = new StringBuilder();
+
+        //all methods return html formatted strings
+        reportWriteable.append("<p>");
+        reportWriteable.append("Most common grade: " + getMostCommonGrade() + "<br>");
+        reportWriteable.append("Average percentage: " + getAveragePercent() + "%<br>");
+
+        reportWriteable.append("Lowest scorers: " + getLowestScorers(3) + "<br>");
+        reportWriteable.append("Highest scorers: " + getHighestScoreres(3) + "<br>");
+
+        //recursion
+        reportWriteable.append("Tags (most to least common): " + catchOrderedTags(3) + "<br>");
+
+        return reportWriteable.toString().replaceAll(" ", "&nbsp");
+    }
+
+    private String getScoreReport() {
+
+        StringBuilder writeable = new StringBuilder();
+
+        for (String student : UserInteractiveGrader.scores.keySet()) {
+
+            int suggestedTotal = 0;
+            int suggestedEarned = 0;
+
+            writeable.append("<p>");
+            writeable.append("<b>" + student + "</b>" + ":   ");
+
+            for (Integer i = 1; i <= numOfProblems; i++) {
+
+                writeable.append(i + ": " + UserInteractiveGrader.scores.get(student).get(i) + "  ");
+
+                suggestedEarned += UserInteractiveGrader.scores.get(student).get(i).getEarned();
+                suggestedTotal += UserInteractiveGrader.scores.get(student).get(i).getPossible();
+
+            }
+
+            Score score = new Score(suggestedEarned, suggestedTotal);
+            UserInteractiveGrader.grades.put(student, Constants.findGrade(score));
+            UserInteractiveGrader.percentages.put(student, score.getPercent());
+            UserInteractiveGrader.totals.put(student, new Score(suggestedEarned, suggestedTotal));
+
+            writeable.append("    total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>");
+            writeable.append("</p>");
+            writeable.append("<br>");
+        }
+
+        return writeable.toString();
+    }
+
 
     private String catchOrderedTags(int n) {
         if (n == 0) return "";
@@ -140,14 +150,31 @@ public class Report {
         }
     }
 
+    private String getOrderedTags(int n) {
+
+        StringBuilder out = new StringBuilder();
+        ArrayList<String> tagsCopy = new ArrayList<>(UserInteractiveGrader.menuLabels);
+
+        for (int i = 0; i < n; i++) {
+            if (i < n - 1) {
+                out.append(mostFrequent(tagsCopy));
+                tagsCopy.remove(mostFrequent(tagsCopy));
+                if (i != n - 1) {
+                    out.append(", ");
+                }
+            } else {
+                out.append(mostFrequent(tagsCopy));
+                tagsCopy.remove(mostFrequent(tagsCopy));
+            }
+        }
+
+        return out.toString();
+    }
+
     public void display() {
         frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
-    }
-
-    private void createUIComponents() {
-        reportPane = new JEditorPane("text/html", "");
     }
 
     public String getMostCommonGrade() {
@@ -248,27 +275,6 @@ public class Report {
         return highestName;
     }
 
-    public String getOrderedTags(int n) {
-
-        StringBuilder out = new StringBuilder();
-        ArrayList<String> tagsCopy = new ArrayList<>(UserInteractiveGrader.menuLabels);
-
-        for (int i = 0; i < n; i++) {
-            if (i < n - 1) {
-                out.append(mostFrequent(tagsCopy));
-                tagsCopy.remove(mostFrequent(tagsCopy));
-                if (i != n - 1) {
-                    out.append(", ");
-                }
-            } else {
-                out.append(mostFrequent(tagsCopy));
-                tagsCopy.remove(mostFrequent(tagsCopy));
-            }
-        }
-
-        return out.toString();
-    }
-
     private String mostFrequent(ArrayList<String> labels) {
         ArrayList<String> uniqueLabels = getUniqueLabels(labels);
         int[] count = new int[uniqueLabels.size()];
@@ -287,10 +293,4 @@ public class Report {
         }
         return uniqueLabels;
     }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-
 }

@@ -1,5 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -204,30 +202,6 @@ public class UserInteractiveGrader {
             }
         }
         return null;
-    }
-
-    private static Integer parsePaneInput(String inputDialog, String filepath) {
-
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(0, 0, 0));
-
-//        new JOptionPane().showInputDialog(panel, "QUIZ GRADER", JOptionPane.INFORMATION_MESSAGE, new QGImage(filepath).resize(100,120, true).getIcon(), null, null);
-
-
-//        JOptionPane pane = new JOptionPane();
-//        pane.setIcon(new QGImage(filepath).resize(100,120, true).getIcon());
-//        pane.setBackground(new Color(0,0,0));
-//        return Integer.parseInt(pane.showInputDialog(inputDialog));
-
-
-        return Integer.parseInt((String) JOptionPane.showInputDialog(
-                null,
-                inputDialog,
-                "QUIZ GRADER",
-                JOptionPane.INFORMATION_MESSAGE,
-                new QGImage(filepath).resize(100, 120, true).getIcon(),
-                null,
-                ""));
     }
 
     private void setup() {

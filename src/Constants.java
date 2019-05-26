@@ -1,5 +1,8 @@
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Constants {
@@ -90,5 +93,21 @@ public class Constants {
             if (simpGrades[i].equals(chr.toString())) return i;
         }
         return -1;
+    }
+
+    public static ArrayList<String> getLines(File inputFile) {
+        ArrayList<String> out = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                out.add(line);
+            }
+
+        } catch (IOException e) {
+            UserInteractiveGrader.logger.log("Could not read from input file: " + inputFile.getName());
+        }
+        return out;
     }
 }
