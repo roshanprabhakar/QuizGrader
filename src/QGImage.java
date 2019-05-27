@@ -38,9 +38,6 @@ public class QGImage implements MouseListener {
         }
     }
 
-    /**
-     * @param image
-     */
     public QGImage(BufferedImage image) {
         this.frame = new JFrame();
         this.image = image;
@@ -49,12 +46,6 @@ public class QGImage implements MouseListener {
         height = image.getHeight();
     }
 
-    /**
-     * @param startX
-     * @param startY
-     * @param endX
-     * @param endY
-     */
     public void drawRectangleAt(int startX, int startY, int endX, int endY) {
         rectangle = new JFrame();
         rectangle.setLocation(new Point(startX, startY));
@@ -65,10 +56,6 @@ public class QGImage implements MouseListener {
         rectangle.setVisible(true);
     }
 
-    /**
-     * @param a
-     * @return
-     */
     public QGImage getRegion(AnswerField a) {
 
         BufferedImage section = new BufferedImage(a.getWidth(), a.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -90,10 +77,6 @@ public class QGImage implements MouseListener {
         return this.image;
     }
 
-    /**
-     * @param newH
-     * @param newW
-     */
     public void resize(int newH, int newW) {
         Image tmp = image.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_RGB);

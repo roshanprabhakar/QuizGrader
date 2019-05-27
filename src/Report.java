@@ -11,6 +11,9 @@ import static javax.swing.BorderFactory.createEmptyBorder;
 
 public class Report {
 
+    private JTextField title;
+    private JTextField classReport;
+
     private JFrame frame;
     private JPanel mainPanel;
 
@@ -79,7 +82,8 @@ public class Report {
 
     private void createUIComponents() {
         totalReportPane = new JEditorPane("text/html", "");
-        scroller.setBorder(createEmptyBorder());
+        removeBorder(scroller);
+        scroller.getVerticalScrollBar().setUnitIncrement(1);
     }
 
     private void removeBorder(JComponent component) {
@@ -103,7 +107,7 @@ public class Report {
         //recursion
         reportWriteable.append("Tags (most to least common): " + catchOrderedTags(3) + "<br>");
 
-        return reportWriteable.toString().replaceAll(" ", "&nbsp");
+        return reportWriteable.toString();//.replaceAll(" ", "&nbsp");
     }
 
     private String getScoreReport() {
@@ -228,7 +232,7 @@ public class Report {
         UserInteractiveGrader.logger.log("-------- lowest scores ----------");
         UserInteractiveGrader.logger.log(percentages);
 
-        String lowestName = "empty HashMap";
+        String lowestName = "";
         double lowestPercent = 101;
         for (String student : percentages.keySet()) {
 
@@ -264,7 +268,7 @@ public class Report {
     }
 
     private String highestScore(HashMap<String, Double> percentages) {
-        String highestName = "empty hashmap";
+        String highestName = "";
         double highestPercentage = -1;
         for (String student : percentages.keySet()) {
             if (percentages.get(student) > highestPercentage) {
