@@ -1,12 +1,11 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class NamesLister {
 
@@ -22,18 +21,39 @@ public class NamesLister {
     private boolean submitted;
 
     public NamesLister() {
+
         frame = new JFrame();
         frame.add(mainPanel);
+
+        mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        submitButton.setOpaque(true);
+        submitButton.setBorderPainted(false);
+        submitButton.setBackground(new Color(200, 197, 255, 255));
+
+        skipButton.setOpaque(true);
+        skipButton.setBorderPainted(false);
+        skipButton.setBackground(new Color(200, 197, 255, 255));
+
+        Action action = new AbstractAction()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                performSubmitOperations();
+            }
+        };
+
+        JTextField textField = new JTextField(10);
+        textField.addActionListener( action );
+
         submitButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
                 //when submit is clicked
-                namesInput = namesTextField.getText();
-                String[] names = smartParser(namesInput);
-                write(names);
-                submitted = true;
+                performSubmitOperations();
             }
         });
         skipButton.addMouseListener(new MouseAdapter() {
@@ -64,20 +84,28 @@ public class NamesLister {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                submitButton.setBackground(new Color(184, 149, 198));
+                skipButton.setBackground(new Color(184, 149, 198));
             }
         });
         skipButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                submitButton.setBackground(new Color(200, 197, 255));
+                skipButton.setBackground(new Color(200, 197, 255));
             }
         });
     }
 
+    private void performSubmitOperations() {
+        namesInput = namesTextField.getText();
+        String[] names = smartParser(namesInput);
+        write(names);
+        submitted = true;
+    }
+
     public void prompt() {
         frame.pack();
+        frame.setSize(new Dimension(500, frame.getHeight()));
         frame.setVisible(true);
         while (!submitted) {
             System.out.print("");

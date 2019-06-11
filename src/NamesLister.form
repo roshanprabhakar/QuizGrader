@@ -43,7 +43,7 @@
         </constraints>
         <properties>
           <background color="-3619329"/>
-          <enabled value="false"/>
+          <enabled value="true"/>
           <foreground color="-16777216"/>
           <text value="Submit"/>
         </properties>
@@ -54,7 +54,7 @@
         </constraints>
         <properties>
           <background color="-3619329"/>
-          <enabled value="false"/>
+          <enabled value="true"/>
           <foreground color="-16777216"/>
           <text value="Skip"/>
         </properties>
