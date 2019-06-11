@@ -29,6 +29,7 @@ public class Canvas {
     private boolean answeredCorrectly = false;
 
     private boolean commentWritten = false;
+    private boolean submitted = false;
 
     public Canvas(QGImage image, String name, int problemNum) {
 
@@ -97,6 +98,8 @@ public class Canvas {
                 if (!commentWritten) {
                     UserInteractiveGrader.comments.get(name).put(problemNum, "");
                 }
+
+                submitted = true;
 
                 UserInteractiveGrader.logger.log("Comment written: ");
                 UserInteractiveGrader.logger.log(UserInteractiveGrader.comments.get(name).get(problemNum));
@@ -201,5 +204,13 @@ public class Canvas {
         if (score.getText().trim().equals("Score/Total")) {
             score.setText("/" + total);
         }
+    }
+
+    public boolean isSubmitted() {
+        return submitted;
+    }
+
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
     }
 }

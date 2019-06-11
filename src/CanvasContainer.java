@@ -80,4 +80,8 @@ public class CanvasContainer {
     public void setScoreField(String total) {
         canvas.setScoreField(total);
     }
+
+    public boolean getSubmitted() {
+        return canvas.isSubmitted();
+    }
 }

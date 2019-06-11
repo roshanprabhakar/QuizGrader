@@ -20,7 +20,7 @@ public class UserInteractiveGrader {
     public static ArrayList<String> menuLabels = new ArrayList<>();
     public static ArrayList<CanvasContainer> canvi = new ArrayList<>();
 
-    //most important data structures for the program
+    //most important structures for the program
     public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
     public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
@@ -33,6 +33,7 @@ public class UserInteractiveGrader {
 
     public void run() throws InterruptedException, IOException {
 
+        new NamesLister().prompt();
 
         if (!fileExists("src/ScannedImageSources")) {
             try {
