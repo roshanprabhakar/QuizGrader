@@ -2,7 +2,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
@@ -12,10 +11,9 @@ public class NamesLister {
     private JFrame frame;
 
     private JPanel mainPanel;
-    private JTextField namesTextField;
-    private JTextField jackBobKatyTextField;
     private JButton submitButton;
     private JButton skipButton;
+    private JTextField inputField;
 
     private String namesInput;
     private boolean submitted;
@@ -43,9 +41,7 @@ public class NamesLister {
                 performSubmitOperations();
             }
         };
-
-        JTextField textField = new JTextField(10);
-        textField.addActionListener( action );
+        inputField.addActionListener(action);
 
         submitButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -97,7 +93,7 @@ public class NamesLister {
     }
 
     private void performSubmitOperations() {
-        namesInput = namesTextField.getText();
+        namesInput = inputField.getText();
         String[] names = smartParser(namesInput);
         write(names);
         submitted = true;
