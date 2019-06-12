@@ -18,12 +18,12 @@ public class UserInteractiveGrader {
     public static int numOfProblems;
 
     public static ArrayList<String> menuLabels = new ArrayList<>();
-    public static ArrayList<CanvasContainer> canvi = new ArrayList<>();
+    public static ArrayList<Canvas> canvi = new ArrayList<>();
 
     //most important structures for the program
     public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
-    public static HashMap<Integer, ArrayList<CanvasContainer>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
+    public static HashMap<Integer, ArrayList<Canvas>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
     public static HashMap<String, Student> students = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Integer>> conceptUnderstood = new HashMap<>(); //need to change the name
     public static HashMap<String, Score> totals = new HashMap<>();
@@ -45,7 +45,6 @@ public class UserInteractiveGrader {
         }
 
         dataLoader.sortData();
-
 
         numOfStudents = new File(Constants.studentResponses).listFiles().length;
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
@@ -72,28 +71,28 @@ public class UserInteractiveGrader {
 
                 QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
                 image.resize(Constants.scaleHeight, Constants.scaleWidth);
-                CanvasContainer container = new CanvasContainer(student.getName(), image.getRegion(ans), ans.getProblemNum());
+                Canvas canvas = new Canvas(image.getRegion(ans), student.getName(), ans.getProblemNum());
 
                 //needed for statistical analysis
-                canvi.add(container);
+                canvi.add(canvas);
                 students.put(student.getName(), thisStudent);
-                numberToCanvas.get(ans.getProblemNum()).add(container);
+                numberToCanvas.get(ans.getProblemNum()).add(canvas);
                 
                 //position stuff
-                if (newX + container.getWidth() + 20 > Constants.screenWidth) {
+                if (newX + canvas.getWidth() + 20 > Constants.screenWidth) {
                     newX = 0;
                     newLine = true;
                 }
 
                 if (newLine) {
-                    newY += container.getHeight() + 20;
+                    newY += canvas.getHeight() + 20;
                     newLine = false;
                 }
 
-                container.setLocation(newX, newY);
-                newX += container.getWidth() + 20;
+                canvas.setLocation(newX, newY);
+                newX += canvas.getWidth() + 20;
 
-                container.display();
+                canvas.display();
             }
         }
 
@@ -109,6 +108,9 @@ public class UserInteractiveGrader {
         }
 
         logger.close();
+
+        //clean up data collection
+        Cleaner.eraseTrailingCommas();
 
         System.exit(0);
     }
@@ -220,17 +222,17 @@ public class UserInteractiveGrader {
     }
 
     public static void updateCanvi() {
-        for (CanvasContainer container : canvi) {
+        for (Canvas canvas : canvi) {
             for (String label : menuLabels) {
-                if (!container.contains(label) && !label.contains("<o>")) {
-                    container.addLabel(label);
+                if (!canvas.contains(label) && !label.contains("<o>")) {
+                    canvas.addLabel(label);
                 }
             }
         }
     }
 
     public static void updateScoresForProblem(int problemNum, String total) {
-        for (CanvasContainer container : numberToCanvas.get(problemNum)) {
+        for (Canvas container : numberToCanvas.get(problemNum)) {
             container.setScoreField(total);
         }
     }

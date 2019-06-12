@@ -16,4 +16,6 @@
 6. reposition each InputPane for how many AnswerFields
 7. put old code for InputPane from UIG from previous commits in github 
 
+Priority 1: combine canvas and canvas container
+
 ## Suggestions (Open to the public)

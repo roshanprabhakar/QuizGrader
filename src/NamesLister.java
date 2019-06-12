@@ -50,6 +50,7 @@ public class NamesLister {
 
                 //when submit is clicked
                 performSubmitOperations();
+                frame.setVisible(false);
             }
         });
         skipButton.addMouseListener(new MouseAdapter() {

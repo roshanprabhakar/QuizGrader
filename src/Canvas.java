@@ -38,9 +38,8 @@ public class Canvas {
 
         frame = new JFrame(name + " #" + problemNum);
         frame.add(mainPanel);
-
+        frame.setName(name + ": " + problemNum);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
         //Color scheme
         menu.setBackground(Color.LIGHT_GRAY);
@@ -163,6 +162,8 @@ public class Canvas {
                 }
             }
         });
+
+        frame.pack();
     }
 
     private void createUIComponents() {
@@ -212,5 +213,25 @@ public class Canvas {
 
     public void setSubmitted(boolean submitted) {
         this.submitted = submitted;
+    }
+
+    public int getWidth() {
+        return frame.getWidth();
+    }
+
+    public int getHeight() {
+        return frame.getHeight();
+    }
+
+    public void display() {
+        frame.setVisible(true);
+    }
+
+    public void setLocation(int x, int y) {
+        frame.setLocation(new Point(x, y));
+    }
+
+    public Point getLocation() {
+        return frame.getLocation();
     }
 }
