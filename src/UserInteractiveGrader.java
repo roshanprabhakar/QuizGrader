@@ -9,6 +9,7 @@ public class UserInteractiveGrader {
 
     public static Logger logger = new Logger();
     public DataLoader dataLoader = new DataLoader(numPages);
+    public File studentResponses = new File(Constants.studentResponses);
 
     public static int submittedProblems = 0;
     public static int logCount = 0;
@@ -46,7 +47,7 @@ public class UserInteractiveGrader {
 
         dataLoader.sortData();
 
-        numOfStudents = new File(Constants.studentResponses).listFiles().length;
+        numOfStudents = studentResponses.listFiles().length;
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
 
         this.setup();
@@ -57,12 +58,14 @@ public class UserInteractiveGrader {
 
         boolean newLine = false;
 
+        CanvasPositioner positioner = new CanvasPositioner();
+
         for (int i = 1; i <= numOfProblems; i++) {
 
             String page = getPageForNum(i);
             AnswerField ans = getAnswerFieldForNum(i);
 
-            for (File student : new File(Constants.studentResponses).listFiles()) { //student will be the name of the student
+            for (File student : studentResponses.listFiles()) { //student will be the name of the student
 
                 conceptUnderstood.put(student.getName(), new HashMap<>());
                 logger.log(conceptUnderstood);
@@ -77,24 +80,12 @@ public class UserInteractiveGrader {
                 canvi.add(canvas);
                 students.put(student.getName(), thisStudent);
                 numberToCanvas.get(ans.getProblemNum()).add(canvas);
-                
-                //position stuff
-                if (newX + canvas.getWidth() + 20 > Constants.screenWidth) {
-                    newX = 0;
-                    newLine = true;
-                }
 
-                if (newLine) {
-                    newY += canvas.getHeight() + 20;
-                    newLine = false;
-                }
-
-                canvas.setLocation(newX, newY);
-                newX += canvas.getWidth() + 20;
-
-                canvas.display();
+                positioner.add(canvas);
             }
         }
+
+        positioner.initiate();
 
         while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print(""); //keep this print
 

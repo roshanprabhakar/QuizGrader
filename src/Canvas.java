@@ -227,6 +227,10 @@ public class Canvas {
         frame.setVisible(true);
     }
 
+    public boolean isVisible() {
+        return frame.isVisible();
+    }
+
     public void setLocation(int x, int y) {
         frame.setLocation(new Point(x, y));
     }
