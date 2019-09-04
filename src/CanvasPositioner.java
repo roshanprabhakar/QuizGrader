@@ -33,6 +33,7 @@ public class CanvasPositioner {
     }
 
     public void initiate() {
+        ArrayList <Canvas> currentlyDisplayed = new ArrayList<>();
         boolean[] submitTracker = new boolean[canvii.size()];
 
         for (int i = 0; i < submitTracker.length; i++) {
@@ -44,6 +45,21 @@ public class CanvasPositioner {
             double xPos = center.getLocation().getX();
             double yPos = center.getLocation().getY()
             canvii.get(i).setLocation((int) xPos,(int) yPos);
+            currentlyDisplayed.add(canvii.get(i));
+        }
+
+        int last = numCanvi;
+        int tracker = 0;
+        while (isSubmited(submitTracker)) {
+            for (int i = 0; i <currentlyDisplayed.size(); i++) {
+                Canvas canvas = currentlyDisplayed.get(i);
+                if (canvas.isSubmitted()) {
+                    submitTracker[tracker] = true;
+                    tracker++;
+
+                    i--;
+                }
+            }
         }
     }
 }
