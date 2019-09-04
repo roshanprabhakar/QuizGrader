@@ -56,8 +56,7 @@ public class CanvasPositioner {
         int tracker = 0;
         while (isSubmitted(submitTracker)) {
             for (int i = 0; i < currentlyDisplayed.size(); i++) {
-                if (isSubmitted(submitTracker)) return;
-
+                if (isSubmitted(submitTracker) || lastCanvis >= canvii.size() || tracker >= submitTracker.length) return;
 
                 Canvas canvas = currentlyDisplayed.get(i);
                 if (canvas.isSubmitted()) {
@@ -68,6 +67,9 @@ public class CanvasPositioner {
 
                     Canvas nextCanvas = canvii.get(lastCanvis);
                     nextCanvas.setLocation((int) curPoint.getX(), (int) curPoint.getY());
+
+                    currentlyDisplayed.remove(canvas);
+                    
                     lastCanvis++;
 
                     i--;
