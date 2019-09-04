@@ -32,6 +32,10 @@ public class CanvasPositioner {
         canvii.add(canvas);
     }
 
+    private boolean exitConditions() {
+
+    }
+
     public void initiate() {
         ArrayList <Canvas> currentlyDisplayed = new ArrayList<>();
         boolean[] submitTracker = new boolean[canvii.size()];
@@ -51,7 +55,7 @@ public class CanvasPositioner {
         int last = numCanvi;
         int tracker = 0;
         while (isSubmited(submitTracker)) {
-            for (int i = 0; i <currentlyDisplayed.size(); i++) {
+            for (int i = 0; i < currentlyDisplayed.size(); i++) {
                 Canvas canvas = currentlyDisplayed.get(i);
                 if (canvas.isSubmitted()) {
                     submitTracker[tracker] = true;
