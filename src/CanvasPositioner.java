@@ -34,7 +34,7 @@ public class CanvasPositioner {
 
     public void initiate() {
         boolean[] submitTracker = new boolean[canvii.size()];
-        double[] xLocs = new double[numCanvi];
+
 
 
         for (int i = 0; i < submitTracker.length; i++) {
