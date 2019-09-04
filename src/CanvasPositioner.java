@@ -70,7 +70,6 @@ public class CanvasPositioner {
                     nextCanvas.setLocation((int) curPoint.getX(), (int) curPoint.getY());
                     lastCanvis++;
 
-
                     i--;
                 }
             }
