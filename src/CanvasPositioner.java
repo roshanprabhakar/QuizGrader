@@ -35,8 +35,6 @@ public class CanvasPositioner {
     public void initiate() {
         boolean[] submitTracker = new boolean[canvii.size()];
 
-
-
         for (int i = 0; i < submitTracker.length; i++) {
             submitTracker[i] = false;
         }
