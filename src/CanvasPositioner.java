@@ -69,7 +69,8 @@ public class CanvasPositioner {
                     nextCanvas.setLocation((int) curPoint.getX(), (int) curPoint.getY());
 
                     currentlyDisplayed.remove(canvas);
-                    
+                    currentlyDisplayed.add(nextCanvas);
+
                     lastCanvis++;
 
                     i--;
