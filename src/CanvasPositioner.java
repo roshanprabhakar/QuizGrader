@@ -33,8 +33,19 @@ public class CanvasPositioner {
     }
 
     public void initiate() {
-        for (int i = 0; i < numCanvi; i++) {
+        boolean[] submitTracker = new boolean[canvii.size()];
+        double[] xLocs = new double[numCanvi];
+        double[] yLocs = new double[numCanvi];
 
+        for (int i = 0; i < submitTracker.length; i++) {
+            submitTracker[i] = false;
+        }
+
+        for (int i = 0; i < numCanvi; i++) {
+            CanvasPosition center = centers.get(i);
+            double xPos = center.getLocation().getX();
+            double yPos = center.getLocation().getY()
+            canvii.get(i).setLocation((int) xPos,(int) yPos);
         }
     }
 }
