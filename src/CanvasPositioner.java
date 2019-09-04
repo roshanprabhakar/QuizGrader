@@ -56,9 +56,8 @@ public class CanvasPositioner {
         int tracker = 0;
         while (isSubmitted(submitTracker)) {
             for (int i = 0; i < currentlyDisplayed.size(); i++) {
-                if (isSubmitted(submitTracker)) {
-                    return;
-                }
+                if (isSubmitted(submitTracker)) return;
+
 
                 Canvas canvas = currentlyDisplayed.get(i);
                 if (canvas.isSubmitted()) {
