@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class ProgressPane {
-
-    private JFrame frame;
+public class ProgressPane extends Window {
 
     private JTextField header;
     private JProgressBar progressBar;
@@ -44,12 +42,12 @@ public class ProgressPane {
 
     public void display() {
         frame.pack();
-        moveToPreferredLocation(); //needs to be called after pack()
+        center(); //needs to be called after pack()
         frame.setVisible(true);
     }
 
-    private void moveToPreferredLocation() {
-        frame.setLocation((int) Constants.screenWidth / 2 - frame.getWidth() / 2, (int) Constants.screenHeight / 2 - frame.getHeight() / 2);
+    private void center() {
+        setLocation((int) Constants.screenWidth / 2 - frame.getWidth() / 2, (int) Constants.screenHeight / 2 - frame.getHeight() / 2);
     }
 
     public void close() {

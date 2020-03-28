@@ -18,7 +18,7 @@ public class UserInteractiveGrader {
     public static int submittedProblems = 0; //project level variable
     public static int logCount = 0;
 
-    public int numOfStudents;
+    public int numOfStudents; //student directory count
     public static HashMap<String, ArrayList<AnswerField>> ANSWER_FIELDS;
     public static int numOfProblems;
 
@@ -36,35 +36,37 @@ public class UserInteractiveGrader {
     public static HashMap<String, Double> percentages = new HashMap<>();
     public static HashMap<String, HashMap<Integer, String>> comments = new HashMap<>();
 
-    public void run() throws InterruptedException, IOException {
+    public void run() throws InterruptedException {
 
         // ---------- SETUP ----------
-        //get all student names
-        new NamesLister().prompt();
+        if (!fileExists("src" + Constants.separator + "ScannedImageSources")) {
+            //get all student names
+            new NamesLister().prompt();
 
-        //get number of pages
-        numPages = Integer.parseInt(new InputPane("How many pages in this assessment?").centered().getInput());
+            //get number of pages
+            numPages = Integer.parseInt(new InputPane("How many pages in this assessment?").centered().getInput());
 
-        //parsing pdf data, storing it in organized directories
-        dataLoader = new DataLoader(numPages);
-        if (!fileExists("src/ScannedImageSources")) {
+            //parsing pdf data, storing it in organized directories
+            dataLoader = new DataLoader(numPages);
             try {
                 dataLoader.loadData("QGTestData.pdf");
                 dataLoader.sortData();
-            } catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 System.out.println("Null Pointer when loading and sorting data");
             }
+        } else {
+            numPages = new File(Constants.blankTest).listFiles().length;
+            dataLoader = new DataLoader(numPages); //in case list of students participating is ever required
         }
+        numOfStudents = new File(Constants.studentResponses).listFiles().length; //depends on dataLoader.sortData()
 
-
-
-
-
-
-        numOfStudents = new File(Constants.studentResponses).listFiles().length;
+        //maps page names to a list of answer fields
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
 
+        //depends on updates to numOfProblems in order to instantiate maps with correct sizes
         this.setup();
+        // ----------- END SETUP ------------
+
 
         //positioning stuff
         int newX = 0;
@@ -76,6 +78,8 @@ public class UserInteractiveGrader {
 
             String page = getPageForNum(i);
             AnswerField ans = getAnswerFieldForNum(i);
+
+            System.out.println(numberToCanvas);
 
             for (File student : new File(Constants.studentResponses).listFiles()) { //student will be the name of the student
 
@@ -92,7 +96,7 @@ public class UserInteractiveGrader {
                 canvi.add(canvas);
                 students.put(student.getName(), thisStudent);
                 numberToCanvas.get(ans.getProblemNum()).add(canvas);
-                
+
                 //position stuff
                 if (newX + canvas.getWidth() + 20 > Constants.screenWidth) {
                     newX = 0;
@@ -135,12 +139,13 @@ public class UserInteractiveGrader {
         return file.exists();
     }
 
-    private HashMap<String, ArrayList<AnswerField>> loadAllAnswerFields() throws InterruptedException, IOException {
+    private HashMap<String, ArrayList<AnswerField>> loadAllAnswerFields() throws InterruptedException {
 
         HashMap<String, ArrayList<AnswerField>> answers = new HashMap<>();
         File[] blankTest = new File(Constants.blankTest).listFiles();
 
         int num = 0;
+        assert blankTest != null;
         for (File page : blankTest) {
 
             answers.put(page.getName(), new ArrayList<>());
@@ -150,8 +155,6 @@ public class UserInteractiveGrader {
             pageImage.display();
 
             int numOfAnswerFields = Integer.parseInt(new InputPane("How many answerfields on this page?").centered().getInput());
-
-//            int numOfAnswerFields = parsePaneInput("How many Answer Fields on this page", "smallLogo.png");
 
             for (int i = 0; i < numOfAnswerFields; i++) {
                 num++;
@@ -222,6 +225,9 @@ public class UserInteractiveGrader {
         return null;
     }
 
+    /**
+     * Populates all essential data structures with empty containers to be filled
+     */
     private void setup() {
         for (File student : new File(Constants.studentResponses).listFiles()) {
             tags.put(student.getName(), new HashMap<>());

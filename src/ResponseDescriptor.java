@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ResponseDescriptor {
+public class ResponseDescriptor extends Window {
 
     private JFrame frame;
     private JPanel mainPanel;
@@ -49,10 +49,10 @@ public class ResponseDescriptor {
         frame.setPreferredSize(new Dimension(400, 300));
         frame.pack();
 
-        frame.setLocation(new Point(
+        setLocation(
                 Constants.getLocationOfMouse()[0] - frame.getWidth() / 2,
                 Constants.getLocationOfMouse()[1] - frame.getHeight() / 2
-        ));
+        );
 
     }
 

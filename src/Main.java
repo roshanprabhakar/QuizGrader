@@ -1,8 +1,17 @@
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        runUserInteractiveGradingSystem();
+//        runUserInteractiveGradingSystem();
+
+        Window window1 = new Window(200, 40);
+        Window window2 = new Window(100, 100);
+        ArrayList<Window> windows = new ArrayList<>(Arrays.asList(window1, window2));
+
+        WindowManager manager = new WindowManager(windows, 2);
+        manager.configure();
     }
 
     /**
@@ -20,11 +29,7 @@ public class Main {
      */
 
     public static void runUserInteractiveGradingSystem() throws InterruptedException {
-        try {
-            UserInteractiveGrader userInteractiveGrader = new UserInteractiveGrader();
-            userInteractiveGrader.run();
-        } catch (IOException e) {
-            UserInteractiveGrader.logger.log("Unhandled IOException while initializing the grader!");
-        }
+        UserInteractiveGrader userInteractiveGrader = new UserInteractiveGrader();
+        userInteractiveGrader.run();
     }
 }

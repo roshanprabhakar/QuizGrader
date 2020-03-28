@@ -9,12 +9,11 @@ import java.util.HashMap;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
-public class Report {
+public class Report extends Window {
 
     private JTextField title;
     private JTextField classReport;
 
-    private JFrame frame;
     private JPanel mainPanel;
 
     private JButton sendInformationButton;

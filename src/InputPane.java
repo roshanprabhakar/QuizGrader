@@ -5,9 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class InputPane {
+public class InputPane extends Window {
 
-    private JFrame frame;
     private JPanel mainPanel;
 
     private JLabel imageLabel;
@@ -83,11 +82,6 @@ public class InputPane {
         }
         frame.setVisible(false);
         return input;
-    }
-
-    public InputPane setLocation(int x, int y) {
-        frame.setLocation(new Point(x, y));
-        return this;
     }
 
     public void pack() {

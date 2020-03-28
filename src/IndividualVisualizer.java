@@ -5,9 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class IndividualVisualizer {
-
-    private JFrame frame;
+public class IndividualVisualizer extends Window {
 
     private JPanel mainPanel;
     private JPanel names;

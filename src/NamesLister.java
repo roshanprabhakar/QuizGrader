@@ -6,9 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 
-public class NamesLister {
-
-    private JFrame frame;
+public class NamesLister extends Window {
 
     private JPanel mainPanel;
     private JButton submitButton;
@@ -110,10 +108,6 @@ public class NamesLister {
         while (!submitted) {
             System.out.print("");
         }
-    }
-
-    public void setLocation(int x, int y) {
-        frame.setLocation(new Point(x, y));
     }
 
     public void center() {

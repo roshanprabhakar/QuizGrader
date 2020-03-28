@@ -161,8 +161,6 @@ public class DataLoader {
             }
         }
 
-
-
         //moving blank test pages
         File blankTestDir = new File(Constants.imagePath + "BlankTestPages" + Constants.separator);
         if (!blankTestDir.exists()) blankTestDir.mkdir();

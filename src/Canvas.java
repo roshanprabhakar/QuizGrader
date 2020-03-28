@@ -6,9 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class Canvas {
-
-    private JFrame frame;
+public class Canvas extends Window {
 
     private JPanel mainPanel;
     private JLabel imageLabel;
@@ -225,10 +223,6 @@ public class Canvas {
 
     public void display() {
         frame.setVisible(true);
-    }
-
-    public void setLocation(int x, int y) {
-        frame.setLocation(new Point(x, y));
     }
 
     public Point getLocation() {
