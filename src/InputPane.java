@@ -28,9 +28,9 @@ public class InputPane {
 
         submit.setOpaque(true);
         submit.setBorderPainted(false);
-        submit.setBackground(new Color(200, 197, 255, 255));
 
-        submit.setBorder(BorderFactory.createLineBorder(new Color(200, 197, 255), 1));
+        submit.setBackground(new Color(200, 197, 255, 255));
+        submit.setPreferredSize(new Dimension(50, 10));
 
         message.setText(messageDialogue);
         message.setBorder(null);
@@ -48,20 +48,14 @@ public class InputPane {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-
                 submit.setBackground(new Color(184, 149, 198));
-                submit.setBorder(BorderFactory.createLineBorder(new Color(184, 149, 198), 1));
-
             }
         });
         submit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-
                 submit.setBackground(new Color(200, 197, 255));
-                submit.setBorder(BorderFactory.createLineBorder(new Color(200, 197, 255), 1));
-
             }
         });
 

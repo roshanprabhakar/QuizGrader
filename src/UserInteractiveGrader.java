@@ -5,12 +5,17 @@ import java.util.HashMap;
 
 public class UserInteractiveGrader {
 
-    public static final int numPages = Integer.parseInt(new InputPane("How many pages in this assessment?").centered().getInput());
-
+    //a logger for error tracking purposes
     public static Logger logger = new Logger();
-    public DataLoader dataLoader = new DataLoader(numPages);
 
-    public static int submittedProblems = 0;
+    //page length of the assessment
+    public static int numPages;
+
+    //loads data from raw pdf document
+    private DataLoader dataLoader;
+
+    //project variables
+    public static int submittedProblems = 0; //project level variable
     public static int logCount = 0;
 
     public int numOfStudents;
@@ -33,8 +38,15 @@ public class UserInteractiveGrader {
 
     public void run() throws InterruptedException, IOException {
 
+        // ---------- SETUP ----------
+        //get all student names
         new NamesLister().prompt();
 
+        //get number of pages
+        numPages = Integer.parseInt(new InputPane("How many pages in this assessment?").centered().getInput());
+
+        //parsing pdf data, storing it in organized directories
+        dataLoader = new DataLoader(numPages);
         if (!fileExists("src/ScannedImageSources")) {
             try {
                 dataLoader.loadData("QGTestData.pdf");
@@ -44,7 +56,10 @@ public class UserInteractiveGrader {
             }
         }
 
-        dataLoader.sortData();
+
+
+
+
 
         numOfStudents = new File(Constants.studentResponses).listFiles().length;
         ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page

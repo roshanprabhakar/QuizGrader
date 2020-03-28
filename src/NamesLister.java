@@ -18,6 +18,10 @@ public class NamesLister {
     private String namesInput;
     private boolean submitted;
 
+    /**
+     * A GUI intended to retrieve a list of student names from the user
+     * List only contains first names
+     */
     public NamesLister() {
 
         frame = new JFrame();
@@ -33,11 +37,9 @@ public class NamesLister {
         skipButton.setBorderPainted(false);
         skipButton.setBackground(new Color(200, 197, 255, 255));
 
-        Action action = new AbstractAction()
-        {
+        Action action = new AbstractAction() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 performSubmitOperations();
             }
         };
@@ -103,10 +105,19 @@ public class NamesLister {
     public void prompt() {
         frame.pack();
         frame.setSize(new Dimension(500, frame.getHeight()));
+        this.center();
         frame.setVisible(true);
         while (!submitted) {
             System.out.print("");
         }
+    }
+
+    public void setLocation(int x, int y) {
+        frame.setLocation(new Point(x, y));
+    }
+
+    public void center() {
+        setLocation((int) Constants.screenWidth / 2 - frame.getWidth() / 2, (int) Constants.screenHeight / 2 - frame.getHeight() / 2);
     }
 
     private String[] smartParser(String input) {
@@ -117,7 +128,6 @@ public class NamesLister {
     }
 
     private void write(String[] names) {
-
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File("names.txt")));
             for (String name : names) {

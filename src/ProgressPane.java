@@ -18,6 +18,8 @@ public class ProgressPane {
         progressBar.setMinimum(0);
         progressBar.setMaximum(300);
 
+        progressBar.setPreferredSize(new Dimension(380, progressBar.getHeight()));
+
         header.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
         frame.pack();

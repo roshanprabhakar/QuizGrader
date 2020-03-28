@@ -95,6 +95,11 @@ public class Constants {
         return -1;
     }
 
+    public static void delete(String filename) {
+        File file = new File(filename);
+        file.delete();
+    }
+
     public static ArrayList<String> getLines(File inputFile) {
         ArrayList<String> out = new ArrayList<>();
         try {

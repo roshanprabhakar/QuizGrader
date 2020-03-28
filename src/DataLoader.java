@@ -18,27 +18,25 @@ public class DataLoader {
     public DataLoader(int pages) {
         this.pages = pages;
         progressPane = new ProgressPane();
-        progressPane.display();
     }
 
     /**
-     * Loading data from PDF input
+     * Converting PDF to image data
      **/
-
     public void loadData(String multipagePDF) {
+        progressPane.display();
 
         ArrayList<BufferedImage> images = new ArrayList<>();
 
         PDDocument pdf = null;
-
         try {
             pdf = PDDocument.load(new File(Constants.pdfIn + multipagePDF));
         } catch (IOException e) {
             UserInteractiveGrader.logger.log("Couldn't load pdf");
-            UserInteractiveGrader.logger.log("DID YOU ADD THE ASSETS FOLDER TO YOUR CLASS PATH IN ECLIPSE?");
             UserInteractiveGrader.logger.log(e.getStackTrace());
         }
 
+        //converting pdf document to list<BufferedImage>
         List<PDPage> pages = pdf.getDocumentCatalog().getAllPages();
 
         progressPane.setMessage("reading from scanned pdf...");
@@ -67,6 +65,7 @@ public class DataLoader {
             UserInteractiveGrader.logger.log("could not close PDF parser!");
         }
 
+        //writing contents of bufferedimage list to separate directories
         File res = new File("src" + File.separator + "RES");
         if (!res.exists()) {
             res.mkdir();
@@ -117,12 +116,14 @@ public class DataLoader {
 
     /**
      * Sorting loaded data from RES to ScannedImageSources
+     * note: blank test is an example test, a random student example
      **/
     public void sortData() {
 
         progressPane.display();
         ArrayList<String> students = getStudentList("names.txt");
 
+        //create each directory hierarchy
         File scannedSources = new File("src" + Constants.separator + "ScannedImageSources");
         if (!scannedSources.exists()) scannedSources.mkdir();
 
@@ -156,14 +157,15 @@ public class DataLoader {
 
                 pageNum++;
                 progressPane.setMessage("sorting for student: " + students.get(student));
+                try {Thread.sleep(10);} catch (InterruptedException ignored) {}
             }
         }
+
+
 
         //moving blank test pages
         File blankTestDir = new File(Constants.imagePath + "BlankTestPages" + Constants.separator);
         if (!blankTestDir.exists()) blankTestDir.mkdir();
-
-        System.out.println("-------------------------------------");
 
         progressPane.setMessage("Initializing blank test...");
         for (int i = 1; i <= pages; i++) {
@@ -177,11 +179,14 @@ public class DataLoader {
             UserInteractiveGrader.logger.log("goal: " + goal.getAbsolutePath());
 
             move(origin, goal);
+
             progressPane.setMessage("Initializing blank test...");
         }
 
         progressPane.setMessage("Complete!");
         progressPane.close();
+        Constants.delete(Constants.res);
+
     }
 
     private ArrayList<String> getStudentList(String namesFile) {
