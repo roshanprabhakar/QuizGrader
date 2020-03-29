@@ -4,7 +4,7 @@ import java.awt.*;
 // for the sole purpose of managing positions
 public class Window {
 
-    public JFrame frame;
+    protected JFrame frame;
 
     public Window() {}
 

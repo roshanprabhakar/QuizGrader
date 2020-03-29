@@ -10,15 +10,14 @@ public class Main {
 //        runUserInteractiveGradingSystem();
 
         ArrayList<Window> windows = new ArrayList<>();
-        for (int i = 0; i < 225; i++) {
-//            windows.add(new Window(50 + (int)(Math.random() * 50), 50 + (int)(Math.random() * 50)));
-//            windows.add(new Window(100, 60));
-            windows.add(new WindowManagerTestWindow());
+        for (int i = 0; i < 25; i++) {
+            windows.add(new WindowManagerTestWindow(i, 50 + (int)(Math.random() * 50), 50 + (int)(Math.random() * 50)));
         }
 
-        manager = new WindowManager(windows, 2);
+        manager = new WindowManager(windows);
         manager.initialize();
         manager.displayAllPositioned();
+        Thread.sleep(100000);
     }
 
     /**

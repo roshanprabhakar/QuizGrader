@@ -8,8 +8,6 @@ import java.util.HashMap;
  */
 public class WindowManager {
 
-    private int numWindows;
-
     private ArrayList<Window> windows; //list works as queue
     private ArrayList<Point> locations; //aspirational positions of the centers of all the windows of the instance
     private HashMap<Point, Window> locationMap;
@@ -22,9 +20,8 @@ public class WindowManager {
      * Case everything else:
      * - only regard the biggest of the two windows
      */
-    public WindowManager(ArrayList<Window> windows, int numWindows) {
+    public WindowManager(ArrayList<Window> windows) {
         this.windows = windows;
-        this.numWindows = numWindows;
         this.locationMap = new HashMap<>();
     }
 
@@ -61,7 +58,6 @@ public class WindowManager {
             }
             i++;
         }
-        displayAllPositioned();
     }
 
     //Finds row and column locations
@@ -101,6 +97,7 @@ public class WindowManager {
         }
     }
 
+    //TODO write functionality to deal with num windows > num locations
     public void update() {
         int displacement = 0;
         for (int i = 0; i < locations.size(); i++) {
@@ -109,6 +106,7 @@ public class WindowManager {
             if (!window.isVisible()) {
                 displacement++;
             }
+            if (locationMap.get(locations.get(i + 1)) == null) break; //prevents loop for traversing locations without windows
         }
     }
 }
