@@ -37,4 +37,8 @@ public class Window {
     public void setVisible(boolean visible) {
         frame.setVisible(visible);
     }
+
+    public boolean isVisible() {
+        return frame.isVisible();
+    }
 }

@@ -3,15 +3,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
+
+    public static WindowManager manager;
+
     public static void main(String[] args) throws InterruptedException {
 //        runUserInteractiveGradingSystem();
 
-        Window window1 = new Window(200, 40);
-        Window window2 = new Window(100, 100);
-        ArrayList<Window> windows = new ArrayList<>(Arrays.asList(window1, window2));
+        ArrayList<Window> windows = new ArrayList<>();
+        for (int i = 0; i < 225; i++) {
+//            windows.add(new Window(50 + (int)(Math.random() * 50), 50 + (int)(Math.random() * 50)));
+//            windows.add(new Window(100, 60));
+            windows.add(new WindowManagerTestWindow());
+        }
 
-        WindowManager manager = new WindowManager(windows, 2);
-        manager.configure();
+        manager = new WindowManager(windows, 2);
+        manager.initialize();
+        manager.displayAllPositioned();
     }
 
     /**

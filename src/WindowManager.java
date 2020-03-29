@@ -1,7 +1,6 @@
-import jdk.internal.net.http.ResponseTimerEvent;
-
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Each WindowManager Instance serves as a template of window positions
@@ -11,28 +10,28 @@ public class WindowManager {
 
     private int numWindows;
 
-    private ArrayList<Window> windows;
-    private ArrayList<Point> centerPositions; //aspirational positions of the centers of all the windows of the instance
+    private ArrayList<Window> windows; //list works as queue
+    private ArrayList<Point> locations; //aspirational positions of the centers of all the windows of the instance
+    private HashMap<Point, Window> locationMap;
 
     /**
-     * @param windows
-     * @param numWindows, the configuration of this instance
-     *                  <p>
-     *                  Case canvii:
-     *                  - Each instance is fed an arraylist of equal number canvii
-     *                  <p>
-     *                  Case everything else:
-     *                  - only regard the biggest of the two windows
+     * <p>
+     * Case canvii:
+     * - Each instance is fed an arraylist of equal number canvii
+     * <p>
+     * Case everything else:
+     * - only regard the biggest of the two windows
      */
     public WindowManager(ArrayList<Window> windows, int numWindows) {
         this.windows = windows;
         this.numWindows = numWindows;
+        this.locationMap = new HashMap<>();
     }
 
     /**
-     * finds all possible locations of windows
+     * finds all possible locations of windows, stores locations in a list
      */
-    public void configure() {
+    public void initialize() {
         Dimension component = largestWindow();
 
         int numRows = (int) ((Constants.screenHeight - (Constants.screenHeight % component.getHeight())) / component.getHeight());
@@ -51,9 +50,21 @@ public class WindowManager {
                 locations.add(new Point(colIndices.get(c), rowIndices.get(r)));
             }
         }
+        this.locations = locations;
+
+        //matches available locations with available windows
+        int i = 0;
+        while (i < locations.size() && i < windows.size()) {
+            if (!windows.get(i).isVisible()) {
+                locationMap.put(locations.get(i), windows.get(i));
+                windows.get(i).centerAt(locations.get(i));
+            }
+            i++;
+        }
+        displayAllPositioned();
     }
 
-    //helper for configure
+    //Finds row and column locations
     private void extracted(int numDivisions, int spaceWidth, ArrayList<Integer> indexList) {
         int index = 0;
         for (int i = 0; i < numDivisions; i++) {
@@ -84,4 +95,20 @@ public class WindowManager {
         return largest;
     }
 
+    public void displayAllPositioned() {
+        for (Point loc : locationMap.keySet()) {
+            locationMap.get(loc).setVisible(true);
+        }
+    }
+
+    public void update() {
+        int displacement = 0;
+        for (int i = 0; i < locations.size(); i++) {
+            Window window = locationMap.get(locations.get(i));
+            window.centerAt(locations.get(i - displacement));
+            if (!window.isVisible()) {
+                displacement++;
+            }
+        }
+    }
 }
