@@ -33,4 +33,8 @@ public class Window {
     public void centerAt(Point p) {
         setLocation((int) (p.getX() - frame.getWidth() / 2), (int) (p.getY() - frame.getHeight() / 2));
     }
+
+    public void setVisible(boolean visible) {
+        frame.setVisible(visible);
+    }
 }
