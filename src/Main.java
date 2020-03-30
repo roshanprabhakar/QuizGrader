@@ -7,17 +7,17 @@ public class Main {
     public static WindowManager manager;
 
     public static void main(String[] args) throws InterruptedException {
-//        runUserInteractiveGradingSystem();
+        runUserInteractiveGradingSystem();
 
-        ArrayList<Window> windows = new ArrayList<>();
-        for (int i = 0; i < 25; i++) {
-            windows.add(new WindowManagerTestWindow(i, 50 + (int)(Math.random() * 50), 50 + (int)(Math.random() * 50)));
-        }
-
-        manager = new WindowManager(windows);
-        manager.initialize();
-        manager.displayAllPositioned();
-        Thread.sleep(100000);
+//        ArrayList<Window> windows = new ArrayList<>();
+//        for (int i = 0; i < 30; i++) {
+//            windows.add(new WindowManagerTestWindow(i, 300 + (int)(Math.random() * 300), 400 + (int)(Math.random() * 400)));
+//        }
+//
+//        manager = new WindowManager(windows);
+//        manager.initialize();
+//        manager.displayAllPositioned();
+//        Thread.sleep(100000);
     }
 
     /**

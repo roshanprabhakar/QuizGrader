@@ -27,5 +27,6 @@ public class WindowManagerTestWindow extends Window {
     private void submitAction() {
         frame.setVisible(false);
         Main.manager.update();
+        Main.manager.incrementClosed();
     }
 }

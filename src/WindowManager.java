@@ -11,6 +11,7 @@ public class WindowManager {
     private ArrayList<Window> windows; //list works as queue
     private ArrayList<Point> locations; //aspirational positions of the centers of all the windows of the instance
     private HashMap<Point, Window> locationMap;
+    private int numClosed;
 
     /**
      * <p>
@@ -23,6 +24,7 @@ public class WindowManager {
     public WindowManager(ArrayList<Window> windows) {
         this.windows = windows;
         this.locationMap = new HashMap<>();
+        this.numClosed = 0;
     }
 
     /**
@@ -48,6 +50,7 @@ public class WindowManager {
             }
         }
         this.locations = locations;
+        System.out.println(locations);
 
         //matches available locations with available windows
         int i = 0;
@@ -92,21 +95,40 @@ public class WindowManager {
     }
 
     public void displayAllPositioned() {
+        for (Window window : windows) {
+            window.setVisible(false);
+        }
         for (Point loc : locationMap.keySet()) {
             locationMap.get(loc).setVisible(true);
         }
     }
 
+    public void incrementClosed() {
+        this.numClosed++;
+    }
+
     //TODO write functionality to deal with num windows > num locations
     public void update() {
+        HashMap<Point, Window> newLocations = new HashMap<>();
         int displacement = 0;
         for (int i = 0; i < locations.size(); i++) {
             Window window = locationMap.get(locations.get(i));
             window.centerAt(locations.get(i - displacement));
+            newLocations.put(locations.get(i - displacement), window);
             if (!window.isVisible()) {
                 displacement++;
             }
-            if (locationMap.get(locations.get(i + 1)) == null) break; //prevents loop for traversing locations without windows
+            if (i < locations.size() - 1 && locationMap.get(locations.get(i + 1)) == null)
+                break; //prevents loop for traversing locations without windows
         }
+
+        if (windows.size() - numClosed > locations.size()) {
+            Point loc = locations.get(locations.size() - 1);
+            newLocations.put(loc, windows.get(locations.size() + numClosed));
+            newLocations.get(loc).centerAt(loc);
+        }
+
+        locationMap = newLocations;
+        displayAllPositioned();
     }
 }
