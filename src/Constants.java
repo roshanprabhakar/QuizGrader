@@ -15,8 +15,12 @@ public class Constants {
     public static final String pdfIn = "PDFInput" + separator;
     public static final String res = "src" + File.separator + "RES" + File.separator;
 
-    public static final int scaleWidth = 500; //scale all images to this width
-    public static final int scaleHeight = 750; //scale all images to this height
+//    public static final int scaleWidth = 500; //scale all images to this width
+//    public static final int scaleHeight = 750; //scale all images to this height
+
+    public static final int scaleWidth = 700; //scale all images to this width
+    public static final int scaleHeight = (int) (750 * ((double)7/5)); //scale all images to this height
+
 
     public static final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -82,10 +86,10 @@ public class Constants {
         return out.toString();
     }
 
-    public static int[] getLocationOfMouse() {
+    public static Point getLocationOfMouse() {
         int mouseX = MouseInfo.getPointerInfo().getLocation().x;
         int mouseY = MouseInfo.getPointerInfo().getLocation().y;
-        return new int[]{mouseX, mouseY};
+        return new Point(mouseX, mouseY);
     }
 
     public static int indexOfSimpGrades(Character chr) {

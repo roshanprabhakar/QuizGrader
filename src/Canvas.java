@@ -98,6 +98,9 @@ public class Canvas extends Window {
 
                 submitted = true;
 
+                UserInteractiveGrader.manager.update();
+                UserInteractiveGrader.manager.incrementClosed();
+
                 UserInteractiveGrader.logger.log("Comment written: ");
                 UserInteractiveGrader.logger.log(UserInteractiveGrader.comments.get(name).get(problemNum));
                 UserInteractiveGrader.logger.log("tags (specified): ");
@@ -219,10 +222,6 @@ public class Canvas extends Window {
 
     public int getHeight() {
         return frame.getHeight();
-    }
-
-    public void display() {
-        frame.setVisible(true);
     }
 
     public Point getLocation() {

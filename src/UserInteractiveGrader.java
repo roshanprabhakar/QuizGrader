@@ -5,8 +5,9 @@ import java.util.HashMap;
 
 public class UserInteractiveGrader {
 
-    //a logger for error tracking purposes
-    public static Logger logger = new Logger();
+    //Utilities
+    public static Logger logger = new Logger(); //logging system stats
+    public static WindowManager manager;
 
     //page length of the assessment
     public static int numPages;
@@ -19,18 +20,18 @@ public class UserInteractiveGrader {
     public static int logCount = 0;
 
     public int numOfStudents; //student directory count
-    public static HashMap<String, ArrayList<AnswerField>> ANSWER_FIELDS;
+    public static HashMap<String, ArrayList<AnswerField>> answerFields;
     public static int numOfProblems;
 
     public static ArrayList<String> menuLabels = new ArrayList<>();
-    public static ArrayList<Canvas> canvi = new ArrayList<>();
+    public static ArrayList<Canvas> canvii = new ArrayList<>();
 
     //most important structures for the program
     public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>();
     public static HashMap<Integer, ArrayList<Canvas>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
     public static HashMap<String, Student> students = new HashMap<>();
-    public static HashMap<String, HashMap<Integer, Integer>> conceptUnderstood = new HashMap<>(); //need to change the name
+    public static HashMap<String, HashMap<Integer, Integer>> conceptUnderstood = new HashMap<>();
     public static HashMap<String, Score> totals = new HashMap<>();
     public static HashMap<String, Character> grades = new HashMap<>();
     public static HashMap<String, Double> percentages = new HashMap<>();
@@ -61,61 +62,46 @@ public class UserInteractiveGrader {
         numOfStudents = new File(Constants.studentResponses).listFiles().length; //depends on dataLoader.sortData()
 
         //maps page names to a list of answer fields
-        ANSWER_FIELDS = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
+        answerFields = loadAllAnswerFields(); //HashMap mapping page name to list of answer fields on that page
 
         //depends on updates to numOfProblems in order to instantiate maps with correct sizes
         this.setup();
         // ----------- END SETUP ------------
 
-
-        //positioning stuff
-        int newX = 0;
-        int newY = 0;
-
-        boolean newLine = false;
-
+        //create the list<canvas> for the window manager
         for (int i = 1; i <= numOfProblems; i++) {
 
-            String page = getPageForNum(i);
-            AnswerField ans = getAnswerFieldForNum(i);
+            String page = getPageForNum(i); //page problem i is located in
+            AnswerField ans = getAnswerFieldForNum(i); //the corresponding answerfield on the appropriate page for problem i
 
-            System.out.println(numberToCanvas);
-
+            //execute data collector on all students
             for (File student : new File(Constants.studentResponses).listFiles()) { //student will be the name of the student
 
-                conceptUnderstood.put(student.getName(), new HashMap<>());
-                logger.log(conceptUnderstood);
-
+                //object representing student's data
                 Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
 
+                //the interface backend for data collection
                 QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
                 image.resize(Constants.scaleHeight, Constants.scaleWidth);
                 Canvas canvas = new Canvas(image.getRegion(ans), student.getName(), ans.getProblemNum());
 
                 //needed for statistical analysis
-                canvi.add(canvas);
+                canvii.add(canvas);
                 students.put(student.getName(), thisStudent);
-                numberToCanvas.get(ans.getProblemNum()).add(canvas);
-
-                //position stuff
-                if (newX + canvas.getWidth() + 20 > Constants.screenWidth) {
-                    newX = 0;
-                    newLine = true;
-                }
-
-                if (newLine) {
-                    newY += canvas.getHeight() + 20;
-                    newLine = false;
-                }
-
-                canvas.setLocation(newX, newY);
-                newX += canvas.getWidth() + 20;
-
-                canvas.display();
+                numberToCanvas.get(ans.getProblemNum()).add(canvas); //grouping data by problem number instead of the conventional by student
             }
         }
 
+        //interface frontend for data collection
+        manager = new WindowManager(new ArrayList<>(canvii));
+        manager.initialize();
+        manager.displayAllPositioned();
+
+        //wait till data collection is done
         while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print(""); //keep this print
+
+
+
 
         new Report(numOfProblems).display();
         new IndividualVisualizer(tags, scores, numOfProblems).display();
@@ -152,7 +138,7 @@ public class UserInteractiveGrader {
 
             QGImage pageImage = new QGImage(Constants.blankTest + page.getName());
             pageImage.resize(Constants.scaleHeight, Constants.scaleWidth);
-            pageImage.display();
+            pageImage.display(true);
 
             int numOfAnswerFields = Integer.parseInt(new InputPane("How many answerfields on this page?").centered().getInput());
 
@@ -168,7 +154,10 @@ public class UserInteractiveGrader {
         return answers;
     }
 
-    private AnswerField recordAnswerField(QGImage page, int problemNum) throws InterruptedException {
+    /**
+     * The problem is that the answer field is being recorded with locations taken with respect to the background, not to the bufferedImage
+     */
+    public static AnswerField recordAnswerField(QGImage page, int problemNum) throws InterruptedException {
 
         //AnswerField where we append mouse locations
         AnswerField field = new AnswerField();
@@ -178,21 +167,29 @@ public class UserInteractiveGrader {
             Thread.sleep(10);
             continue;
         }
+        System.out.println("clicked at: " + Constants.getLocationOfMouse());
 
-        field.setTopX(Constants.getLocationOfMouse()[0]);
-        field.setTopY(Constants.getLocationOfMouse()[1]);
+        field.setTopX((int)Constants.getLocationOfMouse().getX());
+        field.setTopY((int)Constants.getLocationOfMouse().getY());
+
+        System.out.println("recorded: " + field);
 
         //allows time for the user to drag the mouse
         while (page.mouseIsPressed()) {
             Thread.sleep(10);
             continue;
         }
+        System.out.println("clicked at: " + Constants.getLocationOfMouse());
 
-        field.setBottomX(Constants.getLocationOfMouse()[0]);
-        field.setBottomY(Constants.getLocationOfMouse()[1]);
+        field.setBottomX((int)Constants.getLocationOfMouse().getX());
+        field.setBottomY((int)Constants.getLocationOfMouse().getY());
+
+        System.out.println("recorded: " + field);
 
         field.setHeight(Math.abs(field.getTopY() - field.getBottomY()));
         field.setWidth(Math.abs(field.getTopX() - field.getBottomX()));
+
+        System.out.println("recorded: " + field);
 
         field.setProblemNum(problemNum);
 
@@ -204,8 +201,8 @@ public class UserInteractiveGrader {
     }
 
     private String getPageForNum(int num) {
-        for (String page : ANSWER_FIELDS.keySet()) {
-            for (AnswerField ans : ANSWER_FIELDS.get(page)) {
+        for (String page : answerFields.keySet()) {
+            for (AnswerField ans : answerFields.get(page)) {
                 if (ans.getProblemNum() == num) {
                     return page;
                 }
@@ -215,8 +212,8 @@ public class UserInteractiveGrader {
     }
 
     private AnswerField getAnswerFieldForNum(int num) {
-        for (String page : ANSWER_FIELDS.keySet()) {
-            for (AnswerField ans : ANSWER_FIELDS.get(page)) {
+        for (String page : answerFields.keySet()) {
+            for (AnswerField ans : answerFields.get(page)) {
                 if (ans.getProblemNum() == num) {
                     return ans;
                 }
@@ -236,6 +233,7 @@ public class UserInteractiveGrader {
             }
             scores.put(student.getName(), new HashMap<>());
             comments.put(student.getName(), new HashMap<>());
+            conceptUnderstood.put(student.getName(), new HashMap<>());
         }
         for (int i = 1; i <= numOfProblems; i++) {
             numberToCanvas.put(i, new ArrayList<>());
@@ -243,7 +241,7 @@ public class UserInteractiveGrader {
     }
 
     public static void updateCanvi() {
-        for (Canvas canvas : canvi) {
+        for (Canvas canvas : canvii) {
             for (String label : menuLabels) {
                 if (!canvas.contains(label) && !label.contains("<o>")) {
                     canvas.addLabel(label);

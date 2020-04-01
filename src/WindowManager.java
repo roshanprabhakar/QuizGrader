@@ -107,7 +107,6 @@ public class WindowManager {
         this.numClosed++;
     }
 
-    //TODO write functionality to deal with num windows > num locations
     public void update() {
         HashMap<Point, Window> newLocations = new HashMap<>();
         int displacement = 0;
@@ -126,9 +125,9 @@ public class WindowManager {
             Point loc = locations.get(locations.size() - 1);
             newLocations.put(loc, windows.get(locations.size() + numClosed));
             newLocations.get(loc).centerAt(loc);
+            newLocations.get(loc).setVisible(true);
         }
 
         locationMap = newLocations;
-        displayAllPositioned();
     }
 }

@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,18 +7,15 @@ public class Main {
 
     public static WindowManager manager;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         runUserInteractiveGradingSystem();
 
-//        ArrayList<Window> windows = new ArrayList<>();
-//        for (int i = 0; i < 30; i++) {
-//            windows.add(new WindowManagerTestWindow(i, 300 + (int)(Math.random() * 300), 400 + (int)(Math.random() * 400)));
-//        }
-//
-//        manager = new WindowManager(windows);
-//        manager.initialize();
-//        manager.displayAllPositioned();
-//        Thread.sleep(100000);
+//        QGImage pageImage = new QGImage("TestImg.png");
+//        pageImage.resize((int) (pageImage.getHeight() * 0.3), (int) (pageImage.getWidth() * 0.3));
+//        pageImage.display(true);
+//        AnswerField field = UserInteractiveGrader.recordAnswerField(pageImage, 1);
+//        QGImage image2 = pageImage.getRegion(field);
+//        image2.display(false);
     }
 
     /**

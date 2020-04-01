@@ -50,8 +50,8 @@ public class ResponseDescriptor extends Window {
         frame.pack();
 
         setLocation(
-                Constants.getLocationOfMouse()[0] - frame.getWidth() / 2,
-                Constants.getLocationOfMouse()[1] - frame.getHeight() / 2
+                (int) Constants.getLocationOfMouse().getX() - frame.getWidth() / 2,
+                (int) Constants.getLocationOfMouse().getY() - frame.getHeight() / 2
         );
 
     }

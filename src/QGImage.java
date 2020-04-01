@@ -7,11 +7,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class QGImage implements MouseListener {
+public class QGImage extends Window implements MouseListener {
 
     private boolean isPressed;
 
-    private JFrame frame; //for the mouse listener
     private JFrame rectangle; //rectangle view finder
     private BufferedImage image; //contents of the image
 
@@ -48,7 +47,7 @@ public class QGImage implements MouseListener {
 
     public void drawRectangleAt(int startX, int startY, int endX, int endY) {
         rectangle = new JFrame();
-        rectangle.setLocation(new Point(startX, startY));
+        rectangle.setLocation(new Point(startX + frame.getX(), startY + frame.getY()));
         rectangle.setSize(endX - startX, endY - startY);
         rectangle.getContentPane().setBackground(Color.GRAY);
         rectangle.getRootPane().putClientProperty("Window.alpha", new Float(0.3f));
@@ -57,16 +56,17 @@ public class QGImage implements MouseListener {
     }
 
     public QGImage getRegion(AnswerField a) {
+        return new QGImage(image.getSubimage(a.getTopX(), a.getTopY(), a.getWidth(), a.getHeight()));
+    }
 
-        BufferedImage section = new BufferedImage(a.getWidth(), a.getHeight(), BufferedImage.TYPE_INT_RGB);
+    public QGImage getRegion2(AnswerField a) {
+        QGImage newImage = new QGImage(image.getSubimage(a.getTopX(), a.getTopY(), a.getWidth(), a.getHeight()));
+//        newImage.setUndecorated(true);
+        return newImage;
+    }
 
-        for (int r = a.getTopY(); r < a.getBottomY(); r++) {
-            for (int c = a.getTopX(); c < a.getBottomX(); c++) {
-                section.setRGB(c - a.getTopX(), r - a.getTopY(), image.getRGB(c, r));
-            }
-        }
-
-        return new QGImage(section);
+    public void removeBorder() {
+        frame.setUndecorated(true);
     }
 
     public ImageIcon getIcon() {
@@ -92,11 +92,15 @@ public class QGImage implements MouseListener {
     }
 
 
-    public void display() {
-        frame.getContentPane().setLayout(new FlowLayout());
+    public void display(boolean undecorated) {
         frame.getContentPane().add(new JLabel(new ImageIcon(image)));
+        frame.setUndecorated(undecorated);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public void setUndecorated(boolean undecorated) {
+        frame.setUndecorated(undecorated);
     }
 
     public void close() {
@@ -105,10 +109,6 @@ public class QGImage implements MouseListener {
 
     public void closeRectangleView() {
         rectangle.setVisible(false);
-    }
-
-    public void setPosition(Point p) {
-        frame.setLocation(p);
     }
 
     // --- Mouse Listener Interface Methods ---
@@ -131,6 +131,23 @@ public class QGImage implements MouseListener {
 
     public boolean mouseIsPressed() {
         return isPressed;
+    }
+
+
+    public static class QGPanel extends JPanel {
+        private static BufferedImage image;
+
+        public QGPanel(BufferedImage image) {
+           this.image = image;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (image != null) {
+                g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), this);
+            }
+        }
     }
 }
 

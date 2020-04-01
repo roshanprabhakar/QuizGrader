@@ -3,11 +3,11 @@ import java.util.HashMap;
 
 public class Student {
 
-    HashMap<Integer, ArrayList<String>> tags;
-    HashMap<Integer, Score> scores;
-    Score total;
+    private HashMap<Integer, ArrayList<String>> tags;
+    private HashMap<Integer, Score> scores;
+    private Score total;
 
-    String name;
+    private String name;
 
     public Student(HashMap<Integer, ArrayList<String>> tags, HashMap<Integer, Score> scores, String name) {
         this.tags = tags;
