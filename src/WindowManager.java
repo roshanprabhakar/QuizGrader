@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Each WindowManager Instance serves as a template of window positions
  * intended to make easier managing window locations
  */
-public class WindowManager {
+public class WindowManager { //TODO fix this
 
     private ArrayList<Window> windows; //list works as queue
     private ArrayList<Point> locations; //aspirational positions of the centers of all the windows of the instance

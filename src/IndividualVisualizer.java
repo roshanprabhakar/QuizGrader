@@ -53,18 +53,19 @@ public class IndividualVisualizer extends Window {
             problemNumMenu.addItem(i);
         }
 
+        frame.pack();
+
         namesMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nameClicked = true;
                 namesTextField.setText(namesMenu.getSelectedItem().toString());
                 if (nameClicked && numberClicked) {
-                    UserInteractiveGrader.logger.log("both clicked");
+                    System.err.println("both clicked");
                     updateInfo(namesMenu.getSelectedItem().toString(), problemNumMenu.getSelectedIndex());
                 }
             }
         });
-
 
         problemNumMenu.addActionListener(new ActionListener() {
             @Override
@@ -72,7 +73,7 @@ public class IndividualVisualizer extends Window {
                 numberClicked = true;
                 numberTextField.setText(problemNumMenu.getSelectedItem().toString());
                 if (nameClicked && numberClicked) {
-                    UserInteractiveGrader.logger.log("both clicked");
+                    System.err.println("both clicked");
                     updateInfo(namesMenu.getSelectedItem().toString(), problemNumMenu.getSelectedIndex());
                 }
             }
@@ -80,7 +81,6 @@ public class IndividualVisualizer extends Window {
     }
 
     public void display() {
-        frame.pack();
         frame.setVisible(true);
     }
 

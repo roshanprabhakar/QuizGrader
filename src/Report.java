@@ -62,6 +62,11 @@ public class Report extends Window {
         classReportPane.setEditorKit(kit);
         classReportPane.setText(getClassReport());
 
+        scroller.getVerticalScrollBar().setUnitIncrement(2);
+
+        frame.pack();
+        frame.add(mainPanel);
+
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -176,7 +181,6 @@ public class Report extends Window {
 
     public void display() {
         frame.add(mainPanel);
-        frame.pack();
         frame.setVisible(true);
     }
 
@@ -184,8 +188,8 @@ public class Report extends Window {
         int[] grades = new int[5];
         for (String student : UserInteractiveGrader.grades.keySet()) {
 
-            UserInteractiveGrader.logger.log(Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student)));
-            UserInteractiveGrader.logger.log(UserInteractiveGrader.grades.get(student));
+            System.err.println(Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student)));
+            System.err.println(UserInteractiveGrader.grades.get(student));
 
             grades[Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student))]++;
         }
@@ -199,7 +203,7 @@ public class Report extends Window {
         for (String student : UserInteractiveGrader.students.keySet()) {
             totalPercent += UserInteractiveGrader.students.get(student).getTotal().getPercent();
 
-            UserInteractiveGrader.logger.log(totalPercent);
+            System.err.println(totalPercent);
         }
 
         return ((int) (totalPercent / numStudents) * 100) / 100;
@@ -228,14 +232,14 @@ public class Report extends Window {
 
     private String lowestScore(HashMap<String, Double> percentages) {
 
-        UserInteractiveGrader.logger.log("-------- lowest scores ----------");
-        UserInteractiveGrader.logger.log(percentages);
+        System.err.println("-------- lowest scores ----------");
+        System.err.println(percentages);
 
         String lowestName = "";
         double lowestPercent = 101;
         for (String student : percentages.keySet()) {
 
-            UserInteractiveGrader.logger.log(student);
+            System.err.println(student);
 
             if (percentages.get(student) < lowestPercent) {
                 lowestName = student;

@@ -22,7 +22,7 @@ public class Cleaner {
 
 
         } catch (IOException e) {
-            UserInteractiveGrader.logger.log("Could not format generated CSV data");
+            System.err.println("Could not format generated CSV data");
             e.printStackTrace();
         }
     }

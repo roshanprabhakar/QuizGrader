@@ -27,7 +27,7 @@ public class CSVgenerator {
             if (!outDirectory.exists()) {outDirectory.mkdir();}
 
         } catch (Exception e) {
-            UserInteractiveGrader.logger.log("Could not create CSV folder");
+            System.err.println("Could not create CSV folder");
         }
 
         this.numOfProblems = numOfProblems;
@@ -53,8 +53,8 @@ public class CSVgenerator {
                 builder.append(student + ", ");
 
 
-                UserInteractiveGrader.logger.log("scores.get(student): ");
-                UserInteractiveGrader.logger.log(UserInteractiveGrader.scores.get(student));
+                System.err.println("scores.get(student): ");
+                System.err.println(UserInteractiveGrader.scores.get(student));
                 for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
                     builder.append(UserInteractiveGrader.scores.get(student).get(i).getPercent() + ", ");
                 }
@@ -73,7 +73,7 @@ public class CSVgenerator {
             out.close();
 
         } catch (Exception e) {
-            UserInteractiveGrader.logger.log("Could not populate scores.csv");
+            System.err.println("Could not populate scores.csv");
         }
     }
 
@@ -90,7 +90,7 @@ public class CSVgenerator {
             //body of file
             StringBuilder body = new StringBuilder();
 
-            UserInteractiveGrader.logger.log("answered correctly: " + UserInteractiveGrader.conceptUnderstood);
+            System.err.println("answered correctly: " + UserInteractiveGrader.conceptUnderstood);
 
             title.append("name, ");
             for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
@@ -109,14 +109,14 @@ public class CSVgenerator {
             out.close();
 
         } catch (IOException exception) {
-            UserInteractiveGrader.logger.log("could not generate or populate binary reports file");
+            System.err.println("could not generate or populate binary reports file");
         }
 
     }
 
     public void writeComments() {
-        UserInteractiveGrader.logger.log("------------- Writing Comments -------------");
-        UserInteractiveGrader.logger.log(UserInteractiveGrader.comments);
+        System.err.println("------------- Writing Comments -------------");
+        System.err.println(UserInteractiveGrader.comments);
 
         try {
 
@@ -137,22 +137,22 @@ public class CSVgenerator {
 
             for (String student : UserInteractiveGrader.comments.keySet()) {
 
-                UserInteractiveGrader.logger.log("student: " + student);
+                System.err.println("student: " + student);
                 body.append(student + ", ");
 
                 for (int i = 1; i <= numOfProblems; i++) {
-                    UserInteractiveGrader.logger.log("number: " + i);
+                    System.err.println("number: " + i);
 
-                    UserInteractiveGrader.logger.log("######################");
-                    UserInteractiveGrader.logger.log(UserInteractiveGrader.comments.get(student));
+                    System.err.println("######################");
+                    System.err.println(UserInteractiveGrader.comments.get(student));
                     if (UserInteractiveGrader.comments.get(student).get(i).equals("")) {
                         body.append("no comment,");
                     } else {
                         body.append(UserInteractiveGrader.comments.get(student).get(i));
                     }
 
-                    UserInteractiveGrader.logger.log("title: " + title);
-                    UserInteractiveGrader.logger.log("body: " + body);
+                    System.err.println("title: " + title);
+                    System.err.println("body: " + body);
                 }
                 body.append("\n");
             }
@@ -162,7 +162,7 @@ public class CSVgenerator {
             writer.close();
 
         } catch (IOException e) {
-            UserInteractiveGrader.logger.log("Could not generate csv for comments");
+            System.err.println("Could not generate csv for comments");
         }
     }
 
@@ -200,7 +200,7 @@ public class CSVgenerator {
             writer.close();
 
         } catch (IOException e) {
-            UserInteractiveGrader.logger.log("Could not generate csv for tags");
+            System.err.println("Could not generate csv for tags");
         }
     }
 }

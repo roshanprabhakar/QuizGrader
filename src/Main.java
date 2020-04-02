@@ -10,12 +10,15 @@ public class Main {
     public static void main(String[] args) throws InterruptedException, IOException {
         runUserInteractiveGradingSystem();
 
-//        QGImage pageImage = new QGImage("TestImg.png");
-//        pageImage.resize((int) (pageImage.getHeight() * 0.3), (int) (pageImage.getWidth() * 0.3));
-//        pageImage.display(true);
-//        AnswerField field = UserInteractiveGrader.recordAnswerField(pageImage, 1);
-//        QGImage image2 = pageImage.getRegion(field);
-//        image2.display(false);
+//        ArrayList<Window> windows = new ArrayList<>();
+//
+//        for (int i = 0; i < 100; i++) {
+//            windows.add(new WindowManagerTestWindow(i, (100 + (int)(Math.random() * 100)), (100 + (int)(Math.random() * 100))));
+//        }
+//
+//        manager = new WindowManager(windows);
+//        manager.initialize();
+//        manager.displayAllPositioned();
     }
 
     /**
@@ -31,7 +34,6 @@ public class Main {
      * 6. generate student summary, with comments and scores
      * 7. send these scores through email
      */
-
     public static void runUserInteractiveGradingSystem() throws InterruptedException {
         UserInteractiveGrader userInteractiveGrader = new UserInteractiveGrader();
         userInteractiveGrader.run();

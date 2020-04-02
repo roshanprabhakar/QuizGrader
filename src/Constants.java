@@ -15,25 +15,17 @@ public class Constants {
     public static final String pdfIn = "PDFInput" + separator;
     public static final String res = "src" + File.separator + "RES" + File.separator;
 
-//    public static final int scaleWidth = 500; //scale all images to this width
-//    public static final int scaleHeight = 750; //scale all images to this height
-
-    public static final int scaleWidth = 700; //scale all images to this width
-    public static final int scaleHeight = (int) (750 * ((double)7/5)); //scale all images to this height
-
-
     public static final double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static final double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-    public static final int columnWidth = 15;
+    public static final int scaleWidth = (int) (screenHeight * ((double)50/75)); //scale all images to this width
+    public static final int scaleHeight = (int) screenHeight; //scale all images to this height
 
     public static final int labelWidth = 150;
     public static final int labelHeight = 120;
 
-    public static final int increment = 2;
-
-    public static char[] grades = new char[] {'F','F','F','F','F','F','D','C','B','A'};
-    public static String[] simpGrades = new String[] {"F","D","C","B","A"};
+    public static char[] grades = new char[]{'F', 'F', 'F', 'F', 'F', 'F', 'D', 'C', 'B', 'A'};
+    public static String[] simpGrades = new String[]{"F", "D", "C", "B", "A"};
 
     public static String[] toArray(ArrayList<String> arr) {
         String[] list = new String[arr.size()];
@@ -56,7 +48,7 @@ public class Constants {
     public static Character findGrade(Score score) {
         for (double i = 0; i < 100; i += 10) {
             if (score.getPercent() >= i && score.getPercent() < i + 10) {
-                return grades[(int)(i / 10)];
+                return grades[(int) (i / 10)];
             }
         }
         return 'A';
@@ -115,7 +107,7 @@ public class Constants {
             }
 
         } catch (IOException e) {
-            UserInteractiveGrader.logger.log("Could not read from input file: " + inputFile.getName());
+            System.err.println("Could not read from input file: " + inputFile.getName());
         }
         return out;
     }
