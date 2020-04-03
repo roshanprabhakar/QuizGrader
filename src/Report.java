@@ -93,11 +93,16 @@ public class Report extends Window {
 
         //all methods return html formatted strings
         reportWriteable.append("<p>");
-        reportWriteable.append("Most common grade: " + getMostCommonGrade() + "<br>");
-        reportWriteable.append("Average percentage: " + getAveragePercent() + "%<br>");
+        reportWriteable.append(("Most common grade: " + getMostCommonGrade() + "<br>").trim());
+        reportWriteable.append(("Average percentage: " + getAveragePercent() + "%<br>").trim());
 
-        reportWriteable.append("Lowest scorers: " + getLowestScorers(3) + "<br>");
-        reportWriteable.append("Highest scorers: " + getHighestScoreres(3) + "<br>");
+        String lowestScorers = ("Lowest scorers: " + getLowestScorers(3)).trim();
+        if (lowestScorers.charAt(lowestScorers.length() - 1) == ',') lowestScorers = lowestScorers.substring(0, lowestScorers.length() - 1);
+        reportWriteable.append(lowestScorers + "<br>");
+
+        String highestScorers = ("Highest scorers: " + getHighestScoreres(3)).trim();
+        if (highestScorers.charAt(highestScorers.length() - 1) == ',') highestScorers = highestScorers.substring(0, highestScorers.length() - 1);
+        reportWriteable.append(highestScorers + "<br>");
 
         //recursion
         reportWriteable.append("Tags (most to least common): " + catchOrderedTags(3) + "<br>");
@@ -115,7 +120,7 @@ public class Report extends Window {
             int suggestedEarned = 0;
 
             writeable.append("<p>");
-            writeable.append("<b>" + student + "</b>" + ":   ");
+            writeable.append("<b>" + student + "</b>" + ": ");
 
             for (Integer i = 1; i <= numOfProblems; i++) {
 
