@@ -1,10 +1,12 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.util.Arrays;
 
 public class NamesLister extends Window {
 
@@ -12,6 +14,7 @@ public class NamesLister extends Window {
     private JButton submitButton;
     private JButton skipButton;
     private JTextField inputField;
+    private JTextField namesField;
 
     private String namesInput;
     private boolean submitted;
@@ -27,6 +30,8 @@ public class NamesLister extends Window {
 
         mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
+        namesField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+
         submitButton.setOpaque(true);
         submitButton.setBorderPainted(false);
         submitButton.setBackground(new Color(200, 197, 255, 255));
@@ -35,10 +40,13 @@ public class NamesLister extends Window {
         skipButton.setBorderPainted(false);
         skipButton.setBackground(new Color(200, 197, 255, 255));
 
+        inputField.setBorder(new LineBorder(new Color(200, 197, 255, 255), 5));
+
         Action action = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 performSubmitOperations();
+                frame.setVisible(false);
             }
         };
         inputField.addActionListener(action);
@@ -93,39 +101,40 @@ public class NamesLister extends Window {
         });
     }
 
-    private void performSubmitOperations() {
-        namesInput = inputField.getText();
-        String[] names = smartParser(namesInput);
-        write(names);
-        submitted = true;
-    }
-
     public void prompt() {
         frame.pack();
         frame.setSize(new Dimension(500, frame.getHeight()));
-        this.center();
+        this.centerAt(new Point((int) (Constants.screenWidth / 2), (int) (Constants.screenHeight / 2)));
         frame.setVisible(true);
         while (!submitted) {
             System.out.print("");
         }
     }
 
-    public void center() {
-        setLocation((int) Constants.screenWidth / 2 - frame.getWidth() / 2, (int) Constants.screenHeight / 2 - frame.getHeight() / 2);
+    private void performSubmitOperations() {
+        namesInput = inputField.getText();
+        System.out.println(namesInput);
+        String[] names = smartParser(namesInput);
+        System.out.println(Arrays.toString(names));
+        write(names);
+        submitted = true;
     }
 
+
     private String[] smartParser(String input) {
-        input.trim();
-        input.replaceAll(",", " ");
-        input.replaceAll(" +", " ");
-        return input.split(" ");
+        String[] names = input.split(",");
+        for (int i = 0; i < names.length; i++) {
+            names[i] = names[i].trim();
+        }
+        return names;
     }
 
     private void write(String[] names) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File("names.txt")));
-            for (String name : names) {
-                writer.write(name + "\n");
+            for (int i = 0; i < names.length; i++) {
+                writer.write(names[i]);
+                if (i != names.length - 1) writer.write("\n");
             }
             writer.close();
         } catch (IOException e) {

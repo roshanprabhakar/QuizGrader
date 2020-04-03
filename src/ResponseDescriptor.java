@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 
 public class ResponseDescriptor extends Window {
 
-    private JFrame frame;
     private JPanel mainPanel;
 
     private JTextField title;
@@ -40,7 +39,7 @@ public class ResponseDescriptor extends Window {
                     frame.setVisible(false);
                     UserInteractiveGrader.comments.get(student).put(problemNum, comment.getDocument().getText(0, comment.getDocument().getLength()));
                 } catch (Exception exception) {
-                    UserInteractiveGrader.logger.log("Could not record comment!");
+                    System.err.println("Could not record comment!");
                 }
             }
         });

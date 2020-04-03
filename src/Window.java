@@ -34,8 +34,16 @@ public class Window {
         setLocation((int) (p.getX() - frame.getWidth() / 2), (int) (p.getY() - frame.getHeight() / 2));
     }
 
+    public Point getLocation() {
+        return frame.getLocation();
+    }
+
     public void setVisible(boolean visible) {
         frame.setVisible(visible);
+    }
+
+    public JFrame getFrame() {
+        return this.frame;
     }
 
     public boolean isVisible() {

@@ -54,64 +54,13 @@ public class Canvas extends Window {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (customTags.getText().equals("Tags")) customTags.setText("");
-                String[] customTagsCollected = customTags.getText().split(", ");
+                performSubmitOperations(name, problemNum);
 
-                Constants.removeDuplicates(customTagsCollected);
-
-                for (String label : customTagsCollected) {
-                    tags.add(label);
-                    if (!UserInteractiveGrader.menuLabels.contains(label.toLowerCase()))
-                        UserInteractiveGrader.menuLabels.add(label.toLowerCase());
-                }
-
-                //deal with
-                scoreObject = new Score(Double.parseDouble(score.getText().split("/")[0]), Double.parseDouble(score.getText().split("/")[1]));
-
-                UserInteractiveGrader.scores.get(name).put(problemNum, scoreObject);
-                UserInteractiveGrader.students.get(name).addScore(problemNum, scoreObject);
-
+                //window manager operations
                 frame.setVisible(false);
-
-                for (String tag : tags) {
-                    UserInteractiveGrader.tags.get(name).get(problemNum).add(tag);
-                }
-
-                UserInteractiveGrader.updateCanvi();
-                UserInteractiveGrader.updateScoresForProblem(problemNum, score.getText().split("/")[1]);
-
                 UserInteractiveGrader.submittedProblems++;
-                
-                for (String tag : tags) {
-                    UserInteractiveGrader.students.get(name).addTag(problemNum, tag);
-                }
-
-                if (answeredCorrectly) {
-                    UserInteractiveGrader.conceptUnderstood.get(name).put(problemNum, 1);
-                }  else {
-                    UserInteractiveGrader.conceptUnderstood.get(name).put(problemNum, 0);
-                }
-
-                if (!commentWritten) {
-                    UserInteractiveGrader.comments.get(name).put(problemNum, "");
-                }
-
-                submitted = true;
-
                 UserInteractiveGrader.manager.update();
                 UserInteractiveGrader.manager.incrementClosed();
-
-                UserInteractiveGrader.logger.log("Comment written: ");
-                UserInteractiveGrader.logger.log(UserInteractiveGrader.comments.get(name).get(problemNum));
-                UserInteractiveGrader.logger.log("tags (specified): ");
-                UserInteractiveGrader.logger.log(UserInteractiveGrader.tags);
-                UserInteractiveGrader.logger.log("scores: ");
-                UserInteractiveGrader.logger.log(UserInteractiveGrader.scores);
-                UserInteractiveGrader.logger.log("all tags: ");
-                UserInteractiveGrader.logger.log(UserInteractiveGrader.menuLabels);
-                UserInteractiveGrader.logger.log("number of submitted problems: ");
-                UserInteractiveGrader.logger.log(UserInteractiveGrader.submittedProblems);
-                UserInteractiveGrader.logger.log(UserInteractiveGrader.conceptUnderstood);
             }
         });
 
@@ -226,5 +175,53 @@ public class Canvas extends Window {
 
     public Point getLocation() {
         return frame.getLocation();
+    }
+
+    public void performSubmitOperations(String name, int problemNum) {
+        //parses tag data from canvas, stores in customTagsCollected
+        if (customTags.getText().equals("Tags")) customTags.setText("");
+        String[] customTagsCollected = customTags.getText().split(", ");
+        Constants.removeDuplicates(customTagsCollected);
+
+        //updates local index of tags, as well as program global index in uig
+        for (String label : customTagsCollected) {
+            tags.add(label);
+            if (!UserInteractiveGrader.menuLabels.contains(label.toLowerCase()))
+                UserInteractiveGrader.menuLabels.add(label.toLowerCase());
+        }
+
+        //updates student object map with tag info
+        for (String tag : tags) {
+            UserInteractiveGrader.students.get(name).addTag(problemNum, tag);
+        }
+
+        //parses score
+        scoreObject = new Score(Double.parseDouble(score.getText().split("/")[0]), Double.parseDouble(score.getText().split("/")[1]));
+
+        //adds score info to uig index of students
+        UserInteractiveGrader.scores.get(name).put(problemNum, scoreObject);
+        UserInteractiveGrader.students.get(name).addScore(problemNum, scoreObject);
+
+        //updating student-specific tag info in uig
+        for (String tag : tags) {
+            UserInteractiveGrader.tags.get(name).get(problemNum).add(tag);
+        }
+
+        UserInteractiveGrader.updateCanvi(); //adds tags to other canvii
+        UserInteractiveGrader.updateScoresForProblem(problemNum, score.getText().split("/")[1]); //changes score default text for other canvii
+
+        //updates concept understood correctly
+        if (answeredCorrectly) {
+            UserInteractiveGrader.conceptUnderstood.get(name).put(problemNum, 1);
+        }  else {
+            UserInteractiveGrader.conceptUnderstood.get(name).put(problemNum, 0);
+        }
+
+        //in case no comments were written, adds an empty string to that student's index of comments
+        if (!commentWritten) {
+            UserInteractiveGrader.comments.get(name).put(problemNum, "");
+        }
+
+        submitted = true;
     }
 }

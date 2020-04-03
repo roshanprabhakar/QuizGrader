@@ -50,7 +50,6 @@ public class WindowManager {
             }
         }
         this.locations = locations;
-        System.out.println(locations);
 
         //matches available locations with available windows
         int i = 0;

@@ -24,7 +24,6 @@ public class Report extends Window {
 
     private int numOfProblems;
 
-
     public JPanel getMainPanel() {
         return mainPanel;
     }
@@ -62,18 +61,15 @@ public class Report extends Window {
         classReportPane.setEditorKit(kit);
         classReportPane.setText(getClassReport());
 
+        scroller.getVerticalScrollBar().setUnitIncrement(2);
+
+        frame.pack();
+        frame.add(mainPanel);
+
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                CSVgenerator generator = new CSVgenerator(numOfProblems);
-
-                generator.organizeBinaryData();
-                generator.organizeGradeData();
-                generator.writeComments();
-                generator.writeTags();
-
-
+                Burner.writeAll();
                 UserInteractiveGrader.logCount++;
             }
         });
@@ -97,11 +93,16 @@ public class Report extends Window {
 
         //all methods return html formatted strings
         reportWriteable.append("<p>");
-        reportWriteable.append("Most common grade: " + getMostCommonGrade() + "<br>");
-        reportWriteable.append("Average percentage: " + getAveragePercent() + "%<br>");
+        reportWriteable.append(("Most common grade: " + getMostCommonGrade() + "<br>").trim());
+        reportWriteable.append(("Average percentage: " + getAveragePercent() + "%<br>").trim());
 
-        reportWriteable.append("Lowest scorers: " + getLowestScorers(3) + "<br>");
-        reportWriteable.append("Highest scorers: " + getHighestScoreres(3) + "<br>");
+        String lowestScorers = ("Lowest scorers: " + getLowestScorers(3)).trim();
+        if (lowestScorers.charAt(lowestScorers.length() - 1) == ',') lowestScorers = lowestScorers.substring(0, lowestScorers.length() - 1);
+        reportWriteable.append(lowestScorers + "<br>");
+
+        String highestScorers = ("Highest scorers: " + getHighestScoreres(3)).trim();
+        if (highestScorers.charAt(highestScorers.length() - 1) == ',') highestScorers = highestScorers.substring(0, highestScorers.length() - 1);
+        reportWriteable.append(highestScorers + "<br>");
 
         //recursion
         reportWriteable.append("Tags (most to least common): " + catchOrderedTags(3) + "<br>");
@@ -119,7 +120,7 @@ public class Report extends Window {
             int suggestedEarned = 0;
 
             writeable.append("<p>");
-            writeable.append("<b>" + student + "</b>" + ":   ");
+            writeable.append("<b>" + student + "</b>" + ": ");
 
             for (Integer i = 1; i <= numOfProblems; i++) {
 
@@ -176,7 +177,6 @@ public class Report extends Window {
 
     public void display() {
         frame.add(mainPanel);
-        frame.pack();
         frame.setVisible(true);
     }
 
@@ -184,8 +184,8 @@ public class Report extends Window {
         int[] grades = new int[5];
         for (String student : UserInteractiveGrader.grades.keySet()) {
 
-            UserInteractiveGrader.logger.log(Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student)));
-            UserInteractiveGrader.logger.log(UserInteractiveGrader.grades.get(student));
+            Constants.record(Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student)));
+            Constants.record(UserInteractiveGrader.grades.get(student));
 
             grades[Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student))]++;
         }
@@ -199,7 +199,7 @@ public class Report extends Window {
         for (String student : UserInteractiveGrader.students.keySet()) {
             totalPercent += UserInteractiveGrader.students.get(student).getTotal().getPercent();
 
-            UserInteractiveGrader.logger.log(totalPercent);
+            Constants.record(totalPercent);
         }
 
         return ((int) (totalPercent / numStudents) * 100) / 100;
@@ -228,14 +228,14 @@ public class Report extends Window {
 
     private String lowestScore(HashMap<String, Double> percentages) {
 
-        UserInteractiveGrader.logger.log("-------- lowest scores ----------");
-        UserInteractiveGrader.logger.log(percentages);
+        Constants.record("-------- lowest scores ----------");
+        Constants.record(percentages);
 
         String lowestName = "";
         double lowestPercent = 101;
         for (String student : percentages.keySet()) {
 
-            UserInteractiveGrader.logger.log(student);
+            Constants.record(student);
 
             if (percentages.get(student) < lowestPercent) {
                 lowestName = student;
