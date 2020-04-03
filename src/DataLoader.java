@@ -32,8 +32,8 @@ public class DataLoader {
         try {
             pdf = PDDocument.load(new File(Constants.pdfIn + multipagePDF));
         } catch (IOException e) {
-            System.err.println("Couldn't load pdf");
-            System.err.println(e.getStackTrace());
+            Constants.record("Couldn't load pdf");
+            Constants.record(e.getStackTrace());
         }
 
         //converting pdf document to list<BufferedImage>
@@ -51,8 +51,8 @@ public class DataLoader {
             try {
                 images.add(page.convertToImage());
             } catch (IOException e) {
-                System.err.println("problem converting to image");
-                System.err.println(e.getStackTrace());
+                Constants.record("problem converting to image");
+                Constants.record(e.getStackTrace());
             }
 
             counter++;
@@ -62,7 +62,7 @@ public class DataLoader {
         try {
             pdf.close();
         } catch (IOException e) {
-            System.err.println("could not close PDF parser!");
+            Constants.record("could not close PDF parser!");
         }
 
         //writing contents of bufferedimage list to separate directories
@@ -87,7 +87,7 @@ public class DataLoader {
 
             } catch (IOException e) {
 
-                System.err.println("page" + i + " unable to load");
+                Constants.record("page" + i + " unable to load");
                 System.exit(0);
 
             }
@@ -105,7 +105,7 @@ public class DataLoader {
             try {
                 ImageIO.write(images.get(i), "png", new File(Constants.res + "BlankTestPage" + (i + 1) + ".png"));
             } catch (IOException e) {
-                System.err.println("Could not load startup page: (first " + this.pages + " pages)");
+                Constants.record("Could not load startup page: (first " + this.pages + " pages)");
             }
             progressPane.setMessage("converting loaded images to readable...");
         }
@@ -148,10 +148,10 @@ public class DataLoader {
 
                 File origin = new File(Constants.res + "page" + pageNum + ".png");
                 File goal = new File(Constants.studentResponses + students.get(student) + Constants.separator + "page" + pageInTest + ".png");
-                System.err.println(pageInTest);
+                Constants.record(pageInTest);
 
-                System.err.println("origin: " + origin.getAbsolutePath());
-                System.err.println("goal: " + goal.getAbsolutePath());
+                Constants.record("origin: " + origin.getAbsolutePath());
+                Constants.record("goal: " + goal.getAbsolutePath());
 
                 move(origin, goal);
 
@@ -172,9 +172,9 @@ public class DataLoader {
             progressPane.appendMessage(" " + (int)((double) i / pages * 100) + "% ");
 
             File origin = new File(Constants.res + "BlankTestPage" + i + ".png");
-            System.err.println("origin: " + origin.getAbsolutePath());
+            Constants.record("origin: " + origin.getAbsolutePath());
             File goal = new File(Constants.blankTest + "page" + i + ".png");
-            System.err.println("goal: " + goal.getAbsolutePath());
+            Constants.record("goal: " + goal.getAbsolutePath());
 
             move(origin, goal);
 
@@ -198,7 +198,7 @@ public class DataLoader {
                 students.add(student.replaceAll("\n", ""));
             }
         } catch (IOException e) {
-            System.err.println("Unknown IOException while reading from RES!");
+            Constants.record("Unknown IOException while reading from RES!");
         }
 
         return students;
@@ -251,7 +251,7 @@ public class DataLoader {
 //                    pageNumber++;
 //                }
 //                newDirectory = new File(Constants.StudentDirectoryPath + Integer.toString(pages - i + 1));
-//                System.err.println(pages - i + 1);
+//                Constants.record(pages - i + 1);
 //            }
 //
 //            new File("src" + File.separator + "RES").delete();

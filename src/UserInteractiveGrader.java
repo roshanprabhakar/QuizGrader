@@ -27,15 +27,15 @@ public class UserInteractiveGrader {
     public static ArrayList<Canvas> canvii = new ArrayList<>();
 
     //most important structures for the program
-    public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>(); //student --> #:tags
-    public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>(); //student --> #:score
+    public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>(); //student --> #:tags //send
+    public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>(); //student --> #:score //send
     public static HashMap<Integer, ArrayList<Canvas>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
     public static HashMap<String, Student> students = new HashMap<>();
-    public static HashMap<String, HashMap<Integer, Integer>> conceptUnderstood = new HashMap<>();
-    public static HashMap<String, Score> totals = new HashMap<>();
-    public static HashMap<String, Character> grades = new HashMap<>();
-    public static HashMap<String, Double> percentages = new HashMap<>();
-    public static HashMap<String, HashMap<Integer, String>> comments = new HashMap<>();
+    public static HashMap<String, HashMap<Integer, Integer>> conceptUnderstood = new HashMap<>(); //send
+    public static HashMap<String, Score> totals = new HashMap<>(); //send
+    public static HashMap<String, Character> grades = new HashMap<>(); //send
+    public static HashMap<String, Double> percentages = new HashMap<>(); //send
+    public static HashMap<String, HashMap<Integer, String>> comments = new HashMap<>(); //send
 
     public void run() throws InterruptedException {
 
@@ -53,7 +53,7 @@ public class UserInteractiveGrader {
                 dataLoader.loadData("QGTestData.pdf");
                 dataLoader.sortData();
             } catch (NullPointerException e) {
-                System.out.println("Null Pointer when loading and sorting data");
+                Constants.record("Null Pointer when loading and sorting data");
             }
         } else {
             numPages = Objects.requireNonNull(new File(Constants.blankTest).listFiles()).length;
@@ -102,36 +102,40 @@ public class UserInteractiveGrader {
 
 
         Window report = new Report(numOfProblems);
-//        report.centerAt(new Point((int) (Constants.screenWidth / 4), (int) (Constants.screenHeight / 2)));
-//        report.setVisible(true);
+        report.centerAt(new Point((int) (Constants.screenWidth / 2), (int) (Constants.screenHeight / 2)));
+        report.setVisible(true);
 
         Window iv = new IndividualVisualizer(tags, scores, numOfProblems);
-//        iv.centerAt(new Point((int) (3 * Constants.screenWidth / 4), (int) (Constants.screenHeight / 2)));
-//        iv.setVisible(true);
-
-        ArrayList<Window> reportWindows = new ArrayList<>();
-        reportWindows.add(report);
-        reportWindows.add(iv);
-
-        WindowManager manager = new WindowManager(reportWindows);
-        manager.initialize();
-        manager.displayAllPositioned();
-
         iv.setLocation((int) report.getLocation().getX() + report.getWidth(), (int) report.getLocation().getY());
         iv.setVisible(true);
 
+//        //structures to send
+//        System.out.println(tags);
+//        System.out.println(comments);
+//        System.out.println(scores);
+//        System.out.println(conceptUnderstood);
+//        System.out.println(grades);
+//        System.out.println(totals);
+//        System.out.println(percentages);
 
-
-        logCount++;
-
-        while (logCount != 2) {
+        while (logCount != 1) {
             System.out.print("");
         }
 
-        //clean up data collection
-        Cleaner.eraseTrailingCommas();
+        Burner.writeAll();
 
         System.exit(0);
+
+//        logCount++;
+//
+//        while (logCount != 2) {
+//            System.out.print("");
+//        }
+//
+//        //clean up data collection
+//        Cleaner.eraseTrailingCommas();
+//
+//        System.exit(0);
     }
 
     private boolean fileExists(String filepath) {
@@ -155,7 +159,7 @@ public class UserInteractiveGrader {
             pageImage.display(true);
 
             InputPane pane = new InputPane("How many answerfields on this page?");
-            pane.centerAt(new Point((int)(((double)3/5) * Constants.screenWidth), (int)((double)1/2 * Constants.screenHeight)));
+            pane.centerAt(new Point((int) (((double) 3 / 5) * Constants.screenWidth), (int) ((double) 1 / 2 * Constants.screenHeight)));
             int numOfAnswerFields = Integer.parseInt(pane.getInput());
 
 //            int numOfAnswerFields = Integer.parseInt(new InputPane("How many answerfields on this page?").centered().getInput());
@@ -185,29 +189,29 @@ public class UserInteractiveGrader {
             Thread.sleep(10);
             continue;
         }
-//        System.out.println("clicked at: " + Constants.getLocationOfMouse());
+//        Constants.record("clicked at: " + Constants.getLocationOfMouse());
 
-        field.setTopX((int)Constants.getLocationOfMouse().getX() - page.getFrame().getX());
-        field.setTopY((int)Constants.getLocationOfMouse().getY() - page.getFrame().getY());
+        field.setTopX((int) Constants.getLocationOfMouse().getX() - page.getFrame().getX());
+        field.setTopY((int) Constants.getLocationOfMouse().getY() - page.getFrame().getY());
 
-//        System.out.println("recorded: " + field);
+//        Constants.record("recorded: " + field);
 
         //allows time for the user to drag the mouse
         while (page.mouseIsPressed()) {
             Thread.sleep(10);
             continue;
         }
-//        System.out.println("clicked at: " + Constants.getLocationOfMouse());
+//        Constants.record("clicked at: " + Constants.getLocationOfMouse());
 
-        field.setBottomX((int)Constants.getLocationOfMouse().getX() - page.getFrame().getX());
-        field.setBottomY((int)Constants.getLocationOfMouse().getY() - page.getFrame().getY());
+        field.setBottomX((int) Constants.getLocationOfMouse().getX() - page.getFrame().getX());
+        field.setBottomY((int) Constants.getLocationOfMouse().getY() - page.getFrame().getY());
 
-//        System.out.println("recorded: " + field);
+//        Constants.record("recorded: " + field);
 
         field.setHeight(Math.abs(field.getTopY() - field.getBottomY()));
         field.setWidth(Math.abs(field.getTopX() - field.getBottomX()));
 
-//        System.out.println("recorded: " + field);
+//        Constants.record("recorded: " + field);
 
         field.setProblemNum(problemNum);
 

@@ -42,7 +42,7 @@ public class ProgressPane extends Window {
 
     public void display() {
         frame.pack();
-        center(); //needs to be called after pack()
+        centerAt(new Point((int)(Constants.screenWidth / 2), (int)(Constants.screenHeight / 2)));
         frame.setVisible(true);
     }
 

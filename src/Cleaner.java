@@ -10,7 +10,7 @@ public class Cleaner {
            BufferedWriter writer;
 
            for (File outFile : outCSV.listFiles()) {
-               System.out.println(outFile.getName());
+               Constants.record(outFile.getName());
                writer = new BufferedWriter(new FileWriter(outFile));
                ArrayList<String> lines = Constants.getLines(outFile);
                for (String line : lines) {
@@ -22,7 +22,7 @@ public class Cleaner {
 
 
         } catch (IOException e) {
-            System.err.println("Could not format generated CSV data");
+            Constants.record("Could not format generated CSV data");
             e.printStackTrace();
         }
     }

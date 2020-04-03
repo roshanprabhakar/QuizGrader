@@ -1,7 +1,2 @@
-roshan
-neel
-shrey
-kevin
-young
-suhyuk
-rahul
+Roshan
+Neel

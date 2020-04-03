@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +34,9 @@ public class InputPane extends Window {
 
         message.setText(messageDialogue);
         message.setBorder(null);
+
+        inputTextField.setBorder(new LineBorder(new Color(200, 197, 255, 255), 3));
+
 
         submit.addActionListener(new ActionListener() {
             @Override

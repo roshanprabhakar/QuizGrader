@@ -9,16 +9,6 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         runUserInteractiveGradingSystem();
-
-//        ArrayList<Window> windows = new ArrayList<>();
-//
-//        for (int i = 0; i < 100; i++) {
-//            windows.add(new WindowManagerTestWindow(i, (100 + (int)(Math.random() * 100)), (100 + (int)(Math.random() * 100))));
-//        }
-//
-//        manager = new WindowManager(windows);
-//        manager.initialize();
-//        manager.displayAllPositioned();
     }
 
     /**

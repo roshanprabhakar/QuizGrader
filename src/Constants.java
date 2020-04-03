@@ -111,4 +111,7 @@ public class Constants {
         }
         return out;
     }
+
+    public static void record(Object obj) {
+    }
 }

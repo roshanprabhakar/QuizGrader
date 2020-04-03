@@ -24,7 +24,6 @@ public class Report extends Window {
 
     private int numOfProblems;
 
-
     public JPanel getMainPanel() {
         return mainPanel;
     }
@@ -70,15 +69,7 @@ public class Report extends Window {
         sendInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                CSVgenerator generator = new CSVgenerator(numOfProblems);
-
-                generator.organizeBinaryData();
-                generator.organizeGradeData();
-                generator.writeComments();
-                generator.writeTags();
-
-
+                Burner.writeAll();
                 UserInteractiveGrader.logCount++;
             }
         });
@@ -188,8 +179,8 @@ public class Report extends Window {
         int[] grades = new int[5];
         for (String student : UserInteractiveGrader.grades.keySet()) {
 
-            System.err.println(Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student)));
-            System.err.println(UserInteractiveGrader.grades.get(student));
+            Constants.record(Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student)));
+            Constants.record(UserInteractiveGrader.grades.get(student));
 
             grades[Constants.indexOfSimpGrades(UserInteractiveGrader.grades.get(student))]++;
         }
@@ -203,7 +194,7 @@ public class Report extends Window {
         for (String student : UserInteractiveGrader.students.keySet()) {
             totalPercent += UserInteractiveGrader.students.get(student).getTotal().getPercent();
 
-            System.err.println(totalPercent);
+            Constants.record(totalPercent);
         }
 
         return ((int) (totalPercent / numStudents) * 100) / 100;
@@ -232,14 +223,14 @@ public class Report extends Window {
 
     private String lowestScore(HashMap<String, Double> percentages) {
 
-        System.err.println("-------- lowest scores ----------");
-        System.err.println(percentages);
+        Constants.record("-------- lowest scores ----------");
+        Constants.record(percentages);
 
         String lowestName = "";
         double lowestPercent = 101;
         for (String student : percentages.keySet()) {
 
-            System.err.println(student);
+            Constants.record(student);
 
             if (percentages.get(student) < lowestPercent) {
                 lowestName = student;
