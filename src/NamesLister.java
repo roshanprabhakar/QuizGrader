@@ -113,9 +113,7 @@ public class NamesLister extends Window {
 
     private void performSubmitOperations() {
         namesInput = inputField.getText();
-        System.out.println(namesInput);
         String[] names = smartParser(namesInput);
-        System.out.println(Arrays.toString(names));
         write(names);
         submitted = true;
     }
