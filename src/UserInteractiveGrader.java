@@ -8,6 +8,10 @@ public class UserInteractiveGrader {
 
     //Utilities
     public static WindowManager manager;
+    public static boolean closed;
+
+    public static Report report;
+    public static IndividualVisualizer iv;
 
     //page length of the assessment
     public static int numPages;
@@ -101,41 +105,21 @@ public class UserInteractiveGrader {
         while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print(""); //keep this print
 
 
-        Window report = new Report(numOfProblems);
+        report = new Report(numOfProblems);
         report.centerAt(new Point((int) (Constants.screenWidth / 2), (int) (Constants.screenHeight / 2)));
         report.setVisible(true);
 
-        Window iv = new IndividualVisualizer(tags, scores, numOfProblems);
+        iv = new IndividualVisualizer(tags, scores, numOfProblems);
         iv.setLocation((int) report.getLocation().getX() + report.getWidth(), (int) report.getLocation().getY());
         iv.setVisible(true);
 
-//        //structures to send
-//        System.out.println(tags);
-//        System.out.println(comments);
-//        System.out.println(scores);
-//        System.out.println(conceptUnderstood);
-//        System.out.println(grades);
-//        System.out.println(totals);
-//        System.out.println(percentages);
+        Burner.writeAll();
 
-        while (logCount != 1) {
+        while (!closed) {
             System.out.print("");
         }
 
-        Burner.writeAll();
-
         System.exit(0);
-
-//        logCount++;
-//
-//        while (logCount != 2) {
-//            System.out.print("");
-//        }
-//
-//        //clean up data collection
-//        Cleaner.eraseTrailingCommas();
-//
-//        System.exit(0);
     }
 
     private boolean fileExists(String filepath) {

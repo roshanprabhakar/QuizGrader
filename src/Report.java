@@ -16,7 +16,7 @@ public class Report extends Window {
 
     private JPanel mainPanel;
 
-    private JButton sendInformationButton;
+    private JButton closeAllOpps;
     private JScrollPane scroller;
 
     private JEditorPane classReportPane;
@@ -66,11 +66,12 @@ public class Report extends Window {
         frame.pack();
         frame.add(mainPanel);
 
-        sendInformationButton.addActionListener(new ActionListener() {
+        closeAllOpps.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Burner.writeAll();
-                UserInteractiveGrader.logCount++;
+                UserInteractiveGrader.report.setVisible(false);
+                UserInteractiveGrader.iv.setVisible(false);
+                UserInteractiveGrader.closed = true;
             }
         });
     }
