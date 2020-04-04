@@ -1,8 +1,8 @@
 
 Neel Kandlikar
 Problem 1: 
-Tags: , 
-Comment: asdf
+Tags: 
+Comment: 
 Score: 2.0/2.0
 Main Concept Understood: no
 Assessment Summary: 
