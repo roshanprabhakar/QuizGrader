@@ -3,270 +3,190 @@ Zach
 Problem 1: 
 Tags: 
 Comment: 
-Score: 100.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 3.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
-Total Grade: A
-Total Points Earned: 103.0/14.0
-Grade Percent: 735.7142857142857
+Total Grade: F
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Sreeganesh
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 1.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 6.0/14.0
-Grade Percent: 42.857142857142854
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Hannah
 Problem 1: 
 Tags: 
 Comment: 
-Score: 6.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 2.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 8.0/14.0
-Grade Percent: 57.14285714285714
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Nikhil
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 2.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 7.0/14.0
-Grade Percent: 50.0
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Katya
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 4.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
-Total Grade: D
-Total Points Earned: 9.0/14.0
-Grade Percent: 64.28571428571429
+Total Grade: F
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Akash
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 3.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 8.0/14.0
-Grade Percent: 57.14285714285714
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Erik
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 4.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
-Total Grade: D
-Total Points Earned: 9.0/14.0
-Grade Percent: 64.28571428571429
+Total Grade: F
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Meera
 Problem 1: 
 Tags: 
 Comment: 
-Score: 4.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 4.0/4.0
+Score: 3.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 8.0/14.0
-Grade Percent: 57.14285714285714
+Total Points Earned: 3.0/10.0
+Grade Percent: 30.0
 
 
 George
 Problem 1: 
 Tags: 
 Comment: 
-Score: 3.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 1.0/4.0
+Score: 2.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 4.0/14.0
-Grade Percent: 28.57142857142857
+Total Points Earned: 2.0/10.0
+Grade Percent: 20.0
 
 
 Julie
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 4.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
-Total Grade: D
-Total Points Earned: 9.0/14.0
-Grade Percent: 64.28571428571429
+Total Grade: F
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Kayrra
 Problem 1: 
 Tags: 
 Comment: 
-Score: 6.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 5.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
-Total Grade: C
-Total Points Earned: 11.0/14.0
-Grade Percent: 78.57142857142857
+Total Grade: F
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Yusuf
 Problem 1: 
 Tags: 
 Comment: 
-Score: 6.0/10.0
+Score: 4.0/10.0
 Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 4.0/4.0
-Main Concept Understood: yes
 Assessment Summary: 
-Total Grade: C
-Total Points Earned: 10.0/14.0
-Grade Percent: 71.42857142857143
+Total Grade: F
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Chris
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 4.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
-Total Grade: D
-Total Points Earned: 9.0/14.0
-Grade Percent: 64.28571428571429
+Total Grade: F
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Maya
 Problem 1: 
 Tags: 
 Comment: 
-Score: 3.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 4.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 7.0/14.0
-Grade Percent: 50.0
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Roy
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 3.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 8.0/14.0
-Grade Percent: 57.14285714285714
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 
 
 Ayush
 Problem 1: 
 Tags: 
 Comment: 
-Score: 5.0/10.0
-Main Concept Understood: no
-Problem 2: 
-Tags: 
-Comment: 
-Score: 2.0/4.0
+Score: 4.0/10.0
 Main Concept Understood: no
 Assessment Summary: 
 Total Grade: F
-Total Points Earned: 7.0/14.0
-Grade Percent: 50.0
+Total Points Earned: 4.0/10.0
+Grade Percent: 40.0
 

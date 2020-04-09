@@ -46,7 +46,9 @@ public class Score {
         return percent;
     }
 
-
+    public double getParsedPercent() {
+        return Math.round(getPercent() * 10.0) / (double) 10;
+    }
 
     public void recalculatePercent() {
         calculatePercent();

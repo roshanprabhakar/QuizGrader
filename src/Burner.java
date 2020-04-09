@@ -89,14 +89,12 @@ public class Burner {
             StringBuilder studentReport = new StringBuilder();
             HashMap<Integer, Score> scores = UserInteractiveGrader.scores.get(student);
             Score total = UserInteractiveGrader.totals.get(student);
-            Double percentage = UserInteractiveGrader.percentages.get(student);
-//            Character grade = UserInteractiveGrader.grades.get(student);
 
             studentReport.append(student).append(", ");
             for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
                 studentReport.append(scores.get(i).getPercent()).append(", ");
             }
-            studentReport.append(percentage);
+            studentReport.append(total.getParsedPercent());
 
             csvFormatted.add(studentReport.toString());
         }
