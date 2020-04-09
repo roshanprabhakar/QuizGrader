@@ -9,19 +9,19 @@ public class Burner {
 
     /**
      * To Write:
-     *
+     * <p>
      * Problem Specific:
      * - tags
      * - comments
      * - scores
      * - concept understood
-     *
+     * <p>
      * Student Specific
      * - grades
      * - percentages
      * - totals
      */
-    public static void writeAll() {
+    public static void writeEmailExportable() {
         ArrayList<String> report = new ArrayList<>();
         for (String student : UserInteractiveGrader.students.keySet()) {
 
@@ -70,11 +70,41 @@ public class Burner {
 
             report.add(studentReport.toString());
         }
-        write(report);
+        write(report, "Data/EmailExportable.txt");
     }
 
-    public static void write(ArrayList<String> report) {
-        File data = new File("Data/out.txt");
+    public static void writeSoftwareExportable() {
+        ArrayList<String> csvFormatted = new ArrayList<>();
+
+        StringBuilder title = new StringBuilder("name, ");
+        for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
+            title.append(i + ", ");
+        }
+        title.append("total");
+
+        csvFormatted.add(title.toString());
+
+        for (String student : UserInteractiveGrader.students.keySet()) {
+
+            StringBuilder studentReport = new StringBuilder();
+            HashMap<Integer, Score> scores = UserInteractiveGrader.scores.get(student);
+            Score total = UserInteractiveGrader.totals.get(student);
+            Double percentage = UserInteractiveGrader.percentages.get(student);
+//            Character grade = UserInteractiveGrader.grades.get(student);
+
+            studentReport.append(student).append(", ");
+            for (int i = 1; i <= UserInteractiveGrader.numOfProblems; i++) {
+                studentReport.append(scores.get(i).getPercent()).append(", ");
+            }
+            studentReport.append(percentage);
+
+            csvFormatted.add(studentReport.toString());
+        }
+        write(csvFormatted, "Data/SoftwareExportable.csv");
+    }
+
+    public static void write(ArrayList<String> report, String filepath) {
+        File data = new File(filepath);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(data));
             for (String studentReport : report) {

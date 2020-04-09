@@ -113,7 +113,8 @@ public class UserInteractiveGrader {
         iv.setLocation((int) report.getLocation().getX() + report.getWidth(), (int) report.getLocation().getY());
         iv.setVisible(true);
 
-        Burner.writeAll();
+        Burner.writeEmailExportable();
+        Burner.writeSoftwareExportable();
 
         while (!closed) {
             System.out.print("");

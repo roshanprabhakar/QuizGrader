@@ -18,6 +18,7 @@ public class Score {
         this.percent = earned / possible * 100;
     }
 
+
     public double getEarned() {
         return earned;
     }
@@ -44,6 +45,8 @@ public class Score {
         recalculatePercent();
         return percent;
     }
+
+
 
     public void recalculatePercent() {
         calculatePercent();
