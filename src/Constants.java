@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Constants {
@@ -112,6 +109,17 @@ public class Constants {
         return out;
     }
 
+    public static boolean containsText(ArrayList<String> arr) {
+        for (String str : arr) {
+            if (str.trim() != "") return true;
+        }
+        return false;
+    }
+
+    /**
+     * print buffer
+     */
     public static void record(Object obj) {
     }
+
 }

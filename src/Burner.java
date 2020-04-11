@@ -105,8 +105,9 @@ public class Burner {
         File data = new File(filepath);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(data));
-            for (String studentReport : report) {
-                writer.write(studentReport + "\n");
+            for (int i = 0; i < report.size(); i++) {
+                writer.write(report.get(i));
+                if (i < report.size() - 1) writer.write("\n");
             }
             writer.close();
         } catch (IOException e) {

@@ -86,4 +86,8 @@ public class AnswerField {
         return "topX: " + topX +" topY: " + topY + " bottomX: " + bottomX + " bottomY: " + bottomY
                 + " height: " + height + " width: " + width + " num: " + problemNum;
     }
+
+    public String compress() {
+        return topX + "," + topY + "," + bottomX + "," + bottomY + "," + problemNum;
+    }
 }

@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.io.File;
+import java.lang.reflect.AnnotatedWildcardType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -128,10 +129,18 @@ public class UserInteractiveGrader {
         return file.exists();
     }
 
+    //TODO switch functionality in case answerfields already exist
+    //assumes pdf pages have been parsed and organized
     private HashMap<String, ArrayList<AnswerField>> loadAllAnswerFields() throws InterruptedException {
+
+        ArrayList<String> answerFields = Constants.getLines(new File("Progress/Answerfields.txt"));
+        if (Constants.containsText(answerFields)) {
+            return parseAnswerFieldsFromDisk();
+        }
 
         HashMap<String, ArrayList<AnswerField>> answers = new HashMap<>();
         File[] blankTest = new File(Constants.blankTest).listFiles();
+        ArrayList<String> diskInfo = new ArrayList<>();
 
         int num = 0;
         assert blankTest != null;
@@ -151,14 +160,40 @@ public class UserInteractiveGrader {
 
             for (int i = 0; i < numOfAnswerFields; i++) {
                 num++;
-                answers.get(page.getName()).add(recordAnswerField(pageImage, num));
+                AnswerField field = recordAnswerField(pageImage, num);
+                answers.get(page.getName()).add(field);
+                diskInfo.add(field.compress() + "," + page.getName());
             }
 
             pageImage.close();
         }
 
         numOfProblems = num;
+        Burner.write(diskInfo, "Progress/Answerfields.txt");
         return answers;
+    }
+
+    public HashMap<String, ArrayList<AnswerField>> parseAnswerFieldsFromDisk() {
+        ArrayList<String> data = Constants.getLines(new File("Progress/Answerfields.txt"));
+        HashMap<String, ArrayList<AnswerField>> map = new HashMap<>();
+        int num = 0;
+        for (String line : data) {
+            String[] parsed = line.split(",");
+            AnswerField field = new AnswerField(
+                    Integer.parseInt(parsed[0]),
+                    Integer.parseInt(parsed[1]),
+                    Integer.parseInt(parsed[2]),
+                    Integer.parseInt(parsed[3]),
+                    Integer.parseInt(parsed[4])
+            );
+            if (map.get(parsed[5]) == null) {
+                map.put(parsed[5], new ArrayList<>());
+            }
+            map.get(parsed[5]).add(field);
+            num++;
+        }
+        numOfProblems = num;
+        return map;
     }
 
     /**

@@ -1,0 +1,20 @@
+What needs to be stored after every submission:
+
+After initialization:
+- record each number along with its answerfield and page
+- record numOfStudents
+- record numPages
+- write all canvii to disk
+
+After each canvas submission:
+- remove the submitted canvas from what still needs to be submitted
+
+upon reopen:
+- repopulate all essential data structures
+- load all necessary canvii into the window manager
+
+
+Answerfields.txt
+
+each line:
+topX, topY, bottomX, bottomY, problemNum, pageName
