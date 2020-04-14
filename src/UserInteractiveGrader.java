@@ -75,7 +75,16 @@ public class UserInteractiveGrader {
         //creates the list<canvas> for the window manager, burns to disk if grading session not initiated, loads from disk if already initiated
         if (!Constants.containsText(Constants.getLines(new File("Progress" + Constants.separator + "Canvii.txt")))) {
             ArrayList<String> canvasStrings = new ArrayList<>();
+
+            //progress bar on canvii loading
+            ProgressPane loadingCanvasProgress = new ProgressPane();
+            loadingCanvasProgress.centerAt(new Point((int)(Constants.screenWidth / 2), (int)(Constants.screenHeight / 2)));
+            loadingCanvasProgress.display();
+
+            double maxCount = numOfProblems * Objects.requireNonNull(new File(Constants.studentResponses).listFiles()).length;
+
             for (int i = 1; i <= numOfProblems; i++) {
+                loadingCanvasProgress.setMessage("Loading program windows...");
 
                 String page = getPageForNum(i); //page problem i is located in
                 AnswerField ans = getAnswerFieldForNum(i); //the corresponding answerfield on the appropriate page for problem i
@@ -99,13 +108,27 @@ public class UserInteractiveGrader {
                     //needed for statistical analysis
                     canvii.add(canvas);
                     numberToCanvas.get(ans.getProblemNum()).add(canvas); //grouping data by problem number instead of the conventional by student
+
+                    //update user on loading status
+                    loadingCanvasProgress.setProgressBarPercentage((int)(Canvas.canviiCount / maxCount * 100));
+                    loadingCanvasProgress.setMessage("Loading program windows... " + (int)(Canvas.canviiCount / maxCount * 100) + "%");
                 }
             }
+            loadingCanvasProgress.close();
+
             Burner.write(canvasStrings, "Progress/Canvii.txt");
         } else {
+
+            //progress bar on canvii loading
+            ProgressPane loadingCanvasProgress = new ProgressPane();
+            loadingCanvasProgress.setMessage("Loading program windows...");
+            loadingCanvasProgress.centerAt(new Point((int)(Constants.screenWidth / 2), (int)(Constants.screenHeight / 2)));
+            loadingCanvasProgress.display();
+
             //Needs to add student to students, all canvas queued to canvii, map all canvii to numberToCanvas
             ArrayList<String> compressedCanvii = Constants.getLines(new File("Progress" + Constants.separator + "Canvii.txt"));
             for (int i = 0; i < compressedCanvii.size(); i++) {
+
                 Canvas canvas = new Canvas(compressedCanvii.get(i));
 
                 if (students.get(canvas.getStudentName()) == null) {
@@ -114,7 +137,12 @@ public class UserInteractiveGrader {
 
                 canvii.add(canvas);
                 numberToCanvas.get(canvas.getProblemNum()).add(canvas);
+
+                //update user on loading status
+                loadingCanvasProgress.setProgressBarPercentage((int)(i / (double) compressedCanvii.size() * 100));
+                loadingCanvasProgress.setMessage("Loading program windows... " + (int)(i / (double) compressedCanvii.size() * 100) + "%");
             }
+            loadingCanvasProgress.close();
         }
 
         //interface frontend for data collection
@@ -296,7 +324,6 @@ public class UserInteractiveGrader {
      * Populates all essential data structures with empty containers to be filled
      */
     private void setup() {
-        System.out.println("num problems: " + numOfProblems);
         for (File student : new File(Constants.studentResponses).listFiles()) {
             tags.put(student.getName(), new HashMap<>());
             for (int i = 0; i < numOfProblems; i++) {
