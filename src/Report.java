@@ -4,6 +4,7 @@ import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -73,7 +74,8 @@ public class Report extends Window {
                 UserInteractiveGrader.iv.setVisible(false);
                 UserInteractiveGrader.closed = true;
 
-                //TODO clear all dataStructures, answerfields, canvii
+                Burner.clearFile("Progress" + Constants.separator + "Answerfields.txt");
+                Burner.clearFile("Progress" + Constants.separator + "Canvii.txt");
             }
         });
     }
@@ -139,7 +141,7 @@ public class Report extends Window {
             UserInteractiveGrader.percentages.put(student, score.getPercent());
             UserInteractiveGrader.totals.put(student, new Score(suggestedEarned, suggestedTotal));
 
-            writeable.append("    total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>");
+            writeable.append("total: " + score.toString() + ", " + Constants.findGrade(score) + "<br>");
             writeable.append("</p>");
             writeable.append("<br>");
         }

@@ -113,6 +113,9 @@ public class Burner {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void clearFile(String filepath) {
+        Burner.write(new ArrayList<>(), filepath);
     }
 }

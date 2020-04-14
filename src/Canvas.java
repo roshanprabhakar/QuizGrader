@@ -190,7 +190,9 @@ public class Canvas extends Window {
     }
 
     public void addLabel(String label) {
+        menu.removeActionListener(menuListener);
         this.menu.addItem(label);
+        menu.addActionListener(menuListener);
     }
 
     public boolean contains(String label) {
