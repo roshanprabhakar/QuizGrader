@@ -22,6 +22,16 @@ public class AnswerField {
         this.problemNum = problemNum;
     }
 
+    public AnswerField(String compressedField) {
+        this(
+                Integer.parseInt(compressedField.split(",")[0]),
+                Integer.parseInt(compressedField.split(",")[1]),
+                Integer.parseInt(compressedField.split(",")[2]),
+                Integer.parseInt(compressedField.split(",")[3]),
+                Integer.parseInt(compressedField.split(",")[4])
+        );
+    }
+
     public AnswerField() {
     }
 
@@ -87,7 +97,7 @@ public class AnswerField {
                 + " height: " + height + " width: " + width + " num: " + problemNum;
     }
 
-    public String compress() {
+    public String compressedString() {
         return topX + "," + topY + "," + bottomX + "," + bottomY + "," + problemNum;
     }
 }

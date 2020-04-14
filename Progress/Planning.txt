@@ -18,3 +18,5 @@ Answerfields.txt
 
 each line:
 topX, topY, bottomX, bottomY, problemNum, pageName
+
+Canvas.txt: queued with top as queue head

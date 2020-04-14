@@ -1,11 +1,17 @@
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
     public static WindowManager manager;
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        runUserInteractiveGradingSystem();
+//        runUserInteractiveGradingSystem();
+
+        String compressedCanvas = "{/Users/roshanprabhakar/IdeaProjects/QuizGrader/src/ScannedImageSources/StudentResponses/Maya/page1.png,14,249,716,484,1}{tag1,tag2,tag3}{THIS IS COMMENTS}{Score/Total}{false}{Maya:}{1}{true}{true}{false}{0}";
+        Canvas canvas = new Canvas(compressedCanvas);
+        canvas.setVisible(true);
     }
 
     /**

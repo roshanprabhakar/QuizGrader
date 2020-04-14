@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.io.File;
-import java.lang.reflect.AnnotatedWildcardType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -71,29 +70,50 @@ public class UserInteractiveGrader {
 
         //depends on updates to numOfProblems in order to instantiate maps with correct sizes
         this.setup();
-        // ----------- END SETUP ------------
+        // ----------- END SETUP -----------
 
-        //create the list<canvas> for the window manager
-        for (int i = 1; i <= numOfProblems; i++) {
+        //creates the list<canvas> for the window manager, burns to disk if grading session not initiated, loads from disk if already initiated
+        if (!Constants.containsText(Constants.getLines(new File("Progress" + Constants.separator + "Canvii.txt")))) {
+            ArrayList<String> canvasStrings = new ArrayList<>();
+            for (int i = 1; i <= numOfProblems; i++) {
 
-            String page = getPageForNum(i); //page problem i is located in
-            AnswerField ans = getAnswerFieldForNum(i); //the corresponding answerfield on the appropriate page for problem i
+                String page = getPageForNum(i); //page problem i is located in
+                AnswerField ans = getAnswerFieldForNum(i); //the corresponding answerfield on the appropriate page for problem i
 
-            //execute data collector on all students
-            for (File student : Objects.requireNonNull(new File(Constants.studentResponses).listFiles())) { //student will be the name of the student
+                //execute data collector on all students
+                for (File student : Objects.requireNonNull(new File(Constants.studentResponses).listFiles())) { //student will be the name of the student
 
-                //object representing student's data
-                Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
-                students.put(student.getName(), thisStudent);
+                    //object representing student's data
+                    Student thisStudent = new Student(new HashMap<>(), new HashMap<>(), student.getName());
+                    students.put(student.getName(), thisStudent);
 
-                //the interface backend for data collection
-                QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
-                image.resize(Constants.scaleHeight, Constants.scaleWidth);
-                Canvas canvas = new Canvas(image.getRegion(ans), student.getName(), ans.getProblemNum());
+                    //the interface backend for data collection
+                    QGImage image = new QGImage(student.getAbsolutePath() + Constants.separator + page);
+                    image.resize(Constants.scaleHeight, Constants.scaleWidth);
+                    Canvas canvas = new Canvas(image.getRegion(ans), student.getName(), ans.getProblemNum());
 
-                //needed for statistical analysis
+                    //recording progress to disk
+                    Canvas.canviiCount++; //only needed during implementation to create canvas ids
+                    canvasStrings.add(canvas.toString(student.getAbsolutePath() + Constants.separator + page, ans));
+
+                    //needed for statistical analysis
+                    canvii.add(canvas);
+                    numberToCanvas.get(ans.getProblemNum()).add(canvas); //grouping data by problem number instead of the conventional by student
+                }
+            }
+            Burner.write(canvasStrings, "Progress/Canvii.txt");
+        } else {
+            //Needs to add student to students, all canvas queued to canvii, map all canvii to numberToCanvas
+            ArrayList<String> compressedCanvii = Constants.getLines(new File("Progress" + Constants.separator + "Canvii.txt"));
+            for (int i = 0; i < compressedCanvii.size(); i++) {
+                Canvas canvas = new Canvas(compressedCanvii.get(i));
+
+                if (students.get(canvas.getStudentName()) == null) {
+                    students.put(canvas.getStudentName(), new Student(new HashMap<>(), new HashMap<>(), canvas.getStudentName()));
+                }
+
                 canvii.add(canvas);
-                numberToCanvas.get(ans.getProblemNum()).add(canvas); //grouping data by problem number instead of the conventional by student
+                numberToCanvas.get(canvas.getProblemNum()).add(canvas);
             }
         }
 
@@ -129,7 +149,6 @@ public class UserInteractiveGrader {
         return file.exists();
     }
 
-    //TODO switch functionality in case answerfields already exist
     //assumes pdf pages have been parsed and organized
     private HashMap<String, ArrayList<AnswerField>> loadAllAnswerFields() throws InterruptedException {
 
@@ -162,7 +181,7 @@ public class UserInteractiveGrader {
                 num++;
                 AnswerField field = recordAnswerField(pageImage, num);
                 answers.get(page.getName()).add(field);
-                diskInfo.add(field.compress() + "," + page.getName());
+                diskInfo.add(field.compressedString() + "," + page.getName());
             }
 
             pageImage.close();
@@ -268,6 +287,7 @@ public class UserInteractiveGrader {
      * Populates all essential data structures with empty containers to be filled
      */
     private void setup() {
+        System.out.println("num problems: " + numOfProblems);
         for (File student : new File(Constants.studentResponses).listFiles()) {
             tags.put(student.getName(), new HashMap<>());
             for (int i = 0; i < numOfProblems; i++) {

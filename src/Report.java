@@ -72,6 +72,8 @@ public class Report extends Window {
                 UserInteractiveGrader.report.setVisible(false);
                 UserInteractiveGrader.iv.setVisible(false);
                 UserInteractiveGrader.closed = true;
+
+                //TODO clear all dataStructures, answerfields, canvii
             }
         });
     }
