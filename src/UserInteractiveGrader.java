@@ -283,6 +283,15 @@ public class UserInteractiveGrader {
         return null;
     }
 
+    public static Canvas getCanvasForID(int id) {
+        for (Canvas canvas : canvii) {
+            if (canvas.getID() == id) {
+                return canvas;
+            }
+        }
+        return null;
+    }
+
     /**
      * Populates all essential data structures with empty containers to be filled
      */
@@ -316,5 +325,22 @@ public class UserInteractiveGrader {
         for (Canvas container : numberToCanvas.get(problemNum)) {
             container.setScoreField(total);
         }
+    }
+
+    public static void hardBurnCanvasData() {
+        ArrayList<String> compressedCanvii = Constants.getLines(new File("Progress" + Constants.separator + "Canvii.txt"));
+        ArrayList<String> newCanvii = new ArrayList<>();
+        for (String s : compressedCanvii) {
+
+            String[] canvasString = s.substring(1, s.length() - 1).split("}\\{");
+
+            int id = Integer.parseInt(canvasString[10]);
+            Canvas canvas = UserInteractiveGrader.getCanvasForID(id);
+
+            String newString = canvas.toString(canvasString[0].split(",")[0], new AnswerField(canvasString[0].substring(canvasString[0].indexOf(",") + 1)));
+
+            newCanvii.add(newString);
+        }
+        Burner.write(newCanvii, "Progress" + Constants.separator + "Canvii.txt");
     }
 }

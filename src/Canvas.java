@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -47,12 +48,14 @@ public class Canvas extends Window {
                 Integer.parseInt(canvas.substring(1, canvas.length() - 1).split("}\\{")[10]),
                 canvas.substring(1, canvas.length() - 1).split("}\\{")[1].split(","),
                 canvas.substring(1, canvas.length() - 1).split("}\\{")[2],
-                canvas.substring(1, canvas.length() - 1).split("}\\{")[3]
+                canvas.substring(1, canvas.length() - 1).split("}\\{")[3],
+                Boolean.parseBoolean(canvas.substring(1, canvas.length() - 1).split("}\\{")[9]),
+                Boolean.parseBoolean(canvas.substring(1, canvas.length() - 1).split("}\\{")[4])
         );
     }
 
     //order: img, menuItems, tags, score, concept understood, name, problemNum, canTagsDisappear, canScoreDisappear, commentWritten, id
-    private Canvas(QGImage image, String name, int problemNum, int ID, String[] menuItems, String tags, String score) {
+    private Canvas(QGImage image, String name, int problemNum, int ID, String[] menuItems, String tags, String score, boolean commentWritten, boolean conceptUnderstood) {
 
         this(image, name, problemNum);
         this.ID = ID;
@@ -68,6 +71,13 @@ public class Canvas extends Window {
 
         this.score.setText(score);
         if (!score.equals("Score/Total")) canScoreDisappear = false;
+
+        this.commentWritten = commentWritten;
+
+        this.answeredCorrectly = conceptUnderstood;
+        if (answeredCorrectly) {
+            this.conceptUnderstood.setSelected(true);
+        }
     }
 
     public Canvas(QGImage image, String name, int problemNum) {
@@ -228,6 +238,10 @@ public class Canvas extends Window {
         return problemNum;
     }
 
+    public int getID() {
+        return ID;
+    }
+
     public void performSubmitOperations(String name, int problemNum) {
         //parses tag data from canvas, stores in customTagsCollected
         if (customTags.getText().equals("Tags")) customTags.setText("");
@@ -274,6 +288,8 @@ public class Canvas extends Window {
         }
 
         submitted = true;
+        removeFromRecords(this.ID);
+        UserInteractiveGrader.hardBurnCanvasData();
     }
 
 
@@ -301,6 +317,14 @@ public class Canvas extends Window {
     }
 
     public static void removeFromRecords(int id) {
-        //TODO implement this
+        ArrayList<String> canvii = Constants.getLines(new File("Progress" + Constants.separator + "Canvii.txt"));
+        for (int i = 0; i < canvii.size(); i++) {
+            String canvas = canvii.get(i);
+            if (Integer.parseInt(canvas.substring(1, canvas.length() - 1).split("}\\{")[10]) == id) {
+                canvii.remove(i);
+                break;
+            }
+        }
+        Burner.write(canvii, "Progress" + Constants.separator + "Canvii.txt");
     }
 }
