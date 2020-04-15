@@ -118,4 +118,46 @@ public class Burner {
     public static void clearFile(String filepath) {
         Burner.write(new ArrayList<>(), filepath);
     }
+
+    public static void deleteFolder(File folder) {
+        deleteAllFilesFromTree(folder);
+        deleteAllFoldersFromTree(folder);
+    }
+
+    public static void deleteAllFoldersFromTree(File folder) {
+        File[] containedFiles = folder.listFiles();
+        if (containedFiles.length == 0) folder.delete();
+        else {
+            for (File file : containedFiles) {
+                deleteAllFoldersFromTree(file);
+            }
+        }
+        folder.delete();
+    }
+
+    public static void deleteAllFilesFromTree(File folder) {
+        File[] containedFiles = folder.listFiles();
+        for (File file : containedFiles) {
+            if (file.isFile()) file.delete();
+            else {
+                deleteAllFilesFromTree(file);
+            }
+        }
+    }
+
+    private static int countDirs(File[] files) {
+        int i = 0;
+        for (File file : files) {
+            if (file.isDirectory()) i++;
+        }
+        return i;
+    }
+
+    private static int countFiles(File[] files) {
+        int i = 0;
+        for (File file : files) {
+            if (file.isFile()) i++;
+        }
+        return i;
+    }
 }

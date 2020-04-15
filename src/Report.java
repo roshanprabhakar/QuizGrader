@@ -74,6 +74,8 @@ public class Report extends Window {
                 Burner.clearFile("Progress" + Constants.separator + "Canvii.txt");
                 Burner.clearFile("Progress" + Constants.separator + "EssentialStructures.txt");
 
+                Burner.deleteFolder(new File("src" + Constants.separator + "ScannedImageSources"));
+
                 UserInteractiveGrader.report.setVisible(false);
                 UserInteractiveGrader.iv.setVisible(false);
                 UserInteractiveGrader.closed = true;
