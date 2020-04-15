@@ -134,20 +134,4 @@ public class ProgressManager {
         }
         return out;
     }
-
-    public static void main(String[] args) {
-
-        ArrayList<String> students = new ArrayList<>(Arrays.asList("Roshan", "Shrey"));
-        String tags = "{Roshan={1=[tagstagstags]}, Shrey={1=[]}}";
-        String scores = "{Roshan={1=5.0/10.0}, Shrey={}}";
-        String conceptUnderstood = "{Roshan={1=1}, Shrey={}}";
-        String comments = "{Roshan={1=some random comment}, Shrey={}}";
-
-        //all parsing code works
-        ProgressManager manager = new ProgressManager(students);
-//        System.out.println(manager.parseTags(tags));
-//        System.out.println(manager.parseScores(scores));
-//        System.out.println(manager.parseConceptUnderstood(conceptUnderstood));
-//        System.out.println(manager.parseComments(comments));
-    }
 }
