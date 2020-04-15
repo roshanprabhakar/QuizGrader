@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -33,13 +34,19 @@ public class UserInteractiveGrader {
     //most important structures for the program
     public static HashMap<String, HashMap<Integer, ArrayList<String>>> tags = new HashMap<>(); //student --> #:tags //send
     public static HashMap<String, HashMap<Integer, Score>> scores = new HashMap<>(); //student --> #:score //send
-    public static HashMap<Integer, ArrayList<Canvas>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField
+    public static HashMap<Integer, ArrayList<Canvas>> numberToCanvas = new HashMap<>(); //map : problem# --> ansField (ONLY ESSENTIAL IF INIT SESSION CONTINUES PAST COMPLETE CANVAS EXECUTION)
     public static HashMap<String, Student> students = new HashMap<>();
     public static HashMap<String, HashMap<Integer, Integer>> conceptUnderstood = new HashMap<>(); //send
-    public static HashMap<String, Score> totals = new HashMap<>(); //send
-    public static HashMap<String, Character> grades = new HashMap<>(); //send
-    public static HashMap<String, Double> percentages = new HashMap<>(); //send
+    public static HashMap<String, Score> totals = new HashMap<>(); //send (USAGE STARTS IN REPORT)
+    public static HashMap<String, Character> grades = new HashMap<>(); //send (USAGE STARTS IN REPORT)
+    public static HashMap<String, Double> percentages = new HashMap<>(); //send (USAGE STARTS IN REPORT)
     public static HashMap<String, HashMap<Integer, String>> comments = new HashMap<>(); //send
+
+    //TODO write these to disk after every canvas submission
+
+    /**
+     * tags, scores, conceptUnderstood, totals, grades, percentages, comments
+     */
 
     public void run() throws InterruptedException {
 
@@ -70,6 +77,17 @@ public class UserInteractiveGrader {
 
         //depends on updates to numOfProblems in order to instantiate maps with correct sizes
         this.setup();
+
+        //reads all datastructures from disk to see if session already in progress
+        String[] studentNames = Constants.getStudentNames();
+        ArrayList<String> lines = Constants.getLines(new File("Progress" + Constants.separator + "EssentialStructures.txt"));
+        if (lines.size() == 4) {
+            ProgressManager progressManager = new ProgressManager(new ArrayList<>(Arrays.asList(studentNames)));
+            tags = progressManager.parseTags(lines.get(0));
+            scores = progressManager.parseScores(lines.get(1));
+            conceptUnderstood = progressManager.parseConceptUnderstood(lines.get(2));
+            comments = progressManager.parseComments(lines.get(3));
+        }
         // ----------- END SETUP -----------
 
         //creates the list<canvas> for the window manager, burns to disk if grading session not initiated, loads from disk if already initiated
@@ -116,7 +134,7 @@ public class UserInteractiveGrader {
             }
             loadingCanvasProgress.close();
 
-            Burner.write(canvasStrings, "Progress/Canvii.txt");
+            Burner.write(canvasStrings, "Progress" + Constants.separator + "Canvii.txt");
         } else {
 
             //progress bar on canvii loading
@@ -151,10 +169,15 @@ public class UserInteractiveGrader {
         manager.displayAllPositioned();
 
         //wait till data collection is done
-        while ((numOfProblems) * numOfStudents > submittedProblems) System.out.print(""); //keep this print
+        while (canvii.size() > submittedProblems) System.out.print("");
 
+        System.out.println(tags);
+        System.out.println(scores);
+        System.out.println(conceptUnderstood);
+        System.out.println(comments);
 
         report = new Report(numOfProblems);
+        report.frame.pack();
         report.centerAt(new Point((int) (Constants.screenWidth / 2), (int) (Constants.screenHeight / 2)));
         report.setVisible(true);
 

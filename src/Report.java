@@ -70,12 +70,13 @@ public class Report extends Window {
         closeAllOpps.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Burner.clearFile("Progress" + Constants.separator + "Answerfields.txt");
+                Burner.clearFile("Progress" + Constants.separator + "Canvii.txt");
+                Burner.clearFile("Progress" + Constants.separator + "EssentialStructures.txt");
+
                 UserInteractiveGrader.report.setVisible(false);
                 UserInteractiveGrader.iv.setVisible(false);
                 UserInteractiveGrader.closed = true;
-
-                Burner.clearFile("Progress" + Constants.separator + "Answerfields.txt");
-                Burner.clearFile("Progress" + Constants.separator + "Canvii.txt");
             }
         });
     }

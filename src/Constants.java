@@ -116,6 +116,17 @@ public class Constants {
         return false;
     }
 
+    public static String[] getStudentNames() {
+        File[] studentResponses = new File(Constants.studentResponses).listFiles();
+        assert studentResponses != null;
+
+        String[] names = new String[studentResponses.length];
+        for (int i = 0; i < names.length; i++) {
+            names[i] = studentResponses[i].getName();
+        }
+        return names;
+    }
+
     /**
      * print buffer
      */

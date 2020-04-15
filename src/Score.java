@@ -10,7 +10,14 @@ public class Score {
         calculatePercent();
     }
 
-    public Score() { }
+    public Score(String score) {
+        int slashIndex = score.indexOf("/");
+        earned = Double.parseDouble(score.substring(0, slashIndex));
+        possible = Double.parseDouble(score.substring(slashIndex + 1));
+        calculatePercent();
+    }
+
+    public Score() {}
 
     public Score(double percent) {this.percent = percent;}
 

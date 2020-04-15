@@ -289,6 +289,14 @@ public class Canvas extends Window {
             UserInteractiveGrader.comments.get(name).put(problemNum, "");
         }
 
+        //record all all data structures to EssentialStructures
+        ArrayList<String> structures = new ArrayList<>();
+        structures.add(UserInteractiveGrader.tags.toString());
+        structures.add(UserInteractiveGrader.scores.toString());
+        structures.add(UserInteractiveGrader.conceptUnderstood.toString());
+        structures.add(UserInteractiveGrader.comments.toString());
+        Burner.write(structures, "Progress" + Constants.separator + "EssentialStructures.txt");
+
         submitted = true;
         removeFromRecords(this.ID);
         UserInteractiveGrader.hardBurnCanvasData();

@@ -23,3 +23,10 @@ Canvas.txt: queued with top as queue head
 
 Resolve this:
 Exception in thread "main" java.lang.IllegalArgumentException: layoutState cannot be null
+
+
+EssentialStructures order:
+tags
+scores
+conceptUnderstood
+comments
