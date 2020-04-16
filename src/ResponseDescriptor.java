@@ -37,7 +37,7 @@ public class ResponseDescriptor extends Window {
             public void actionPerformed(ActionEvent e) {
                 try {
                     frame.setVisible(false);
-                    UserInteractiveGrader.comments.get(student).put(problemNum, comment.getDocument().getText(0, comment.getDocument().getLength()));
+                    UserInteractiveGrader.comments.get(student).put(problemNum, comment.getDocument().getText(0, comment.getDocument().getLength()).replaceAll("\n", " "));
                 } catch (Exception exception) {
                     System.err.println("Could not record comment!");
                 }

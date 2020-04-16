@@ -42,12 +42,6 @@ public class UserInteractiveGrader {
     public static HashMap<String, Double> percentages = new HashMap<>(); //send (USAGE STARTS IN REPORT)
     public static HashMap<String, HashMap<Integer, String>> comments = new HashMap<>(); //send
 
-    //TODO write these to disk after every canvas submission
-
-    /**
-     * tags, scores, conceptUnderstood, totals, grades, percentages, comments
-     */
-
     public void run() throws InterruptedException {
 
         // ---------- SETUP ----------
@@ -88,6 +82,10 @@ public class UserInteractiveGrader {
             conceptUnderstood = progressManager.parseConceptUnderstood(lines.get(2));
             comments = progressManager.parseComments(lines.get(3));
         }
+//        System.out.println(tags);
+//        System.out.println(scores);
+//        System.out.println(conceptUnderstood);
+//        System.out.println(comments);
         // ----------- END SETUP -----------
 
         //creates the list<canvas> for the window manager, burns to disk if grading session not initiated, loads from disk if already initiated
@@ -171,10 +169,10 @@ public class UserInteractiveGrader {
         //wait till data collection is done
         while (canvii.size() > submittedProblems) System.out.print("");
 
-        System.out.println(tags);
-        System.out.println(scores);
-        System.out.println(conceptUnderstood);
-        System.out.println(comments);
+//        System.out.println(tags);
+//        System.out.println(scores);
+//        System.out.println(conceptUnderstood);
+//        System.out.println(comments);
 
         report = new Report(numOfProblems);
         report.frame.pack();
