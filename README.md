@@ -52,7 +52,6 @@ grading session
 regarding this phase of the grading session
 - After all windows are submitted, Two summary windows are provided along with
 the generated data, in order to provide you with a way of browsing the collected data
-- Closing this window will close erase all program data, including the generated data
-- MAKE SURE TO EXPORT THE APPROPRIATE INFORMATION BEFORE CLOSING THE GRADING SESSION
-- NOTE: the PDFInput is not removed, for the sake of not accidentally deleting large amounts
+- Closing this window will close erase all progress saving data, but will not delete files in ./Data
+- NOTE: the PDFInput is never removed by the software, for the sake of not accidentally deleting large amounts
 of data. After every grading execution, manually replace the file in this location. 
